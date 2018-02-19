@@ -11,7 +11,7 @@ script:
     # static analysis
     - composer check
     # test that website is generated
-    - vendor/bin/statie generate source
+    - vendor/bin/statie generate site
 
 # see docs: https://www.statie.org/docs/github-pages/
 deploy:
