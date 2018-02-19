@@ -1,0 +1,127 @@
+html {
+	font-family: @font-families;
+	font-size: @font-size--small;
+	line-height: 1.75em;
+	font-weight: 300;
+	color: @font-color--main;
+	background-color: @bg-color--main;
+	overflow-y: scroll;
+	overflow-x: hidden; // logo hover fix
+	position: relative;
+	padding-bottom: @padding--wide;
+
+	@media @screen--wide {
+		font-size: @font-size--wide;
+		padding-bottom: 0;
+	}
+}
+
+a {
+	color: @font-color--link;
+	text-decoration: none;
+	.transition(~"color");
+
+	&:hover {
+		color: @font-color--link-content;
+
+		img {
+			opacity: .8;
+		}
+	}
+}
+
+h1 {
+	margin-top: 0;
+}
+
+h2 {
+	margin-top: @padding--wide;
+}
+
+pre,
+code {
+	font-size: .7rem;
+	font-family: monospace !important;
+	line-height: 1.35 !important;
+	color: @font-color--code;
+	background: @bg-color--code;
+}
+
+pre[class*="language-"] {
+	border-radius: 0;
+	margin-left: -@padding--basic;
+	margin-right: -@padding--basic;
+	padding-left: @padding--basic;
+	padding-right: @padding--basic;
+
+	@media @screen--wide {
+		margin-left: -@padding--wide;
+		margin-right: -@padding--wide;
+		padding-left: @padding--wide;
+		padding-right: @padding--wide;
+	}
+}
+
+code {
+	font-size: .8rem;
+	padding: 3px 5px;
+
+	pre & {
+		padding: 0;
+		border: none;
+	}
+}
+
+img {
+	display: block;
+	height: auto;
+	margin: 0 auto;
+	max-width: 100%;
+}
+
+blockquote {
+	font-family: serif;
+	font-style: italic;
+	quotes: "\201C""\201D""\2018""\2019";
+	margin: @padding--wide 0 @padding--basic @padding--wide;
+
+	&:before {
+		color: @color-supplementary;
+		content: open-quote;
+		font-size: 4em;
+		margin-right: 0.25em;
+		vertical-align: -0.4em;
+		line-height: 0;
+	}
+
+	p {
+		display: inline;
+	}
+}
+
+.wrapper--side {
+	background: @bg-color--side;
+	border-top: @content-line-width solid @content-line-color;
+	box-shadow: 0 0 15px rgba(27, 116, 171, .25);
+}
+
+@media @screen--wide {
+	.wrapper {
+		height: 100vh;
+		box-sizing: border-box;
+
+		&--side {
+			border-left: @content-line-width solid @content-line-color;
+			border-top: none;
+			float: left;
+			position: fixed;
+			width: @wrapper-width--side;
+			z-index: 10;
+		}
+
+		&--content {
+			float: right;
+			width: @wrapper-width--content;
+		}
+	}
+}

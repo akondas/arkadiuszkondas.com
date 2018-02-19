@@ -1,0 +1,115 @@
+.logo {
+	@media screen and (min-width: @bp--wide) and (max-width: @bp--ultra) {
+		.clearfix();
+	}
+
+	&__background {
+		.logoRadius();
+		background-size: 80%, 100%;
+		float: right;
+		display: block;
+		clear: right;
+
+		@media @screen--wide {
+			margin-bottom: @padding--basic / 2;
+		}
+
+		@media @screen--ultra {
+			float: left;
+		}
+	}
+
+	&__image {
+		.logoRadius();
+		.transition();
+	}
+}
+
+.title {
+	color: lighten(@font-color--main, 30);
+	font-size: .6em;
+	font-weight: bold;
+	letter-spacing: .05em;
+	text-transform: uppercase;
+}
+
+.nav {
+	margin: 0;
+	padding: @padding--basic;
+	font-weight: normal;
+
+	&__item,
+	&__divider {
+		list-style: none;
+	}
+
+	&__item {
+		display: inline-block;
+		margin-right: @padding--basic / 2;
+
+		&--logo {
+			display: inherit;
+			margin-right: inherit;
+			margin-bottom: @padding--basic / 2;
+
+			a {
+				font-size: 1.2rem;
+		    	font-weight: bold;
+				color: lighten(@font-color--main, 20);
+				display: block;
+			}
+		}
+
+		&--funky {
+			a:hover {
+				color: @color-supplementary;
+			}
+
+			a:hover span {
+				animation-name: funky;
+				// animation-play-state: running;
+			}
+
+			span {
+				animation-duration: 2s;
+				animation-iteration-count: infinite;
+				// animation-name: funky;
+				// animation-play-state: paused;
+			}
+
+			// playground letters count
+			.funky-letters-delay(10);
+		}
+	}
+
+	@media @screen--wide {
+		padding: @padding--wide;
+
+		&__divider {
+			height: @padding--basic;
+		}
+
+		&__item {
+			text-align: right;
+			display: list-item;
+			margin: 0;
+		}
+	}
+}
+
+.funky-letters-delay(@n, @i: 0) when (@i =< @n) {
+	span:nth-child(@{i}) {
+		animation-delay: ~"calc(@{i}s * 0.1)";
+	}
+
+	.funky-letters-delay(@n, (@i + 1));
+  }
+
+@keyframes funky {
+	0% {color: @color-supplementary;}
+	20% {color: #EF5350;}
+	40% {color: #29B6F6;}
+	60% {color: #FFEE58;}
+	80% {color: #9CCC65;}
+	100% {color: @color-supplementary;}
+}

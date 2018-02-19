@@ -1,0 +1,30 @@
+imports:
+    - { resource: 'manifest.yml', ignore_errors: true }
+    - { resource: 'site/_data/projects.yml' }
+    - { resource: 'site/_data/talks.yml' }
+
+parameters:
+    github_repository_source_directory: https://github.com/akondas/arkadiuszkondas.com/tree/master/site
+    markdown_headline_anchors: true
+
+    # other constants
+    author: Arkadiusz Kondas
+    email: arkadiusz.kondas@gmail.com
+    site:
+        url: https://arkadiuszkondas.com
+        title: Arkadiusz Kondas
+        subtitle: "PHP expert and open-source evangelist"
+    codes:
+        disqus: arkadiusz-kondas-website
+    gravatar:
+        email: arkadiusz.kondas@gmail.com
+        url: https://www.gravatar.com/avatar/
+
+    generators:
+        posts:
+          variable: 'post'
+          variable_global: 'posts'
+          path: '_posts'
+          layout: 'post'
+          route_prefix: ''
+          object: Symplify\Statie\Renderable\File\PostFile

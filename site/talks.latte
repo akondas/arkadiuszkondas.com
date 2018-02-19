@@ -1,0 +1,22 @@
+---
+layout: default
+title: Talks
+---
+
+{block content}
+	<h2>English</h2>
+
+	I hope they will appear soon ...
+
+	<h2>Polish</h2>
+
+	<ul>
+	{foreach $talks['polish'] as $talk}
+		<li class="talk">
+			<h3>{$talk['name']}</h3>
+			<p>{$talk['event']} - {$talk['year']}</p>
+			<a href="{$talk['slides']}" target="_blank">Slides</a>
+		</li>
+	{/foreach}
+	</ul>
+{/block}

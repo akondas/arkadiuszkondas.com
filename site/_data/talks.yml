@@ -1,0 +1,8 @@
+parameters:
+    talks:
+        polish:
+            -
+                name: "UUID The only ID you need?"
+                event: "PHP Central Europe Conference 2017 @ Poland"
+                slides: https://speakerdeck.com/crazko/wordpress-modern-development
+                year: 2017
