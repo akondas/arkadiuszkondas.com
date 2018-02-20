@@ -2,16 +2,21 @@ language: php
 
 php: 7.1
 
-install:
-    - composer update
+branches:
+    only:
+        - master
 
-script:
+install:
+    - composer install
+    - npm install
+
+before_script:
     # turn off XDebug
     - phpenv config-rm xdebug.ini || return 0
-    # static analysis
     - composer check
-    # test that website is generated
-    - vendor/bin/statie generate site
+
+script:
+    - npm run build
 
 # see docs: https://www.statie.org/docs/github-pages/
 deploy:
@@ -20,7 +25,7 @@ deploy:
     github_token: $GITHUB_TOKEN
     on:
         branch: master
-    local_dir: output
+    local_dir: dist
 
 notifications:
     email:
