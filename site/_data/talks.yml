@@ -4,5 +4,34 @@ parameters:
             -
                 name: "UUID The only ID you need?"
                 event: "PHP Central Europe Conference 2017 @ Poland"
-                slides: https://speakerdeck.com/crazko/wordpress-modern-development
+                slides: http://slides.com/arkadiuszkondas/uuid-the-only-id-you-need
                 year: 2017
+            -
+                name: "Constantly improve your PHP code"
+                event: "PHP Central Europe Conference 2017 @ Poland"
+                slides: http://slides.com/arkadiuszkondas/constantly-improve-your-php-code
+                year: 2017
+            -
+                name: "Reactive PHP"
+                event: "4developers Poland"
+                slides: http://slides.com/arkadiuszkondas/reactive-php
+                year: 2017
+            -
+                name: "Machine Learning - how to begin to learn the machine in PHP"
+                event: "PHPCon Poland"
+                year: 2016
+            -
+                name: "Mutated PHP - mutation testing for beginners"
+                event: "PHPCon Poland"
+                slides: http://slides.com/arkadiuszkondas/mutated-php-mutation-testing-for-beginners
+                year: 2016
+            -
+                name: "Pragmatic developer"
+                event: "WeBB MeetUp @ Poland Bielsko-Biała"
+                slides: http://slides.com/arkadiuszkondas/pragmatyczny-developer
+                year: 2016
+            -
+                name: "Practical Code Review"
+                event: "WeBB MeetUp @ Poland Bielsko-Biała"
+                slides: http://slides.com/arkadiuszkondas/praktyczne-code-review
+                year: 2015
