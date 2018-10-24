@@ -1,5 +1,12 @@
 parameters:
     talks:
+        english:
+            -
+                name: "Short story about learning the machine in PHP"
+                event: "PHP Prague @ Czech Republic"
+                slides: https://slides.com/arkadiuszkondas/shor-story-about-machine-learning-in-php
+                year: 2018
+
         polish:
             -
                 name: "UUID The only ID you need?"
@@ -19,6 +26,7 @@ parameters:
             -
                 name: "Machine Learning - how to begin to learn the machine in PHP"
                 event: "PHPCon Poland"
+                slides: https://slides.com/arkadiuszkondas/machine-learning-how-to-begin-to-learn-the-machine-in-php
                 year: 2016
             -
                 name: "Mutated PHP - mutation testing for beginners"
