@@ -6,6 +6,10 @@ branches:
     only:
         - master
 
+cache:
+    directories:
+    - $HOME/.composer/cache
+
 install:
     - composer install
     - npm install
@@ -16,7 +20,7 @@ before_script:
     - composer check
 
 script:
-    - npm run build
+    - vendor/bin/statie generate site --output=dist
 
 # see docs: https://www.statie.org/docs/github-pages/
 deploy:
@@ -29,5 +33,5 @@ deploy:
 
 notifications:
     email:
-        on_success: newer
+        on_success: never
         on_failure: always
