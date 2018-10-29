@@ -904,7 +904,7 @@ blockquote p {
   content: '\2014\00A0';
 }
 .post__sources {
-  padding: 2rem;
+  padding: 0.5rem 2rem;
   background-color: #f0f0f0;
   margin: auto -2rem;
   margin-top: 2em;
@@ -917,7 +917,9 @@ blockquote p {
 }
 .post__sources-list {
   padding: 0;
-  list-style: none;
+}
+.post__sources-list li {
+  margin-left: 20px;
 }
 .post__social #buttons {
   align-items: center;

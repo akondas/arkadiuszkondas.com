@@ -17,7 +17,7 @@ gulp.task('default', function () {
     console.log('Local PHP server started at "http://localhost:8000", open browser to see it.');
 
     // For the second arg see: https://github.com/floatdrop/gulp-watch/issues/242#issuecomment-230209702
-    return watch(['source/**/*', '!**/*___jb_tmp___'], { ignoreInitial: false })
+    return watch(['site/**/*', '!**/*___jb_tmp___'], { ignoreInitial: false })
         .on('change', function() {
             exec('vendor/bin/statie generate site --output=dist', function (err, stdout, stderr) {
                 console.log(stdout);
