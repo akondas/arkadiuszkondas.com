@@ -7,18 +7,13 @@ My personal web site [https://arkadiuszkondas.com](http://arkadiuszkondas.com).
 
 ## What's inside?
 - PHP static site generator [Statie](https://github.com/Symplify/Statie) - see documentation at [www.statie.org](https://www.statie.org)
-- CSS comes from [Less](http://lesscss.org/) pre-processor.
 - Assets and build are handled by task runner [gulp](http://gulpjs.com/) via [Travis](https://travis-ci.org).
 
-## Use it
-
+## Install it
 - `$ composer install && npm install`
 
-Commands:
-- `$ gulp` - generates site from source files
-- `$ gulp watch` - starts local server and acts upon changes
-- `$ gulp build` - generates version ready for production
-- `$ gulp clean` - removes output folder
+## Use it
+- `$ gulp` - starts local server and acts upon changes
 - `$ composer check` - runs code standard and static analysis
 - `$ composer fix` - fixes code standard errors
 
