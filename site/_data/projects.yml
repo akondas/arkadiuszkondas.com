@@ -9,12 +9,18 @@ parameters:
                 image: /assets/thumbs/php-ml-logo.png
         trivial:
             -
-                name: php-benchmark
-                description: "My personal php internals benchmarks. rocket You do not believe? check on your own."
-                repository: https://github.com/akondas/php-benchmark
-                image: /assets/thumbs/php-benchmark.png
+                name: php-blockchain
+                description: "Minimal working blockchain implemented in PHP"
+                repository: https://github.com/akondas/php-blockchain
+
             -
                 name: php-langston-ant
                 description: "Langton's ant implementation written in PHP and running in CLI."
                 repository: https://github.com/akondas/php-langston-ant
                 image: /assets/thumbs/langston-ant.png
+
+            -
+                name: php-benchmark
+                description: "My personal php internals benchmarks. rocket You do not believe? check on your own."
+                repository: https://github.com/akondas/php-benchmark
+                image: /assets/thumbs/php-benchmark.png
