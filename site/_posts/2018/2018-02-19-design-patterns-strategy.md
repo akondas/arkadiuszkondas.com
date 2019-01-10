@@ -1,14 +1,14 @@
 ---
-layout: post
+id: 1
 title: Design Patterns - Strategy
 description: "One of the main assumptions of good project programming is the 'Open/closed' principle, which says that classes should be closed for modification, but open to extension. The strategy pattern allows you to easily maintain this standard in your code."
 sources:
-	-
-		- "https://en.wikipedia.org/wiki/Open/closed_principle"
-		- Open / closed principle
-	-
-		- "https://sourcemaking.com/design_patterns/strategy"
-		- Strategy Design Pattern
+    -
+        - "https://en.wikipedia.org/wiki/Open/closed_principle"
+        - Open / closed principle
+    -
+        - "https://sourcemaking.com/design_patterns/strategy"
+        - Strategy Design Pattern
 ---
 ## Problem
 
