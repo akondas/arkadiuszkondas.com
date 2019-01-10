@@ -3,11 +3,11 @@
 <html lang="en">
 <head>
 	<meta charset="utf-8">
-	<title>{include "title"}</title>
+	<title>{include "_snippets/layout/title.latte"}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
 
-	{include "googleAnalytics"}
+	{include "_snippets/layout/googleAnalytics.latte"}
 
 	{* @link http://realfavicongenerator.net/ *}
 	<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
@@ -16,7 +16,7 @@
 	<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
 	{block meta}{/block}
 
-	{include "styles"}
+	{include "_snippets/layout/styles.latte"}
 
 	{block styles}{/block}
 </head>
@@ -27,7 +27,7 @@
 				<li class="nav__item nav__item--logo">
 					<a href="/">
 						<div class="logo">
-							<div class="logo__background">{include "gravatar", size => 200, class => 'logo__image'}</div>
+							<div class="logo__background">{include "_snippets/layout/gravatar.latte", size => 200, class => 'logo__image'}</div>
 						</div>
 						Arkadiusz Kondas
 					</a> <strong class="title">software architect</strong>
@@ -60,7 +60,7 @@
 	</div>
 
 	{block scripts}{/block}
-	{include "scripts"}
+	{include "_snippets/layout/scripts.latte"}
 </body>
 </html>
 {/spaceless}
