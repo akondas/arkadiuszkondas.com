@@ -19,3 +19,7 @@ parameters:
     gravatar:
         email: arkadiusz.kondas@gmail.com
         url: https://www.gravatar.com/avatar/
+    # see https://www.statie.org/docs/generators/
+    generators:
+        posts:
+            route_prefix: ''
