@@ -3,7 +3,6 @@ layout: "_layouts/default.latte"
 title: Playground
 ---
 
-{block content}
 {foreach $projects['trivial'] as $project}
 	{ifset $project['image']}
 		{include "_snippets/layout/image.latte", src => $project['image'], url => $project['repository'], alt => $project['name']}
@@ -13,4 +12,3 @@ title: Playground
 	<p>{$project['description']}</p>
 	<p><a href="{$project['repository']}" class="link--more">{$project['repository']}</a><p>
 {/foreach}
-{/block}
