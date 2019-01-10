@@ -48,7 +48,7 @@ class Image
         $y = ($height / 2) - ($this->text->height / 2) + $this->size;
 
         $image = Img::fromBlank($width, $height, Img::rgb(...Color::BACKGROUND));
-        $image->ttfText($this->size, self::ANGLE, $x, $y, Img::rgb(...Color::FOREGROUND), self::FONT, $this->text);
+        $image->ttfText($this->size, self::ANGLE, $x, $y, Img::rgb(...Color::FOREGROUND), self::FONT, (string) $this->text);
         $image->resize($this->width, null);
 
         // Add signature
