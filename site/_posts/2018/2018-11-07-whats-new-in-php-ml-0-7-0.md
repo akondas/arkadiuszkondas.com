@@ -1,11 +1,11 @@
 ---
-layout: post
+id: 2
 title: What's new in PHP-ML 0.7.0
 description: "A quick overview of new features, changes and fixes in PHP-ML 0.7.0 version"
 sources:
-	-
-		- "https://github.com/php-ai/php-ml/blob/master/CHANGELOG.md#070---2018-11-07"
-		- PHP-ML Changelog
+    - 
+        - "https://github.com/php-ai/php-ml/blob/master/CHANGELOG.md#070---2018-11-07"
+        - PHP-ML Changelog
 ---
 ## BC Breaks
 

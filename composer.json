@@ -13,21 +13,19 @@
       }
     },
     "require": {
-        "nette/utils": "^2.4",
-        "nette/finder": "^2.4",
-        "symplify/statie": "^3.0"
+        "symplify/statie": "^5.3"
     },
     "require-dev": {
-        "phpstan/phpstan": "^0.9.1",
-        "symplify/easy-coding-standard": "^3.0"
+        "phpstan/phpstan": "^0.10",
+        "symplify/easy-coding-standard": "^5.3"
     },
     "scripts": {
       "check": [
         "@ecs",
         "@phpstan"
       ],
-      "ecs": "vendor/bin/ecs check src --config coding-standard.neon",
-      "fix": "vendor/bin/ecs check --fix src --config coding-standard.neon",
+      "ecs": "vendor/bin/ecs check src",
+      "fix": "vendor/bin/ecs check --fix src",
       "phpstan": "vendor/bin/phpstan analyse -l max src --ansi"
     }
 }

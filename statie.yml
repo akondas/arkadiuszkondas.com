@@ -19,12 +19,7 @@ parameters:
     gravatar:
         email: arkadiusz.kondas@gmail.com
         url: https://www.gravatar.com/avatar/
-
+    # see https://www.statie.org/docs/generators/
     generators:
         posts:
-          variable: 'post'
-          variable_global: 'posts'
-          path: '_posts'
-          layout: 'post'
-          route_prefix: ''
-          object: Symplify\Statie\Renderable\File\PostFile
+            route_prefix: ''

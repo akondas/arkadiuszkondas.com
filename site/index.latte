@@ -1,30 +1,27 @@
 ---
-layout: default
+layout: "_layouts/default.latte"
 title: Posts
 ---
 
-{block content}
+<p>Read about PHP, Symfony and Machine Learning</p>
 
-	<p>Read about PHP, Symfony and Machine Learning</p>
+{foreach $posts as $post}
+	{continueIf $post->getDateInFormat('Y-m-d') > date('Y-m-d')}
 
-	{foreach $posts as $post}
-		{continueIf $post->getDateInFormat('Y-m-d') > date('Y-m-d')}
+	{var $url = '/' . $post['relativeUrl'] . '/'}
+	{ifset $post['external']}
+		{var $url = $post['external']}
+	{/ifset}
 
-		{var $url = '/' . $post['relativeUrl'] . '/'}
-		{ifset $post['external']}
-			{var $url = $post['external']}
-		{/ifset}
+	<article>
+		{ifset $post['promoImage']}{include "image", src => $post['promoImage'], url => $url, alt => $post['title']}{/ifset}
+		<h2><a href="{$url}">{$post['title']}</a></h2>
+		{include "_snippets/post/postMeta.latte", post => $post}
 
-		<article>
-			{ifset $post['promoImage']}{include "image", src => $post['promoImage'], url => $url, alt => $post['title']}{/ifset}
-			<h2><a href="{$url}">{$post['title']}</a></h2>
-			{include "postMeta", post => $post}
-
-			<p>{$post['description']|noescape}</p>
-			<p><a href="{$url}" class="link--more">Read more</a></p>
-		</article>
-	{/foreach}
-{/block}
+		<p>{$post['description']|noescape}</p>
+		<p><a href="{$url}" class="link--more">Read more</a></p>
+	</article>
+{/foreach}
 
 {block scripts}
 	<script id="dsq-count-scr" src="//{$codes['disqus']}.disqus.com/count.js" async></script>
