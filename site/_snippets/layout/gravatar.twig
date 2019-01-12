@@ -1,5 +1,5 @@
 <img
-	src="{$gravatar['url']}{md5($gravatar['email'])|lower}{ifset $size}?size={$size}{/ifset}}"
+	src="{{ gravatar.url }}{{ gravatar.email|md5|lower }}{% if size is defined %}?size={{ size }}{% endif %}"
 	alt=""
-	{ifset $class}class="{$class}"{/ifset}
+	{% if class is defined %}class="{{ class }}"{% endif %}
 >

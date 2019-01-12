@@ -1,9 +1,9 @@
-{var $appendix = $site['title'] . ' | ' . $site['subtitle']}
+{% set appendix %}{{ site.title }} | {{ site.subtitle }}{% endset %}
 
-{if isset($dontIncludeTitle)}
-	{$appendix}
-{elseif isset($title)}
-	{$title} | {$appendix}
-{else}
-	{$appendix}
-{/if}
+{% if dontIncludeTitle is defined %}
+	{{ appendix }}
+{% elseif title is defined %}
+	{{ title }} | {{ appendix }}
+{% else %}
+	{{ appendix }}
+{% endif %}

@@ -1,14 +1,14 @@
 ---
-layout: "_layouts/default.latte"
+layout: "_layouts/default.twig"
 title: Playground
 ---
 
-{foreach $projects['trivial'] as $project}
-	{ifset $project['image']}
-		{include "_snippets/layout/image.latte", src => $project['image'], url => $project['repository'], alt => $project['name']}
-	{/ifset}
+{% for project in projects.trivial %}
+	{% if project.image is defined %}
+		{% include "_snippets/layout/image.twig" with { src: project.image, url: project.repository, alt: project.name } %}
+	{% endif %}
 
-	<h2><a href="{$project['repository']}">{$project['name']}</a></h2>
-	<p>{$project['description']}</p>
-	<p><a href="{$project['repository']}" class="link--more">{$project['repository']}</a><p>
-{/foreach}
+	<h2><a href="{{ project.repository }}">{{ project.name }}</a></h2>
+	<p>{{ project.description }}</p>
+	<p><a href="{{ project.repository }}" class="link--more">{{ project.repository }}</a><p>
+{% endfor %}

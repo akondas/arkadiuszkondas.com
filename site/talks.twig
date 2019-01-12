@@ -1,28 +1,28 @@
 ---
-layout: "_layouts/default.latte"
+layout: "_layouts/default.twig"
 title: Talks
 ---
 
 <h2>English</h2>
 
 <ul>
-{foreach $talks['english'] as $talk}
+{% for talk in talks.english %}
 	<li class="talk">
-		<h3>{$talk['name']}</h3>
-		<p>{$talk['event']} - {$talk['year']}</p>
-		<a href="{$talk['slides']}" target="_blank">Slides</a>
+		<h3>{{ talk.name }}</h3>
+		<p>{{ talk.event }} - {{ talk.year }}</p>
+		<a href="{{ talk.slides }}" target="_blank">Slides</a>
 	</li>
-{/foreach}
+{% endfor %}
 </ul>
 
 <h2>Polish</h2>
 
 <ul>
-{foreach $talks['polish'] as $talk}
+{% for talk in talks.polish %}
 	<li class="talk">
-		<h3>{$talk['name']}</h3>
-		<p>{$talk['event']} - {$talk['year']}</p>
-		<a href="{$talk['slides']}" target="_blank">Slides</a>
+		<h3>{{ talk.name }}</h3>
+		<p>{{ talk.event }} - {{ talk.year }}</p>
+		<a href="{{ talk.slides }}" target="_blank">Slides</a>
 	</li>
-{/foreach}
+{% endfor %}
 </ul>

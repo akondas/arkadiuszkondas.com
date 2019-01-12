@@ -1,8 +1,8 @@
-{extends "_layouts/default.latte"}
+{% extends "_layouts/default.twig" %}
 
-{var $title = 'Whoops'}
+{% set title = 'Whoops' %}
 
-{block content}
+{% block content %}
 <p>You shouldn't be here.</p>
 <p>Start again from <a href="/">the beginning</a>.</p>
-{/block}
+{% endblock %}
