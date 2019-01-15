@@ -1,4 +1,11 @@
 ---
-layout: "_layouts/error.twig"
+layout: "_layouts/default.twig"
 outputPath: 404.html
 ---
+
+{% set title = 'Whoops' %}
+
+{% block content %}
+    <p>You shouldn't be here.</p>
+    <p>Start again from <a href="/">the beginning</a>.</p>
+{% endblock %}
