@@ -1,0 +1,5 @@
+<div class="image">
+	{% if url is defined %}<a href="{{ url }}">{% endif %}
+	<img src="{{ src }}" {% if alt is defined %} alt="{{ alt }}"{% endif %}>
+	{% if url is defined %}</a>{% endif %}
+</div>

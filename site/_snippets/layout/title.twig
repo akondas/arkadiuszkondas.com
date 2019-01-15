@@ -1,0 +1,9 @@
+{% set appendix %}{{ site.title }} | {{ site.subtitle }}{% endset %}
+
+{% if dontIncludeTitle is defined %}
+	{{ appendix }}
+{% elseif title is defined %}
+	{{ title }} | {{ appendix }}
+{% else %}
+	{{ appendix }}
+{% endif %}

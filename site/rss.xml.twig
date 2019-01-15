@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+	<title>Arkadiusz Kondas Posts</title>
+	<link>{{ site.url }}/</link>
+	<description>Posts about PHP and Machine Learning.</description>
+	<atom:link href="{{ site.url }}/rss.xml" rel="self" type="application/rss+xml" />
+	<pubDate>{date('r')}</pubDate>
+
+	{% for post in posts %}
+		{% if post.getDateInFormat('Y-m-d') <= "today"|date('Y-m-d') %}
+			{% if loop.first %}<lastBuildDate>{{ post.getDateInFormat('r') }}</lastBuildDate>{% endif %}
+			{% set url %}{{ site.url }}/{{ post.getRelativeUrl }}/{% endset %}
+
+			{% if post.external is defined %}
+				{% set url = post.external %}
+			{% endif %}
+
+			<item>
+				<title>{{ post.title }}</title>
+				<link>{{ url }}</link>
+				<guid isPermaLink="false">{{ url }}</guid>
+				<pubDate>{{ post.getDateInFormat('r') }}</pubDate>
+				<description>{{ post.description|striptags }}</description>
+				<dc:creator>{{ author }}</dc:creator>
+			</item>
+		{% endif %}
+	{% endfor %}
+  </channel>
+</rss>
