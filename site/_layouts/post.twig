@@ -19,7 +19,9 @@
 	{% include "_snippets/post/postMeta.twig" with { post: post, showSuggestEdit: true } %}
 	<p class="post__description">{{ post.description|raw }}</p>
 
-	{% if post.promoImage is defined %}{% include "_snippets/layout/image.twig" with { src: post.promoImage, url: site.url, alt: post.title } %}{% endif %}
+	{% if post.promoImage is defined %}
+		{% include "_snippets/layout/image.twig" with { src: post.promoImage, url: site.url, alt: post.title } %}
+	{% endif %}
 
 	{{ post.content|raw }}
 
@@ -28,20 +30,13 @@
 	<div id="social" class="post__social"></div>
 
 	{% if sources is defined %}
-<section class="post__sources">
-		<h3>Sources</h3>
-		<ul class="post__sources-list">
-{% for source in sources %}
-			<li><a href="{{ source.0 }}" target="_blank">{{ source.1 }}</a></li>
-		{% endfor %}
-</ul>
-	</section>
-{% endif %}
-{% endblock %}
-
-{% block scripts %}
-<script>
-	const disqusCode = '{{ codes.disqus }}';
-</script>
-<script id="dsq-count-scr" src="//{{ codes.disqus }}.disqus.com/count.js" async></script>
+		<section class="post__sources">
+			<h3>Sources</h3>
+			<ul class="post__sources-list">
+				{% for source in sources %}
+					<li><a href="{{ source.0 }}" target="_blank">{{ source.1 }}</a></li>
+				{% endfor %}
+			</ul>
+		</section>
+	{% endif %}
 {% endblock %}

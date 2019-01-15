@@ -1,5 +1,10 @@
 {% if manifest is defined %}
-<script src="/assets/js/scripts.js?{{ manifest.js }}" async></script>
+    <script src="/assets/js/scripts.js?{{ manifest.js }}" async></script>
 {% else %}
-<script src="/assets/js/scripts.js" async></script>
+    <script src="/assets/js/scripts.js" async></script>
 {% endif %}
+
+<script>
+    const disqusCode = '{{ codes.disqus }}';
+</script>
+<script id="dsq-count-scr" src="//{{ codes.disqus }}.disqus.com/count.js" async></script>
