@@ -4,20 +4,21 @@ imports:
     - { resource: 'site/_data/talks.yml' }
 
 parameters:
-    github_repository_source_directory: https://github.com/akondas/arkadiuszkondas.com/tree/master/site
+    github_repository_source_directory: 'https://github.com/akondas/arkadiuszkondas.com/tree/master/site'
     markdown_headline_anchors: true
 
     # other constants
-    author: Arkadiusz Kondas
-    email: arkadiusz.kondas@gmail.com
+    author: 'Arkadiusz Kondas'
+    email: 'arkadiusz.kondas@gmail.com'
     site:
-        url: https://arkadiuszkondas.com
+        url: 'https://arkadiuszkondas.com'
         title: Arkadiusz Kondas
         subtitle: "PHP expert and open-source evangelist"
     codes:
-        disqus: arkadiusz-kondas-website
+        disqus: 'arkadiusz-kondas-website'
     gravatar:
-        url: https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df
+        url: 'https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df'
+
     # see https://www.statie.org/docs/generators/
     generators:
         posts:

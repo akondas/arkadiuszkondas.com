@@ -1,42 +1,42 @@
-{% extends "_layouts/default.twig" %}
+<!DOCTYPE html>
+<html lang="en">
+    {% include "_snippets/layout/head.twig" %}
+    <body>
+	    <div class="wrapper wrapper--side">
+			{% include "_snippets/layout/menu.twig" %}
+			{% include "_snippets/layout/social_meta.twig" %}
+		</div>
 
-{% block meta %}
-	{% set url = "%s/%s"|format(site.url, post.relativeUrl) %}
-	{% set image = "%s/assets/posts/%s.png"|format(site.url, post.relativeUrl) %}
-	<meta name="twitter:card" content="summary_large_image">
-	<meta name="twitter:creator" content="@ArkadiuszKondas">
-	<meta name="twitter:title" content="{{ post.title|truncate(70) }}">
-	<meta name="twitter:description" content="{{ post.description|truncate(200) }}" />
-	<meta name="twitter:image" content="{{ image }}" />
-	<meta property="og:type" content="article" />
-	<meta property="og:title" content="{{ post.title }}" />
-	<meta property="og:description" content="{{ post.description }}" />
-	<meta property="og:url" content="{{ url }}" />
-	<meta property="og:image" content="{{ image }}" />
-{% endblock %}
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				{% if title is defined %}<h1>{{ title }}</h1>{% endif %}
 
-{% block content %}
-	{% include "_snippets/post/postMeta.twig" with { post: post, showSuggestEdit: true } %}
-	<p class="post__description">{{ post.description|raw }}</p>
+				{% include "_snippets/post/postMeta.twig" with { post: post, showSuggestEdit: true } %}
+				<p class="post__description">{{ post.description|raw }}</p>
 
-	{% if post.promoImage is defined %}
-		{% include "_snippets/layout/image.twig" with { src: post.promoImage, url: site.url, alt: post.title } %}
-	{% endif %}
+				{% if post.promoImage is defined %}
+					{% include "_snippets/layout/image.twig" with { src: post.promoImage, url: site.url, alt: post.title } %}
+				{% endif %}
 
-	{{ post.content|raw }}
+				{{ post.content|raw }}
 
-	<div class="post__signature">Arkadiusz Kondas</div>
+				<div class="post__signature">Arkadiusz Kondas</div>
 
-	<div id="social" class="post__social"></div>
+				<div id="social" class="post__social"></div>
 
-	{% if sources is defined %}
-		<section class="post__sources">
-			<h3>Sources</h3>
-			<ul class="post__sources-list">
-				{% for source in sources %}
-					<li><a href="{{ source.0 }}" target="_blank">{{ source.1 }}</a></li>
-				{% endfor %}
-			</ul>
-		</section>
-	{% endif %}
-{% endblock %}
+				{% if sources is defined %}
+					<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+							{% for source in sources %}
+								<li><a href="{{ source.0 }}" target="_blank">{{ source.1 }}</a></li>
+							{% endfor %}
+						</ul>
+					</section>
+				{% endif %}
+			</main>
+		</div>
+
+		{% include "_snippets/layout/scripts.twig" %}
+	</body>
+</html>
