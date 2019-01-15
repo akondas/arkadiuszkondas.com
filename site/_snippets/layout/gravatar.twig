@@ -1,5 +1,5 @@
 <img
-	src="{{ gravatar.url }}{{ gravatar.email|md5|lower }}{% if size is defined %}?size={{ size }}{% endif %}"
+	src="{{ gravatar.url }}{% if size is defined %}?size={{ size }}{% endif %}"
 	alt=""
 	{% if class is defined %}class="{{ class }}"{% endif %}
 >

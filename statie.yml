@@ -17,8 +17,7 @@ parameters:
     codes:
         disqus: arkadiusz-kondas-website
     gravatar:
-        email: arkadiusz.kondas@gmail.com
-        url: https://www.gravatar.com/avatar/
+        url: https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df
     # see https://www.statie.org/docs/generators/
     generators:
         posts:
