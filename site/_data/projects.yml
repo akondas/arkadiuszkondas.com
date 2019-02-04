@@ -1,26 +1,29 @@
 parameters:
     projects:
-        serious:
-            -
-                name: PHP-ML
-                title: "Fresh approach to Machine Learning in PHP. Algorithms, Cross Validation, Neural Network, Preprocessing, Feature Extraction and much more in one library."
-                description: "PHP-ML is a library for experimenting with Machine Learning in PHP, PHP-ML gives you an easy to use common API for training your bot and making it do predictions based on input data. It offers a variety of different algorithms for pattern recognition and complex statistics calculations."
-                repository: https://github.com/php-ai/php-ml
-                image: /assets/thumbs/php-ml-logo.png
-        trivial:
-            -
-                name: php-blockchain
-                description: "Minimal working blockchain implemented in PHP"
-                repository: https://github.com/akondas/php-blockchain
+        -
+            name: PHP-ML
+            title: "Fresh approach to Machine Learning in PHP. Algorithms, Cross Validation, Neural Network, Preprocessing, Feature Extraction and much more in one library."
+            description: "PHP-ML is a library for experimenting with Machine Learning in PHP, PHP-ML gives you an easy to use common API for training your bot and making it do predictions based on input data. It offers a variety of different algorithms for pattern recognition and complex statistics calculations."
+            repository: https://github.com/php-ai/php-ml
+            image: /assets/thumbs/php-ml-logo.png
 
-            -
-                name: php-langston-ant
-                description: "Langton's ant implementation written in PHP and running in CLI."
-                repository: https://github.com/akondas/php-langston-ant
-                image: /assets/thumbs/langston-ant.png
+        -   name: php-grandmaster
+            description: "Chess engine written in PHP and deployed on AWS Lambda. Play chess against PHP: <a class=\"btn\" href=\"/php-grandmaster\">Play on-line</a>"
+            repository: https://github.com/akondas/php-grandmaster
 
-            -
-                name: php-benchmark
-                description: "My personal php internals benchmarks. rocket You do not believe? check on your own."
-                repository: https://github.com/akondas/php-benchmark
-                image: /assets/thumbs/php-benchmark.png
+        -
+            name: php-blockchain
+            description: "Minimal working blockchain implemented in PHP"
+            repository: https://github.com/akondas/php-blockchain
+
+        -
+            name: php-langston-ant
+            description: "Langton's ant implementation written in PHP and running in CLI."
+            repository: https://github.com/akondas/php-langston-ant
+            image: /assets/thumbs/langston-ant.png
+
+        -
+            name: php-benchmark
+            description: "My personal php internals benchmarks. rocket You do not believe? check on your own."
+            repository: https://github.com/akondas/php-benchmark
+            image: /assets/thumbs/php-benchmark.png

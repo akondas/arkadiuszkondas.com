@@ -59,27 +59,6 @@
 				display: block;
 			}
 		}
-
-		&--funky {
-			a:hover {
-				color: @color-supplementary;
-			}
-
-			a:hover span {
-				animation-name: funky;
-				// animation-play-state: running;
-			}
-
-			span {
-				animation-duration: 2s;
-				animation-iteration-count: infinite;
-				// animation-name: funky;
-				// animation-play-state: paused;
-			}
-
-			// playground letters count
-			.funky-letters-delay(10);
-		}
 	}
 
 	@media @screen--wide {
@@ -97,19 +76,3 @@
 	}
 }
 
-.funky-letters-delay(@n, @i: 0) when (@i =< @n) {
-	span:nth-child(@{i}) {
-		animation-delay: ~"calc(@{i}s * 0.1)";
-	}
-
-	.funky-letters-delay(@n, (@i + 1));
-  }
-
-@keyframes funky {
-	0% {color: @color-supplementary;}
-	20% {color: #EF5350;}
-	40% {color: #29B6F6;}
-	60% {color: #FFEE58;}
-	80% {color: #9CCC65;}
-	100% {color: @color-supplementary;}
-}
