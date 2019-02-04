@@ -98,6 +98,25 @@
 			top: 2px;
 			left: 2px;
 		}
+		.card-body {
+			position: relative;
+		}
+		.loader {
+			display: none;
+			width: 100%;
+			height: 400px;
+			background-image: url("assets/thumbs/loader.png");
+			background-position: center;
+			background-repeat: no-repeat;
+			background-color: rgba(255, 255, 255, 0.6);
+			position: absolute;
+			top: 15px;
+			left: 0px;
+			text-align: center;
+			font-size: 2em;
+			font-weight: bold;
+			line-height: 550px;
+		}
 
 	</style>
 </head>
@@ -113,13 +132,11 @@
 <div class="container">
 	<div class="card mb-4 shadow-sm">
 		<div class="card-header">
-			<h4 class="my-0 font-weight-normal">Play chess against PHP</h4>
+			<h4 class="my-0 font-weight-normal">Play chess against PHP (deployed on AWS Lambda)</h4>
 		</div>
 		<div class="card-body">
-			<div class="alert alert-warning">
-				This is an experiment on AWS Lambda, unfortunately the response time is below expectations (average 15s).
-			</div>
 			<div id="board" class="board"></div>
+			<div class="loader"><span>Invoking lambda ...</span></div>
 			<br />
 			<div class="info">
 				<div style="display: none">
@@ -179,6 +196,7 @@
 		};
 
 		var loadMove = function () {
+			$('.loader').show();
 			$.ajax({
 				type: 'POST',
 				url: 'https://fkldch2ljd.execute-api.us-east-1.amazonaws.com/Prod/',
@@ -190,6 +208,7 @@
 					"depth": $('#depth').val()
 				},
 				success: function(data) {
+					$('.loader').hide();
 					if(data.error) {
 						alert(data.error);
 						return;
@@ -212,6 +231,14 @@
 					if (game.game_over()) {
 						alert('Game over');
 					}
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					$('.loader').hide();
+					alert(textStatus);
+					game.undo();
+					setTimeout(function () {
+						board.position(game.fen());
+					}, 100);
 				}
 			});
 		};
