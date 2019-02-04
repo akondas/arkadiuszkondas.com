@@ -1,0 +1,284 @@
+<!doctype html>
+<html class="no-js" lang="">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="x-ua-compatible" content="ie=edge">
+	<title>PHP Grandmaster - chess engine written in pure PHP</title>
+	<meta name="description" content="">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<script src="https://chessboardjs.com/js/chessboard.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
+	<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+	<style type="text/css">
+		.board {
+			width: 400px;
+			margin: auto
+		}
+
+		.info {
+			width: 400px;
+			margin: auto;
+		}
+
+		.move-history {
+			max-height: 100px;
+			overflow-y: scroll;
+		}
+
+		/*!
+         * chessboard.js v0.3.0
+         *
+         * Copyright 2013 Chris Oakman
+         * Released under the MIT license
+         * https://github.com/oakmac/chessboardjs/blob/master/LICENSE
+         *
+         * Date: 10 Aug 2013
+         */
+
+		/* clearfix */
+		.clearfix-7da63 {
+			clear: both;
+		}
+
+		/* board */
+		.board-b72b1 {
+			border: 2px solid #404040;
+			-moz-box-sizing: content-box;
+			box-sizing: content-box;
+		}
+
+		/* square */
+		.square-55d63 {
+			float: left;
+			position: relative;
+
+			/* disable any native browser highlighting */
+			-webkit-touch-callout: none;
+			-webkit-user-select: none;
+			-khtml-user-select: none;
+			-moz-user-select: none;
+			-ms-user-select: none;
+			user-select: none;
+		}
+
+		/* white square */
+		.white-1e1d7 {
+			background-color: #f0d9b5;
+			color: #b58863;
+		}
+
+		/* black square */
+		.black-3c85d {
+			background-color: #b58863;
+			color: #f0d9b5;
+		}
+
+		/* highlighted square */
+		.highlight1-32417, .highlight2-9c5d2 {
+			-webkit-box-shadow: inset 0 0 3px 3px yellow;
+			-moz-box-shadow: inset 0 0 3px 3px yellow;
+			box-shadow: inset 0 0 3px 3px yellow;
+		}
+
+		/* notation */
+		.notation-322f9 {
+			cursor: default;
+			font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+			font-size: 14px;
+			position: absolute;
+		}
+		.alpha-d2270 {
+			bottom: 1px;
+			right: 3px;
+		}
+		.numeric-fc462 {
+			top: 2px;
+			left: 2px;
+		}
+
+	</style>
+</head>
+
+<body>
+<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm">
+	<h5 class="my-0 mr-md-auto font-weight-normal">PHP Grandmaster</h5>
+	<a class="btn btn-outline-primary" href="https://github.com/akondas/php-grandmaster">
+		<i class="fab fa-github"></i>
+		GitHub
+	</a>
+</div>
+<div class="container">
+	<div class="card mb-4 shadow-sm">
+		<div class="card-header">
+			<h4 class="my-0 font-weight-normal">Play chess against PHP</h4>
+		</div>
+		<div class="card-body">
+			<div class="alert alert-warning">
+				This is an experiment on AWS Lambda, unfortunately the response time is below expectations (average 15s).
+			</div>
+			<div id="board" class="board"></div>
+			<br />
+			<div class="info">
+				<div style="display: none">
+					<label for="strategy">Strategy: </label>
+					<select id="strategy">
+						<option value="Grandmaster\Strategy\RandomMove">Random move</option>
+						<option value="Grandmaster\Strategy\PositionEvaluation">Position evaluation</option>
+						<option selected="selected" value="Grandmaster\Strategy\TreeSearch">Tree search</option>
+					</select>
+					<label for="depth">Depth (tree): </label>
+					<select id="depth">
+						<option value="1">1</option>
+						<option value="2">2</option>
+						<option value="3" selected="selected">3</option>
+						<option value="4">4</option>
+						<option value="5">5</option>
+						<option value="6">6</option>
+						<option value="7">7</option>
+						<option value="8">8</option>
+					</select>
+					<br /><br />
+				</div>
+				Moves evaluated: <span id="movesEvaluated"></span><br />
+				Time*: <span id="time"></span><br />
+				<small>*php time, http request latency not included</small>
+				<br /><br />
+				Move history:<br />
+				<div id="move-history" class="move-history">
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script type="text/javascript">
+	var board, game;
+
+	$(function() {
+		game = new Chess();
+
+		var onDragStart = function (source, piece, position, orientation) {
+			if (game.in_checkmate() === true || game.in_draw() === true ||
+					piece.search(/^b/) !== -1) {
+				return false;
+			}
+		};
+
+		var renderMoveHistory = function (moves) {
+			var historyElement = $('#move-history').empty();
+			historyElement.empty();
+			for (var i = 0; i < moves.length; i = i + 2) {
+				historyElement.append('<span>' + moves[i] + ' ' + ( moves[i + 1] ? moves[i + 1] : ' ') + '</span><br>')
+			}
+			historyElement.scrollTop(historyElement[0].scrollHeight);
+
+		};
+
+		var loadMove = function () {
+			$.ajax({
+				type: 'POST',
+				url: 'https://fkldch2ljd.execute-api.us-east-1.amazonaws.com/Prod/',
+				crossDomain: true,
+				dataType: "json",
+				data: {
+					"state": game.fen(),
+					"strategy": $('#strategy').val(),
+					"depth": $('#depth').val()
+				},
+				success: function(data) {
+					if(data.error) {
+						alert(data.error);
+						return;
+					}
+					if(data.move === null) {
+						alert('Game over');
+						return;
+					}
+
+					game.move(data.move);
+
+					// chessboard.js have some problems if we do it too fast ...
+					setTimeout(function () {
+						board.position(game.fen());
+					}, 100);
+
+					renderMoveHistory(game.history());
+					$('#movesEvaluated').text(data.movesEvaluated);
+					$('#time').text(data.time.toFixed(4) + 's');
+					if (game.game_over()) {
+						alert('Game over');
+					}
+				}
+			});
+		};
+
+		var onDrop = function (source, target) {
+
+			var move = game.move({
+				from: source,
+				to: target,
+				promotion: 'q'
+			});
+
+			removeGreySquares();
+			if (move === null) {
+				return 'snapback';
+			}
+
+			renderMoveHistory(game.history());
+			loadMove();
+		};
+
+		var onMouseoverSquare = function(square, piece) {
+			var moves = game.moves({
+				square: square,
+				verbose: true
+			});
+
+			if (moves.length === 0) return;
+
+			greySquare(square);
+
+			for (var i = 0; i < moves.length; i++) {
+				greySquare(moves[i].to);
+			}
+		};
+
+		var onMouseoutSquare = function(square, piece) {
+			removeGreySquares();
+		};
+
+		var removeGreySquares = function() {
+			$('#board .square-55d63').css('background', '');
+		};
+
+		var greySquare = function(square) {
+			var squareEl = $('#board .square-' + square);
+
+			var background = '#a9a9a9';
+			if (squareEl.hasClass('black-3c85d') === true) {
+				background = '#696969';
+			}
+
+			squareEl.css('background', background);
+		};
+
+		board = ChessBoard('board', {
+			draggable: true,
+			position: 'start',
+			onDragStart: onDragStart,
+			onDrop: onDrop,
+			onMouseoutSquare: onMouseoutSquare,
+			onMouseoverSquare: onMouseoverSquare,
+			pieceTheme: 'http://chessboardjs.com/img/chesspieces/alpha/{piece}.png'
+		});
+	});
+</script>
+
+</body>
+
+</html>
