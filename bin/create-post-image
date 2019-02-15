@@ -1,0 +1,13 @@
+#!/usr/bin/env php
+<?php declare(strict_types=1);
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Crazko\Site\TextToImage\Image;
+use Nette\Utils\Strings;
+
+$title = 'Write your own simple chess AI in PHP';
+$image = (new Image($title))->get(__DIR__.'/board-game.jpg');
+$imageName = Strings::webalize($title);
+
+$image->save(sprintf('%s/../site/assets/posts/%s.png', __DIR__, $imageName), 7);

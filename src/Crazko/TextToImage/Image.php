@@ -38,7 +38,7 @@ class Image
         $this->width = $width;
     }
 
-    public function get(): Img
+    public function get(?string $background = null): Img
     {
         $width = max($this->width, ($this->text->width + self::PADDING));
         $height = floor($width / 16 * 9);
@@ -47,7 +47,11 @@ class Image
         $x = ($width / 2) - ($this->text->width / 2);
         $y = ($height / 2) - ($this->text->height / 2) + $this->size;
 
-        $image = Img::fromBlank($width, $height, Img::rgb(...Color::BACKGROUND));
+        if ($background) {
+            $image = Img::fromFile($background);
+        } else {
+            $image = Img::fromBlank($width, $height, Img::rgb(...Color::BACKGROUND));
+        }
         $image->ttfText($this->size, self::ANGLE, $x, $y, Img::rgb(...Color::FOREGROUND), self::FONT, (string) $this->text);
         $image->resize($this->width, null);
 
