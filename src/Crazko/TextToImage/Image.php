@@ -47,7 +47,7 @@ class Image
         $x = ($width / 2) - ($this->text->width / 2);
         $y = ($height / 2) - ($this->text->height / 2) + $this->size;
 
-        if($background) {
+        if ($background) {
             $image = Img::fromFile($background);
         } else {
             $image = Img::fromBlank($width, $height, Img::rgb(...Color::BACKGROUND));
