@@ -3,7 +3,7 @@ layout: "_layouts/default.twig"
 title: Posts
 ---
 
-<p>Read about PHP, Symfony and Machine Learning</p>
+<p>Read about PHP, Machine Learning, Symfony and good software craftsmanship practices.</p>
 
 {% for post in posts %}
 	{% if post.getDateInFormat('Y-m-d') <= "today"|date('Y-m-d') %}
