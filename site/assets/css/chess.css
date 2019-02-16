@@ -7,7 +7,8 @@
 .board {
     padding: 15px 0px;
     width: 400px;
-    margin: auto
+    margin: auto;
+    touch-action: none;
 }
 
 @media only screen and (max-width: 500px) {

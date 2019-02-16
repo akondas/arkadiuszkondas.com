@@ -543,4 +543,4 @@ That's it!
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="/assets/js/chess.js"></script>
-<link rel="stylesheet" href="/assets/css/chess.css" />
+<link rel="stylesheet" href="/assets/css/chess.css?v=2" />
