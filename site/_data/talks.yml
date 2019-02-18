@@ -8,6 +8,11 @@ parameters:
                 year: 2018
 
         polish:
+            -   name: "Offline Concurrency Patterns"
+                event: "CoreDump 2018 @ Poland (Kraków)"
+                slides: https://slides.com/arkadiuszkondas/offline-concurrency-patterns
+                video: https://www.youtube.com/watch?v=xs76el5p3hY
+                year: 2018
             -
                 name: "UUID The only ID you need?"
                 event: "PHP Central Europe Conference 2017 @ Poland"
