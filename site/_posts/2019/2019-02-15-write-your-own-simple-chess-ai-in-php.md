@@ -4,6 +4,9 @@ title: Write your own simple chess AI in PHP
 description: "A brief history of how to start writing your own chess engine in PHP. You will learn some basic algorithms, prepare a solid foundation allowing for further development and finally I will consider how you can push your AI further."
 sources:
     -
+        - "https://github.com/akondas/php-grandmaster"
+        - PHP Grandmaster source code
+    -
         - "https://www.chessprogramming.org/Main_Page"
         - Chess Programming Wiki
     -
