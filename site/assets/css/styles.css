@@ -702,6 +702,11 @@ blockquote p {
   border-top: 10px solid #1abc9c;
   box-shadow: 0 0 15px rgba(27, 116, 171, 0.25);
 }
+@media screen and (max-width: 899px) {
+  .wrapper--content {
+    padding-bottom: 6rem;
+  }
+}
 @media screen and (min-width: 900px) {
   .wrapper {
     height: 100vh;
@@ -995,6 +1000,9 @@ blockquote p {
   bottom: 0;
   line-height: 1rem;
 }
+.footer p {
+  text-align: center;
+}
 @media screen and (min-width: 900px) {
   .footer__extended {
     display: none;
@@ -1073,5 +1081,28 @@ h3:hover .anchor {
   clip-path: inset(50%);
   border: 0;
 }
+#mc_embed_signup {
+  margin: 0px 0px 10px 0px;
+}
+
+#mc_embed_signup input.email {
+  width: 100%;
+  padding: 3px;
+  margin: 5px 0px 5px 0px;
+}
+#mc_embed_signup form {
+  text-align: center;
+}
+
+#mc_embed_signup .button {
+  border: none;
+  border-radius: 9999px;
+  background-color: #1abc9c;
+  cursor: pointer;
+  padding: 0.5em;
+  color: #FFF;
+  font-weight: bold;
+}
 
 /*# sourceMappingURL=maps/styles.css.map */
+
