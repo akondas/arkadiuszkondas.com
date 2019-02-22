@@ -1,6 +1,6 @@
 ---
 id: 4
-title: When the expert becomes a leader.
+title: When the expert becomes a leader
 description: "Very often in the life of an expert there is a moment when he wants (or it must) to become a leader. These are two different roles that are very difficult to reconcile with each other. In this post I will present some useful techniques that can help experts become a good leader."
 sources:
     -
