@@ -702,11 +702,6 @@ blockquote p {
   border-top: 10px solid #1abc9c;
   box-shadow: 0 0 15px rgba(27, 116, 171, 0.25);
 }
-@media screen and (max-width: 899px) {
-  .wrapper--content {
-    padding-bottom: 6rem;
-  }
-}
 @media screen and (min-width: 900px) {
   .wrapper {
     height: 100vh;
@@ -877,6 +872,20 @@ blockquote p {
   text-decoration: underline;
   text-decoration-color: #81eed8;
   text-decoration-skip: ink;
+}
+.content table {
+  width: 100%;
+  border: 1px solid lightgray;
+  box-shadow: 0 0 15px rgba(27, 116, 171, 0.25);
+}
+.content table thead {
+  border-bottom: 1px solid lightgray;
+}
+.content table thead th {
+  border-right: 1px dashed lightgray;
+}
+.content table tbody td {
+  border: 1px dashed lightgray;
 }
 .content p:last-of-type {
   margin-bottom: 0;
@@ -1082,19 +1091,33 @@ h3:hover .anchor {
   border: 0;
 }
 #mc_embed_signup {
-  margin: 0px 0px 10px 0px;
+  padding: 1rem;
+  background: #f0f0f0;
 }
 
-#mc_embed_signup input.email {
-  width: 100%;
+#mc_embed_signup input.email, #mc_embed_signup input.name {
+  width: 47%;
+  float: right;
   padding: 3px;
   margin: 5px 0px 5px 0px;
 }
+#mc_embed_signup input.name {
+    float: left;
+}
+
+@media screen and (max-width: 900px) {
+    #mc_embed_signup input.email, #mc_embed_signup input.name {
+        float: none;
+        width: 100%;
+    }
+}
+
 #mc_embed_signup form {
   text-align: center;
 }
 
 #mc_embed_signup .button {
+  margin-top:10px;
   border: none;
   border-radius: 9999px;
   background-color: #1abc9c;
