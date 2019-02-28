@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "a642f976dcd515e01c5d3c88a02ab0db",
+    "content-hash": "ba70c05c0bd2ffb9060ba8516b36d104",
     "packages": [
         {
             "name": "erusev/parsedown",
@@ -1888,6 +1888,49 @@
             ],
             "description": "PHP core functions that throw exceptions instead of returning FALSE on error",
             "time": "2019-01-11T09:03:26+00:00"
+        },
+        {
+            "name": "tovic/parsedown-extra-plugin",
+            "version": "dev-master",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/tovic/parsedown-extra-plugin.git",
+                "reference": "82b9e16af200d572654809b0e7b5923d57bb3a68"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/tovic/parsedown-extra-plugin/zipball/82b9e16af200d572654809b0e7b5923d57bb3a68",
+                "reference": "82b9e16af200d572654809b0e7b5923d57bb3a68",
+                "shasum": ""
+            },
+            "require": {
+                "erusev/parsedown-extra": "~0.7"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "ParsedownExtraPlugin": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Taufik Nurrohman",
+                    "homepage": "https://plus.google.com/+TaufikNurrohman"
+                }
+            ],
+            "description": "Configurable Markdown to HTML converter with Parsedown Extra.",
+            "homepage": "https://github.com/tovic/parsedown-extra-plugin",
+            "keywords": [
+                "markdown",
+                "markdown extra",
+                "parsedown",
+                "parser"
+            ],
+            "time": "2018-12-18T12:11:10+00:00"
         },
         {
             "name": "tracy/tracy",
@@ -3833,7 +3876,9 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": [],
+    "stability-flags": {
+        "tovic/parsedown-extra-plugin": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

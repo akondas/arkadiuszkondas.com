@@ -23,3 +23,9 @@ parameters:
     generators:
         posts:
             route_prefix: ''
+
+services:
+    ParsedownExtra:
+        class: ParsedownExtraPlugin
+        properties:
+            links_attr: {target: _blank}
