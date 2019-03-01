@@ -76,6 +76,32 @@ final class BinaryHeap
 }
 ```
 
+Score function allow us to create heap of any kind: from simple (min/max) to more complicated structure (array, objects).
+Some examples:
+
+```php
+// min-heap
+function ($x) {
+    return $x;
+}
+
+// max-heap
+function ($x) {
+    return -$x;
+}
+
+// max-heap with array data
+function ($x) {
+    return -$x[1];
+}
+
+// min-heap with object data
+function ($x) {
+    return $x->someValue();
+}
+```
+
+
 Then we add some basic methods which they explain themselves.
 
 ```php
@@ -272,6 +298,8 @@ This gives us confidence that no other processes (running in the background) wil
 
 We will run script with `--retry-threshold=2`, what will mean, that each iteration can have a maximum of 2% deviation over time.
 
+Let's say clearly what we will tests: we will draw 10,000 random numbers from the range. 
+Then we will measure the time of adding the next random number to our collection and extract the minimum from it.
 You can check full benchmark script in [BinaryHeapBench](https://github.com/php-ai/php-data-structures/blob/master/benchmarks/Heap/BinaryHeapBench.php).
 
 Lets run benchmarks and see what's happened. Here are results for `10 000` random numbers:
@@ -311,6 +339,6 @@ You can find data collected in benchmarks in sources list under this post.
 
 As you can see `BinaryHeap` has very good performance while maintaining flexibility.
 We have conducted a series of tests with good stability (`--retry-threshold`). You can use `scoreFunction` to 
-implement any heap: from min to max and a whole bunch of others. You can install in through composer: `php-ai/php-data-structures`.
+implement any heap: from min to max and a whole bunch of others. You can install it using composer: `php-ai/php-data-structures`.
 
 Happy heaping 😉
