@@ -7,7 +7,7 @@ var exec = require('child_process').exec;
 
 gulp.task('default', function () {
     // Generate current version
-    exec('vendor/bin/statie generate site --output=dist', function (err, stdout, stderr) {
+    exec('composer build', function (err, stdout, stderr) {
         console.log(stdout);
         console.error(stderr);
     });
@@ -19,7 +19,7 @@ gulp.task('default', function () {
     // For the second arg see: https://github.com/floatdrop/gulp-watch/issues/242#issuecomment-230209702
     return watch(['site/**/*', '!**/*___jb_tmp___'], { ignoreInitial: false })
         .on('change', function() {
-            exec('vendor/bin/statie generate site --output=dist', function (err, stdout, stderr) {
+            exec('composer build', function (err, stdout, stderr) {
                 console.log(stdout);
                 console.error(stderr);
             });

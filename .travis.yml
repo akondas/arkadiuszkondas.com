@@ -20,7 +20,7 @@ before_script:
     - composer check
 
 script:
-    - vendor/bin/statie generate site --output=dist
+    - composer build
 
 # see docs: https://www.statie.org/docs/github-pages/
 deploy:
