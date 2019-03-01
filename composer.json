@@ -27,6 +27,7 @@
       ],
       "ecs": "vendor/bin/ecs check src",
       "fix": "vendor/bin/ecs check --fix src",
-      "phpstan": "vendor/bin/phpstan analyse -l max src --ansi"
+      "phpstan": "vendor/bin/phpstan analyse -l max src --ansi",
+      "build": "vendor/bin/statie generate site --output=dist"
     }
 }
