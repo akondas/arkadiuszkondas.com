@@ -914,6 +914,9 @@ blockquote p {
   font-size: 1.1rem;
   text-align: right;
 }
+.post__text-right {
+  text-align: right;
+}
 .post__signature::before {
   content: '\2014\00A0';
 }

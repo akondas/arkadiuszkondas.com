@@ -9,12 +9,13 @@
     ],
     "autoload": {
       "psr-4": {
-        "Crazko\\Site\\": "src/Crazko/"
+        "Akondas\\": "src"
       }
     },
     "require": {
         "symplify/statie": "^5.3",
-        "tovic/parsedown-extra-plugin": "dev-master#82b9e16af200d572654809b0e7b5923d57bb3a68"
+        "tovic/parsedown-extra-plugin": "dev-master#82b9e16af200d572654809b0e7b5923d57bb3a68",
+        "php-ai/php-ml": "^0.7.0"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.10",
