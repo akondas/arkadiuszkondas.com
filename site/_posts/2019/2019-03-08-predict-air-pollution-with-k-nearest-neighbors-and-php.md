@@ -314,4 +314,4 @@ In this post, I used the brute force method to predict results, but there is muc
  using the k-d tree algorithm. I will try to describe it in the next post. Not necessarily the next one. Subscribe to 
  my newsletter if you don't want to miss post that you are interested in.
  
-Enjoy you Nearest Neighbors.
+Enjoy your Nearest Neighbors.
