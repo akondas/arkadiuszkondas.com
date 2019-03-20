@@ -8,6 +8,11 @@ parameters:
                 year: 2018
 
         polish:
+            -   name: "Machine Learning - how to start to teach the machine"
+                event: SegFault University 2019 @ Poland (Gdańsk)
+                slides: https://slides.com/arkadiuszkondas/machine-learning-how-to-start-to-teach-the-machine
+                year: 2019
+
             -   name: "Offline Concurrency Patterns"
                 event: "CoreDump 2018 @ Poland (Kraków)"
                 slides: https://slides.com/arkadiuszkondas/offline-concurrency-patterns
