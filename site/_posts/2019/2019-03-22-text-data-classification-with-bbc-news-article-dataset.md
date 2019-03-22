@@ -198,7 +198,8 @@ $transformer->fit($samples);
 $transformer->transform($samples);
 ```
 
-Remember to also transform sample that you want to predict:
+⚠️ **Remember to also transform sample that you want to predict.** 
+This is a common problem that people forget about.
 
 ```php
 $testSamples = $split->getTestSamples();
@@ -326,6 +327,9 @@ With prepared model timing is much more better:
 Model loaded in 1.3793s
 Predicted category: tech in 1.260704s
 ```
+
+Ready to use code can be found on [https://github.com/php-ai/php-ml-examples/tree/master/classification](https://github.com/php-ai/php-ml-examples/tree/master/classification){rel="nofollow"}
+in files: `bbc.php`, `bbcPipeline.php` and `bbcRestored.php`.
 
 You can also try `NaiveBayes` classifier, which is much faster and achieves very good results for these data.
 
