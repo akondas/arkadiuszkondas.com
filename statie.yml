@@ -13,7 +13,7 @@ parameters:
     site:
         url: 'https://arkadiuszkondas.com'
         title: Arkadiusz Kondas
-        subtitle: "PHP expert and open-source evangelist"
+        subtitle: "Software Architect and Machine Learning Engineer"
     codes:
         disqus: 'arkadiusz-kondas-website'
     gravatar:
