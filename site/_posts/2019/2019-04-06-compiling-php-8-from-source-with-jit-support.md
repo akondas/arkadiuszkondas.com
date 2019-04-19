@@ -14,6 +14,12 @@ sources:
         - "Playing with the PHP JIT"
 ---
 
+*
+**UPDATE (2019-04-19)**  
+If you want you can use prepared docker image from my other blog post: 
+[How to run PHP 8 with JIT support using Docker](/how-to-run-php-8-with-jit-support-using-docker/).
+*
+
 If you don't know what JIT is and why it will we implemented in PHP 8 please read Joe Watkins [PHP GR8](https://blog.krakjoe.ninja/2019/03/php-gr8.html){rel="nofollow"} blog post.
 
 In my opinion, the more people will be able to experiment with JIT the better it will be.
