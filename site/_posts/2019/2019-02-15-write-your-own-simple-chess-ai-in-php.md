@@ -542,7 +542,7 @@ That's it!
 
 
 
-<script src="https://chessboardjs.com/js/chessboard.js"></script>
+<script src="/assets/js/chessboard-0.3.0.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
 <script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
 <script src="/assets/js/chess.js"></script>
