@@ -13,7 +13,7 @@ parameters:
     site:
         url: 'https://arkadiuszkondas.com'
         title: Arkadiusz Kondas
-        subtitle: "Software Architect and Machine Learning Engineer"
+        subtitle: "Software Architect and Data Scientist"
     codes:
         disqus: 'arkadiusz-kondas-website'
     gravatar:
