@@ -2,6 +2,13 @@ parameters:
     talks:
         english:
             -
+                name: "Machine Learning - how to begin to learn the machine in PHP"
+                event: "PHP Russia @ Russia (Moscow)"
+                slides: https://slides.com/arkadiuszkondas/machine-learning-in-php-2019
+                year: 2019
+
+
+            -
                 name: "Short story about learning the machine in PHP"
                 event: "PHP Prague @ Czech Republic"
                 slides: https://slides.com/arkadiuszkondas/shor-story-about-machine-learning-in-php
