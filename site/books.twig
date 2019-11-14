@@ -1,0 +1,43 @@
+---
+layout: "_layouts/default.twig"
+title: Books
+---
+
+<p>
+	A collection of books I have read or want to read.
+	I keep this list mainly for myself, but maybe it will inspire someone.
+	Some of them have had their own blog entries.
+
+	<small><i>(The list is in the process of being created.)</i></small>
+</p>
+
+<h2>Waiting in line</h2>
+
+<p>Books that I bought, that I am currently reading or that are waiting for the first reading.</p>
+
+{% for book in booksInLine %}
+	{% include '_snippets/book.twig' %}
+{% endfor %}
+
+<div class="clearfix"></div>
+
+{% for list in books %}
+
+	<h2>Read in {{ list.year }}</h2>
+
+	{% for book in list.books %}
+		{% include '_snippets/book.twig' %}
+	{% endfor %}
+
+	<div class="clearfix"></div>
+{% endfor %}
+
+<h2>Read before 2019</h2>
+
+<p>Unfortunately, before 2019 I did not write down exact dates and lists of books, so there are items here which I remember.<br /><br /></p>
+
+{% for book in booksBefore %}
+	{% include '_snippets/book.twig' %}
+{% endfor %}
+
+<div class="clearfix"></div>

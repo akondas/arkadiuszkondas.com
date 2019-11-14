@@ -1,0 +1,27 @@
+parameters:
+  booksInLine:
+    -
+      title: "The DevOps Handbook: How to Create World-Class Agility, Reliability, and Security in Technology Organizations"
+      author: "Gene Kim, Patrick Debois, John Willis, Jez Humble"
+      image: "devops-handbook.jpg"
+
+  books:
+    - year: 2019
+      books:
+      -
+        title: "The Mythical Man-Month: Essays on Software Engineering"
+        author: "Frederick P. Brooks Jr."
+        count: 1
+        image: "mythical-man-month.jpeg"
+      -
+        title: "Superintelligence: Paths, Dangers, Strategies"
+        author: "Nick Bostrom"
+        count: 1
+        image: "superintelligence.jpg"
+        post: "superintelligence-paths-dangers-strategies-nick-bostrom"
+
+  booksBefore:
+    - title: "The Pragmatic Programmer: From Journeyman to Master"
+      author: "Andrew Hunt, David Thomas"
+      count: 1
+      image: "the-pragmatic-programmer.jpg"
