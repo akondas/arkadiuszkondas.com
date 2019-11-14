@@ -1,6 +1,12 @@
 parameters:
     projects:
         -
+            name: Munus
+            title: "Power of object-oriented programming with the elegance of functional programming."
+            description: "Increase the robustness with reduced amount of code. Library with functional elements implemented in object-oriented style"
+            repository: https://github.com/akondas/munus
+
+        -
             name: PHP-ML
             title: "Fresh approach to Machine Learning in PHP. Algorithms, Cross Validation, Neural Network, Preprocessing, Feature Extraction and much more in one library."
             description: "PHP-ML is a library for experimenting with Machine Learning in PHP, PHP-ML gives you an easy to use common API for training your bot and making it do predictions based on input data. It offers a variety of different algorithms for pattern recognition and complex statistics calculations."
