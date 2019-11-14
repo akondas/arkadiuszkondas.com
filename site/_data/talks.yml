@@ -15,6 +15,16 @@ parameters:
                 year: 2018
 
         polish:
+            -   name: "Reactive PHP"
+                event: PHPCon 2019 @ Poland (Szczyrk)
+                slides: https://slides.com/arkadiuszkondas/reactive-php-2019
+                year: 2019
+
+            -   name: "Event Modeling - The Model That Works"
+                event: Phpers 2019 @ Poland (Gliwice)
+                slides: https://slides.com/arkadiuszkondas/event-modeling-the-model-that-works
+                year: 2019
+
             -   name: "Machine Learning - how to start to teach the machine"
                 event: SegFault University 2019 @ Poland (Gdańsk)
                 slides: https://slides.com/arkadiuszkondas/machine-learning-how-to-start-to-teach-the-machine
