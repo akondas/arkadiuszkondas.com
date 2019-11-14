@@ -1130,5 +1130,36 @@ h3:hover .anchor {
   font-weight: bold;
 }
 
+.book {
+  text-align: center;
+  width: 50%;
+  float:left;
+}
+
+@media screen and (max-width: 550px) {
+  .book {
+    float: none;
+    width: auto;
+  }
+}
+
+.book h4 {
+  padding: 0px 20px;
+  margin: 10px 0px 0px 0px;
+}
+.book img {
+  height: 200px;
+}
+.book p {
+  margin: 0px;
+}
+.book .count {
+  font-size: small;
+}
+.book .count span {
+  color: #1abc9c;
+  font-weight: bold;
+}
+
 /*# sourceMappingURL=maps/styles.css.map */
 
