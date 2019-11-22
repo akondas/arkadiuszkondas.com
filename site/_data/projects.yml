@@ -4,7 +4,8 @@ parameters:
             name: Munus
             title: "Power of object-oriented programming with the elegance of functional programming."
             description: "Increase the robustness with reduced amount of code. Library with functional elements implemented in object-oriented style"
-            repository: https://github.com/akondas/munus
+            repository: https://github.com/munusphp/munus
+            image: /assets/thumbs/munus.png
 
         -
             name: PHP-ML
