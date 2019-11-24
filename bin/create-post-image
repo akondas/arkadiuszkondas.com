@@ -6,8 +6,8 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Akondas\TextToImage\Image;
 use Nette\Utils\Strings;
 
-$title = '3 Reasons Why PHP is Not Yet Perfect for Machine Learning';
-$image = (new Image($title))->get(__DIR__.'/analysis.jpg');
+$title = 'What is software architecture?';
+$image = (new Image($title))->get(__DIR__.'/architecture.jpg');
 $imageName = Strings::webalize($title);
 
 $image->save(sprintf('%s/../site/assets/posts/%s.png', __DIR__, $imageName), 7);
