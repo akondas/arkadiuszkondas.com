@@ -125,7 +125,7 @@ Otherwise, why design systems at all?
 I will try to close the whole post in one sentence (collecting all three points in one).
 
 **Software architecture is a coherent concept, for which the architect is responsible by making appropriate decisions in 
-the process of designing the system, which affects its entire structure.**
+the process of designing the system, which affects its structure.**
 
 Do you have any other thoughts about this?
 Let me know in the comments or on the Tweeter.
