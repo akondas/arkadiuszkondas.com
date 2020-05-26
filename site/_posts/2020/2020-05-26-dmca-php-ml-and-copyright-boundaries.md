@@ -18,6 +18,8 @@ Last friday, DMCA took down my Github repository.
 This post will explain the who, the what and how we came to this situation.
 This posting is sticking to the facts, feel free to reach out or react in the comments if you think that something’s wrong.
 
+> Dear Andrew, dear PHP developers, once again, I apologize for the mistakes that I did regarding the license. I hope that we will find a way to fix this in a good way so we can still develop and eventually collaborate together for the greater good.
+
 ## DMCA
 
 Until last Friday I had no idea about something like the DMCA and how it can be used.
