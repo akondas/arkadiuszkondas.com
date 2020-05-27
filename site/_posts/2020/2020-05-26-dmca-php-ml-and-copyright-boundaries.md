@@ -20,6 +20,8 @@ This posting is sticking to the facts, feel free to reach out or react in the co
 
 > Dear Andrew, dear PHP developers, once again, I apologize for the mistakes that I did regarding the license. I hope that we will find a way to fix this in a good way so we can still develop and eventually collaborate together for the greater good.
 
+**If your build has broken because of the code being removed, see the bottom of the post.**
+
 ## DMCA
 
 Until last Friday I had no idea about something like the DMCA and how it can be used.
@@ -165,3 +167,13 @@ Alternatively and in the meantime, you can use some kind of packagist proxy (the
 You may not agree with my reaction. You don't know me personally, you don't know how I was at the moment of events. Just remember when assessing these facts.
 
 Finally, I would like to thank my friends for their support. You helped me reconsider this situation.
+
+**Update: 2020-05-27**  
+ 
+## My build is broken. What to do?
+
+The php-ml sources have been removed from GitHub. Feeling obliged to help I decided to publish them on GitLab,
+ but without the code being disputed. To fix your broken build run this command:
+```bash
+composer update php-ai/php-ml --lock
+```
