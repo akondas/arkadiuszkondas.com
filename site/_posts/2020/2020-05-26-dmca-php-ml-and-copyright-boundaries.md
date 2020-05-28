@@ -80,9 +80,35 @@ As I said earlier, note that there is no license or attribution file in RubixML 
 
 [![RubmixML vs php-ml](/assets/posts/phpml/rubixml-phpml-0.png)](/assets/posts/phpml/rubixml-phpml-0.png)
 
-[![RubmixML vs php-ml](/assets/posts/phpml/rubixml-phpml-1.png)](/assets/posts/phpml/rubixml-phpml-0.png)
+[![RubmixML vs php-ml](/assets/posts/phpml/rubixml-phpml-1.png)](/assets/posts/phpml/rubixml-phpml-1.png)
 
-On Friday, Github took down the main repository of my library.
+**Update: 2020-05-28**
+
+---
+
+At the moment sources of php-ml are already available on GitLab [php-ai/php-ml](https://gitlab.com/php-ai/php-ml) so I can compare several files that appeared in RubixML without any attribution:
+
+| Class | RubmixML | php-ml |
+| :----: | :----: | :----: |
+| ActivationFunction | [GitHub](https://github.com/RubixML/RubixML/blob/1868c2be46239870ec4f6a4211da4c1eeabb0306/src/NeuralNetwork/ActivationFunctions/ActivationFunction.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/NeuralNetwork/ActivationFunction.php) |
+| Gaussian | [GitHub](https://github.com/RubixML/RubixML/blob/1868c2be46239870ec4f6a4211da4c1eeabb0306/src/NeuralNetwork/ActivationFunctions/Gaussian.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/NeuralNetwork/ActivationFunction/Gaussian.php) |
+| Pipeline | [GitHub](https://github.com/RubixML/RubixML/blob/0a2f6fe06b68ff7313ad89282fa61ddd29f92c74/src/Pipeline.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/Pipeline.php) |
+| Heaviside |[ GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/NeuralNetwork/ActivationFunctions/Heaviside.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/NeuralNetwork/ActivationFunction/BinaryStep.php) |
+| HyperbolicTangent | [GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/NeuralNetwork/ActivationFunctions/HyperbolicTangent.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/NeuralNetwork/ActivationFunction/HyperbolicTangent.php) |
+| PReLU | [GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/NeuralNetwork/ActivationFunctions/PReLU.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/NeuralNetwork/ActivationFunction/PReLU.php) |
+| Sigmoid | [GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/NeuralNetwork/ActivationFunctions/Sigmoid.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/NeuralNetwork/ActivationFunction/Sigmoid.php) |
+| Filesystem | [GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/Persisters/Filesystem.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/ModelManager.php) |
+| Tokenizer | [GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/Transformers/Tokenizers/Tokenizer.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/Tokenization/Tokenizer.php) |
+| WordTokenizer | [GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/Transformers/Tokenizers/WordTokenizer.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/Tokenization/WordTokenizer.php) |
+| VarianceTresholdFilter | [GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/Transformers/VarianceThresholdFilter.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/FeatureSelection/VarianceThreshold.php) |
+| Regression | [GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/Regression.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/Regression/Regression.php) |
+| LeastSquares | [GitHub](https://github.com/RubixML/RubixML/blob/0.0.1-alpha/src/LeastSquares.php) | [GitLab](https://gitlab.com/php-ai/php-ml/-/blob/b4b190de7fd624892bade2bbd9c9e39f57da4fad/src/Regression/LeastSquares.php) |
+
+I also remind you that it did not hurt me. I didn't make a fuss about it or even mention Andrew.
+
+---
+
+**On Friday, GitHub took down the main repository of my library.**
 
 ## RubixML and php-ml conflict
 
@@ -99,9 +125,9 @@ Another example.
 
 When I write a loop in PHP, I do use most of the time foreach(), does that mean that I also cheated on other people ?
 
-**Where are the boundaries?** Anyway, let’s move on.
+**Where are the boundaries?** 
 
-In May 2020, I released version 0.9.0 and Andrew was not credited in the license code.
+Anyway, let’s move on. In May 2020, I released version 0.9.0 and Andrew was not credited in the license code.
 I should have at least written something in the README file saying that I was inspired by some internal parts of his library but I didn’t. 
 Andrew noticed it and opened an issue in which he complained about the current state of affairs.
 
@@ -169,7 +195,9 @@ You may not agree with my reaction. You don't know me personally, you don't know
 Finally, I would like to thank my friends for their support. You helped me reconsider this situation.
 
 **Update: 2020-05-27**  
- 
+
+---
+
 ## My build is broken. What to do?
 
 The php-ml sources have been removed from GitHub. Feeling obliged to help I decided to publish them on GitLab,
