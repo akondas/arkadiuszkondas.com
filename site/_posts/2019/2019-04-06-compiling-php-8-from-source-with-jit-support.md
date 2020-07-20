@@ -75,7 +75,7 @@ Next, we want to configure our compilation. You can use `--prefix` flag to set d
 
 ```bash
 ./configure --prefix=/opt/php/php8 --enable-opcache --with-zlib 
---enable-zip --enable-json --enable-sockets --without-pear
+--enable-zip --enable-sockets --without-pear
 ```
 
 To see all available options:
