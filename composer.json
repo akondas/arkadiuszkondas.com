@@ -26,9 +26,9 @@
         "@ecs",
         "@phpstan"
       ],
-      "ecs": "vendor/bin/ecs check src",
-      "fix": "vendor/bin/ecs check --fix src",
-      "phpstan": "vendor/bin/phpstan analyse -l max src --ansi",
-      "build": "vendor/bin/statie generate site --output=dist"
+      "ecs": "ecs check src",
+      "fix": "ecs check --fix src",
+      "phpstan": "phpstan analyse -l max src --ansi",
+      "build": "statie generate site --output=dist"
     }
 }

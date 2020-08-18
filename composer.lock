@@ -650,12 +650,12 @@
             "version": "0.7.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/php-ai/php-ml.git",
+                "url": "https://gitlab.com/php-ai/php-ml.git",
                 "reference": "db95db3e57475df53d602b32c4451438c21e46c3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/php-ai/php-ml/zipball/db95db3e57475df53d602b32c4451438c21e46c3",
+                "url": "https://gitlab.com/api/v4/projects/php-ai%2Fphp-ml/repository/archive.zip?sha=db95db3e57475df53d602b32c4451438c21e46c3",
                 "reference": "db95db3e57475df53d602b32c4451438c21e46c3",
                 "shasum": ""
             },
@@ -698,7 +698,7 @@
                 "machine learning",
                 "pattern recognition"
             ],
-            "time": "2018-11-07T18:40:31+00:00"
+            "time": "2018-11-07T19:40:31+00:00"
         },
         {
             "name": "psr/cache",
@@ -1486,6 +1486,20 @@
             ],
             "description": "Symfony HttpFoundation Component",
             "homepage": "https://symfony.com",
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-30T14:07:33+00:00"
         },
         {
@@ -1637,6 +1651,20 @@
                 "mime",
                 "mime-type"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-27T16:56:45+00:00"
         },
         {
@@ -1757,6 +1785,20 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-09T19:04:49+00:00"
         },
         {
@@ -1816,6 +1858,20 @@
                 "portable",
                 "shim"
             ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
+            ],
             "time": "2020-03-09T19:04:49+00:00"
         },
         {
@@ -1870,6 +1926,20 @@
                 "polyfill",
                 "portable",
                 "shim"
+            ],
+            "funding": [
+                {
+                    "url": "https://symfony.com/sponsor",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/fabpot",
+                    "type": "github"
+                },
+                {
+                    "url": "https://tidelift.com/funding/github/packagist/symfony/symfony",
+                    "type": "tidelift"
+                }
             ],
             "time": "2020-02-27T09:26:54+00:00"
         },
@@ -1978,6 +2048,16 @@
                 "MIT"
             ],
             "description": "Dependency Injection, Console and Kernel toolkit for Symplify packages.",
+            "funding": [
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/rectorphp",
+                    "type": "patreon"
+                }
+            ],
             "time": "2019-01-11T10:33:05+00:00"
         },
         {
@@ -2185,12 +2265,12 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/tovic/parsedown-extra-plugin.git",
+                "url": "https://github.com/taufik-nurrohman/parsedown-extra-plugin.git",
                 "reference": "82b9e16af200d572654809b0e7b5923d57bb3a68"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/tovic/parsedown-extra-plugin/zipball/82b9e16af200d572654809b0e7b5923d57bb3a68",
+                "url": "https://api.github.com/repos/taufik-nurrohman/parsedown-extra-plugin/zipball/82b9e16af200d572654809b0e7b5923d57bb3a68",
                 "reference": "82b9e16af200d572654809b0e7b5923d57bb3a68",
                 "shasum": ""
             },
@@ -3857,6 +3937,16 @@
                 "MIT"
             ],
             "description": "Set of Symplify rules for PHP_CodeSniffer and PHP CS Fixer.",
+            "funding": [
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/rectorphp",
+                    "type": "patreon"
+                }
+            ],
             "time": "2019-01-11T10:41:11+00:00"
         },
         {
@@ -3922,6 +4012,16 @@
                 "MIT"
             ],
             "description": "Use Coding Standard with 0-knowledge of PHP-CS-Fixer and PHP_CodeSniffer.",
+            "funding": [
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                },
+                {
+                    "url": "https://www.patreon.com/rectorphp",
+                    "type": "patreon"
+                }
+            ],
             "time": "2019-01-11T10:41:11+00:00"
         },
         {
@@ -4028,5 +4128,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

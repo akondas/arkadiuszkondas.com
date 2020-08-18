@@ -8,17 +8,16 @@ My personal web site [https://arkadiuszkondas.com](http://arkadiuszkondas.com).
 
 ## What's inside?
 - PHP static site generator [Statie](https://github.com/Symplify/Statie) - see documentation at [www.statie.org](https://www.statie.org)
-- Build for localhost handled by task runner [gulp](http://gulpjs.com/)
 - Extension for Parsedown Extra [tovic/parsedown-extra-plugin](Extension for Parsedown Extra)
 
 ## Install it
-- `$ composer install && npm install`
+- `$ composer install`
 
 ## Build it
 - `$ composer build`
 
 ## Use it
-- `$ gulp` - starts local server and acts upon changes
+- `$ php -S localhost:8000 -t dist` - starts local server
 - `$ composer check` - runs code standard and static analysis
 - `$ composer fix` - fixes code standard errors
 

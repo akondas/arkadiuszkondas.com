@@ -6,3 +6,4 @@
 *.log
 manifest.yml
 site.zip
+composer.phar
