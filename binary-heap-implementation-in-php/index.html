@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	Binary heap implementation in PHP | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="Binary heap implementation in PHP">
+<meta name="twitter:description" content="Short explanation what is binary heap and how to implement it in pure PHP from scratch. I will show you how to compare it with native solution (SPL). Performance results are surprising." />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/binary-heap-implementation-in-php.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Binary heap implementation in PHP" />
+<meta property="og:description" content="Short explanation what is binary heap and how to implement it in pure PHP from scratch. I will show you how to compare it with native solution (SPL). Performance results are surprising." />
+<meta property="og:url" content="https://arkadiuszkondas.com/binary-heap-implementation-in-php" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/binary-heap-implementation-in-php.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>Binary heap implementation in PHP</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">01. March 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/binary-heap-implementation-in-php"></span></li>	<li class="post__meta-item">8min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-03-01-binary-heap-implementation-in-php.md">suggest an edit</a></li></ul>
+				<p class="post__description">Short explanation what is binary heap and how to implement it in pure PHP from scratch. I will show you how to compare it with native solution (SPL). Performance results are surprising.</p>
+
+				
+				<p>The main motivation to create this implementation was a need to create a different structure (kd-tree) for my
+machine learning library <a target="_blank" href="http://php-ml.org">php-ml</a>. This is also an interesting research, so I decided that it
+is worth sharing. </p>
+<h2>Heap</h2>
+<p>Heap is a special data structure that is based on a tree and finds use in many algorithms.
+A typical data structure, which can be built using a heap, is a <a target="_blank" href="https://en.wikipedia.org/wiki/Priority_queue" rel="nofollow">priority queue</a>.
+The heap also used for one of the most popular and efficient sorting algorithms - <a target="_blank" href="https://en.wikipedia.org/wiki/Heapsort" rel="nofollow">heap sort</a>.</p>
+<p>The heap is defined in such a way, that the root of the heap is smaller or larger than its children's nodes.</p>
+<p>If the parent node has a higher value than the children's nodes, we have dealing with <code>max-heap</code>, and if the parent
+node has a smaller value than children's nodes, we're talking about a <code>min-heap</code>.</p>
+<p>Example of <code>min-heap</code>:</p>
+<p><img src="/assets/posts/heap.svg" alt="binary min heap" /></p>
+<p>The important thing is that we can always easily find the maximum or minimum value belonging to the tree (its peak).</p>
+<p>There are many types of heaps, such as binary heap, Fibonacci heap, B-heap or Brodal heap.</p>
+<p>Ok, so far so good, let's go deeper.</p>
+<h2>Binary heap</h2>
+<p>The binary heap is a full <a target="_blank" href="https://en.wikipedia.org/wiki/Binary_tree" rel="nofollow">binary tree</a>, which all internal levels are completely filled and the last level can be filled in
+completely or partially. As we are dealing with a binary structure, most of the operations can be done in a logarithmic time.</p>
+<p>Most popular way to implement a binary heap is to use an array. If we assume that the root is under index 1, its elements
+children will be located under indexes 2 and 3. This order can be generally written down as follows:
+index <code>i</code> indicates parent, index <code>2*i</code> - left child, and <code>2*i + 1</code> - right child.</p>
+<h3>Implementation</h3>
+<p>At the beginning let's assume that elements of the heap can be any elements <code>mixed[]</code>.
+Such elements can't be compared using <code>&gt;</code> or <code>&lt;</code> operator, so we need some kind of <code>callable $scoreFunction</code>.</p>
+<pre><code class="language-php">final class BinaryHeap
+{
+    /**
+     * @var mixed[]
+     */
+    private $nodes = [];
+
+    /**
+     * @var callable
+     */
+    private $scoreFunction;
+
+    public function __construct(callable $scoreFunction)
+    {
+        $this-&gt;scoreFunction = $scoreFunction;
+    }
+}</code></pre>
+<p>Score function allow us to create heap of any kind: from simple (min/max) to more complicated structure (array, objects).
+Some examples:</p>
+<pre><code class="language-php">// min-heap
+function ($x) {
+    return $x;
+}
+
+// max-heap
+function ($x) {
+    return -$x;
+}
+
+// max-heap with array data
+function ($x) {
+    return -$x[1];
+}
+
+// min-heap with object data
+function ($x) {
+    return $x-&gt;someValue();
+}</code></pre>
+<p>Then we add some basic methods which they explain themselves.</p>
+<pre><code class="language-php">public function peek()
+{
+    return $this-&gt;nodes[0];
+}
+
+public function size(): int
+{
+    return count($this-&gt;nodes);
+}
+
+public function isEmpty(): bool
+{
+    return $this-&gt;nodes === [];
+}
+
+public function nodes(): array
+{
+    return $this-&gt;nodes;
+}</code></pre>
+<p>As you can see, <code>peek</code> is really simple without any complexity (<code>O(1)</code>).
+Now a more difficult part. </p>
+<p>When an element needs to be added to the heap, it is placed at the end of the array and must &quot;bubble&quot; up by repeatedly
+exchanging it from the parent until we find a parent that is smaller than the new node.</p>
+<pre><code class="language-php">public function push($node): void
+{
+    $this-&gt;nodes[] = $node;
+    $this-&gt;bubbleUp(count($this-&gt;nodes) - 1);
+}
+
+public function pop()
+{
+    $peek = $this-&gt;nodes[0];
+    $last = array_pop($this-&gt;nodes);
+
+    if (!$this-&gt;isEmpty()) {
+        $this-&gt;nodes[0] = $last;
+        $this-&gt;sinkDown(0);
+    }
+
+    return $peek;
+}
+
+private function bubbleUp(int $index): void
+{
+    $node = $this-&gt;nodes[$index];
+    $score = ($this-&gt;scoreFunction)($node);
+
+    while ($index &gt; 0) {
+        $parentIndex = (int) floor(($index + 1) / 2) - 1;
+        $parent = $this-&gt;nodes[$parentIndex];
+
+        if ($score &gt;= ($this-&gt;scoreFunction)($parent)) {
+            break;
+        }
+
+        $this-&gt;nodes[$parentIndex] = $node;
+        $this-&gt;nodes[$index] = $parent;
+        $index = $parentIndex;
+    }
+}
+
+private function sinkDown(int $index): void
+{
+    $size = $this-&gt;size();
+    $node = $this-&gt;nodes[$index];
+    $score = ($this-&gt;scoreFunction)($node);
+
+    while (true) {
+        $child2Index = ($index + 1) * 2;
+        $child1Index = $child2Index - 1;
+        $swap = null;
+
+        if ($child1Index &lt; $size &amp;&amp; ($child1Score = ($this-&gt;scoreFunction)($this-&gt;nodes[$child1Index])) &lt; $score) {
+            $swap = $child1Index;
+        }
+
+        if ($child2Index &lt; $size &amp;&amp; ($this-&gt;scoreFunction)($this-&gt;nodes[$child2Index]) &lt; ($swap === null ? $score : $child1Score)) {
+            $swap = $child2Index;
+        }
+
+        if ($swap === null) {
+            break;
+        }
+
+        $this-&gt;nodes[$index] = $this-&gt;nodes[$swap];
+        $this-&gt;nodes[$swap] = $node;
+        $index = $swap;
+    }
+}</code></pre>
+<p>Finally, it's time to test our fresh new <code>BinaryHeap</code> class</p>
+<pre><code class="language-php">    public function testBinaryHeap(): void
+    {
+        $heap = new BinaryHeap(function ($x) {
+            return $x;
+        });
+
+        foreach([10, 5, 3, 2, 1, 7] as $int) {
+            $heap-&gt;push($int);
+        }
+
+        self::assertEquals(1, $heap-&gt;pop());
+        self::assertEquals(2, $heap-&gt;pop());
+    }</code></pre>
+<p>You can find full working code in <a target="_blank" href="https://github.com/php-ai/php-data-structures">php-ai/php-data-structures</a>.</p>
+<h2>Performance 🚀</h2>
+<p>After happy coding we need to check how our solution is compared to other approaches.
+Consider how you can draw from the collection the smallest possible value differently.</p>
+<p><strong>sort</strong><br />
+You can sort the array and extract the first element from it (works only for primitives) .</p>
+<pre><code class="language-php">sort($numbers);
+echo $numbers[0];</code></pre>
+<p><strong>foreach</strong><br />
+Classic combination of <code>foreach</code> and <code>if</code>:</p>
+<pre><code class="language-php">$min = PHP_INT_MAX;
+foreach ($numbers as $number) {
+    if($number &lt; $min) {
+        $min = $number;
+    }
+}
+echo $min;</code></pre>
+<p><strong>min</strong><br />
+Built-in <code>PHP</code> solution:</p>
+<pre><code class="language-php">echo min($numbers);</code></pre>
+<p><strong>SplMinHeap</strong><br />
+Built-in <code>SplMinHeap</code> class (which is an implementation of <code>min-heap</code>):</p>
+<pre><code class="language-php">$heap = new \SplMinHeap();
+$heap-&gt;insert(...);
+echo $heap-&gt;top();</code></pre>
+<p><strong>SplHeap</strong><br />
+Similar to <code>SplMinHeap</code>, but <code>SplHeap</code> allows to implement custom score function (more generic approach):</p>
+<pre><code class="language-php">final class GenericSplHeap extends \SplHeap
+{
+    protected function compare($a, $b)
+    {
+        if($a === $b) {
+            return 0;
+        }
+
+        return $a &gt; $b ? 1 : -1;
+    }
+}
+
+$heap = new GenericSplHeap();
+$heap-&gt;insert(...);
+echo $heap-&gt;top();</code></pre>
+<h3>Benchmarks</h3>
+<p>A simple script will not provide good quality performance tests. It also doesn't ensure their good stability.
+Fortunately, there is a very good designed project in <code>PHP</code> land:
+<a target="_blank" href="https://github.com/phpbench/phpbench">phpbench/phpbench</a> (thanks to <a target="_blank" href="https://twitter.com/dantleech" rel="nofollow">@dantleech</a>).</p>
+<p>For me <strong>Retry Threshold</strong> is the most important feature:</p>
+<blockquote>
+<p>PHPBench is able to dramatically improve the stability of your benchmarks by retrying the iteration set until all the
+deviations in time between iterations fit within a given margin of error.</p>
+</blockquote>
+<p>This means that <code>phpbench</code> will keep repeating tests until their average time stabilizes.
+This gives us confidence that no other processes (running in the background) will affect our tests.</p>
+<p>We will run script with <code>--retry-threshold=2</code>, what will mean, that each iteration can have a maximum of 2% deviation over time.</p>
+<p>Let's say clearly what we will tests: we will draw 10,000 random numbers from the range.
+Then we will measure the time of adding the next random number to our collection and extract the minimum from it.
+You can check full benchmark script in <a target="_blank" href="https://github.com/php-ai/php-data-structures/blob/master/benchmarks/Heap/BinaryHeapBench.php">BinaryHeapBench</a>.</p>
+<p>Lets run benchmarks and see what's happened. Here are results for <code>10 000</code> random numbers:</p>
+<pre><code class="language-bash">composer bench-time benchmarks/Heap/BinaryHeapBench.php
+
++---------------------+----------+----------+--------+---------+
+| subject             | mode     | mean     | rstdev | diff    |
++---------------------+----------+----------+--------+---------+
+| benchSplMinHeap     | 0.759μs  | 0.760μs  | 0.28%  | 1.00x   |
+| benchGenericSplHeap | 0.874μs  | 0.873μs  | 0.30%  | 1.15x   |
+| benchBinaryHeap     | 1.177μs  | 1.182μs  | 0.92%  | 1.56x   |
+| benchNativeMin      | 10.884μs | 10.823μs | 0.88%  | 14.24x  |
+| benchNativeForeach  | 12.502μs | 12.538μs | 0.98%  | 16.50x  |
+| benchNativeSort     | 96.412μs | 96.769μs | 0.92%  | 127.33x |
++---------------------+----------+----------+--------+---------+</code></pre>
+<p>Column marked as <code>mean</code> means average execution time spend on given approach.
+The picture is worth a thousand words so simple chart illustrate it better.</p>
+<p><a target="_blank" href="/assets/posts/heap-performance.svg"><img src="/assets/posts/heap-performance.svg" alt="heap performance" /></a></p>
+<p>Surprised? 🤯</p>
+<p>As you can see, our implementation may not be the fastest, but it <strong>maintains an order of magnitude the same as the native solution</strong>.
+To be sure of the stability of the solution, we will now do a series of tests.
+We will increase the number of items in array to search: from 10x to 100000x 😱. Have no fear, Mr. Kondas is here 😂.</p>
+<p><a target="_blank" href="/assets/posts/heap-performance-series.svg"><img src="/assets/posts/heap-performance-series.svg" alt="heap performance series" /></a></p>
+<p>The chart has been cropped (since <code>sort</code> have dramatic times above 10000 elements), you can see original chart <a target="_blank" href="/assets/posts/heap-performance-series-raw.svg" rel="nofollow">here</a>.
+You can find data collected in benchmarks in sources list under this post.</p>
+<h3>Summary</h3>
+<p>As you can see <code>BinaryHeap</code> has very good performance while maintaining flexibility.
+We have conducted a series of tests with good stability (<code>--retry-threshold</code>). You can use <code>scoreFunction</code> to
+implement any heap: from min to max and a whole bunch of others. You can install it using composer: <code>php-ai/php-data-structures</code>.</p>
+<p>Happy heaping 😉</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://github.com/php-ai/php-data-structures" rel="nofollow" target="_blank">PHP Data Structures</a></li>
+															<li><a href="https://en.wikipedia.org/wiki/Binary_heap" rel="nofollow" target="_blank">Binary heap</a></li>
+															<li><a href="http://eloquentjavascript.net/1st_edition/appendix2.html" rel="nofollow" target="_blank">Eloquent Java Script: Binary Heaps</a></li>
+															<li><a href="https://docs.google.com/spreadsheets/d/1uZQ3wOXl3gLLCisU6h-GfFLARJeKJK_d9sXr-Pz417s/edit?usp=sharing" rel="nofollow" target="_blank">BinaryHeap Performance Data</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

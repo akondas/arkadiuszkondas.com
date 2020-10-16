@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	Compiling PHP 8 from source with JIT support | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="Compiling PHP 8 from source with JIT support">
+<meta name="twitter:description" content="Initially, this post was to apply to the experiments with JIT alone. However, I encountered some problems at the time of compiling PHP so I decided to share this experience." />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/compiling-php-8-from-source-with-jit-support.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Compiling PHP 8 from source with JIT support" />
+<meta property="og:description" content="Initially, this post was to apply to the experiments with JIT alone. However, I encountered some problems at the time of compiling PHP so I decided to share this experience." />
+<meta property="og:url" content="https://arkadiuszkondas.com/compiling-php-8-from-source-with-jit-support" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/compiling-php-8-from-source-with-jit-support.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>Compiling PHP 8 from source with JIT support</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">06. April 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/compiling-php-8-from-source-with-jit-support"></span></li>	<li class="post__meta-item">5min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-04-06-compiling-php-8-from-source-with-jit-support.md">suggest an edit</a></li></ul>
+				<p class="post__description">Initially, this post was to apply to the experiments with JIT alone. However, I encountered some problems at the time of compiling PHP so I decided to share this experience.</p>
+
+				
+				<p><em>
+<strong>UPDATE (2019-04-19)</strong><br />
+If you want you can use prepared docker image from my other blog post:
+<a target="_blank" href="/how-to-run-php-8-with-jit-support-using-docker/">How to run PHP 8 with JIT support using Docker</a>.
+</em></p>
+<p>If you don't know what JIT is and why it will we implemented in PHP 8 please read Joe Watkins <a target="_blank" href="https://blog.krakjoe.ninja/2019/03/php-gr8.html" rel="nofollow">PHP GR8</a> blog post.</p>
+<p>In my opinion, the more people will be able to experiment with JIT the better it will be.</p>
+<p>Let's start at the very beginning. The process outlined in this post applies to Ubuntu,
+but the rest of the systems will look the same (with some exceptions: Windows, sorry).</p>
+<h2>Dependencies</h2>
+<p>We will need several dependencies to compile PHP from source.</p>
+<pre><code class="language-bash">sudo apt-get update
+sudo apt-get install git build-essential 
+libgccjit-6-dev libzip-dev autoconf re2c bison libxml2-dev -y</code></pre>
+<p>It may turn out that this is not enough. There is then a general rule: try to install missing dependency with <code>lib</code> prefix
+and/or <code>-dev</code> suffix. For example, when you encounter an error like this (in configure step):</p>
+<pre><code class="language-bash">configure: error: xml2-config not found. 
+Please check your libxml2 installation.</code></pre>
+<p>You can run this command to install missing <code>libxml2</code>:</p>
+<pre><code class="language-bash">sudo apt-get install libxml2-dev</code></pre>
+<p>After installing the dependencies, we will need the source code.</p>
+<h2>Clone PHP source</h2>
+<pre><code class="language-bash">cd ~
+git clone https://github.com/php/php-src.git
+cd php-src</code></pre>
+<p>By default, we land on the master branch, so in current case, it will be <code>PHP 8.0.0-dev</code></p>
+<h2>Configure</h2>
+<p>Since <code>./configure</code> file is missing we must use <code>./buildconf</code> to generate one:</p>
+<pre><code class="language-bash">./buildconf</code></pre>
+<p>Next, we want to configure our compilation. You can use <code>--prefix</code> flag to set destination dir.</p>
+<pre><code class="language-bash">./configure --prefix=/opt/php/php8 --enable-opcache --with-zlib 
+--enable-zip --enable-sockets --without-pear</code></pre>
+<p>To see all available options:</p>
+<pre><code class="language-bash">./configure --help</code></pre>
+<p>When everything goes well you should see:</p>
+<pre><code class="language-bash">Generating files
+configure: creating ./config.status
+creating main/internal_functions.c
+creating main/internal_functions_cli.c
++--------------------------------------------------------------------+
+| License:                                                           |
+| This software is subject to the PHP License, available in this     |
+| distribution in the file LICENSE.  By continuing this installation |
+| process, you are bound by the terms of this license agreement.     |
+| If you do not agree with the terms of this license, you must abort |
+| the installation process at this point.                            |
++--------------------------------------------------------------------+
+
+Thank you for using PHP.
+
+config.status: creating main/build-defs.h
+config.status: creating scripts/phpize
+config.status: creating scripts/man1/phpize.1
+config.status: creating scripts/php-config
+config.status: creating scripts/man1/php-config.1
+config.status: creating sapi/cli/php.1
+config.status: creating sapi/phpdbg/phpdbg.1
+config.status: creating sapi/cgi/php-cgi.1
+config.status: creating ext/phar/phar.1
+config.status: creating ext/phar/phar.phar.1
+config.status: creating main/php_config.h
+config.status: executing default commands</code></pre>
+<p>We are now ready to build the project.</p>
+<h2>Build</h2>
+<p>Before you issue a build command, it is worth checking how many cores your machine has:</p>
+<pre><code class="language-bash">nproc</code></pre>
+<p>Now you can use this number to make build faster with <code>-j</code> flag:</p>
+<pre><code class="language-bash">make -j4</code></pre>
+<p>This will use <code>4</code> cores to make a build. After <code>make</code> is done, you should see:</p>
+<pre><code class="language-bash">Generating phar.php
+Generating phar.phar
+PEAR package PHP_Archive not installed: 
+ generated phar will require PHP's phar extension be enabled.
+directorytreeiterator.inc
+directorygraphiterator.inc
+pharcommand.inc
+clicommand.inc
+invertedregexiterator.inc
+phar.inc
+
+Build complete.
+Don't forget to run 'make test'.</code></pre>
+<p>If you have more time you can test your compiled PHP:</p>
+<pre><code class="language-bash">make test</code></pre>
+<p>Next, we want to make compiled binary available in an independent place.</p>
+<h2>Install</h2>
+<pre><code class="language-bash">sudo make install</code></pre>
+<p>This command will install PHP in <code>--prefix</code> destination (provided during configuration). Now check if new compiled PHP works:</p>
+<pre><code class="language-bash">/opt/php/php8/bin/php -v
+
+PHP 8.0.0-dev (cli) (built: Apr  5 2019 11:19:45) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v4.0.0-dev, Copyright (c) Zend Technologies</code></pre>
+<p>It starts to get interesting.</p>
+<h2>Enable extension</h2>
+<p>And this is the point about which I completely forgot. Without it, there will be no support for JIT because
+it is an integral part of <code>opcache</code>.</p>
+<blockquote>
+<p>PHP JIT is implemented as an almost independent part of OPcache. It may be enabled/disabled at PHP compile time and at run-time.</p>
+</blockquote>
+<p>We want to enable <code>opcache</code> extension. Since there is no configuration file you can create new one.
+First lets check correct path:</p>
+<pre><code class="language-bash">$ /opt/php/php8/bin/php --ini
+Configuration File (php.ini) Path: /opt/php/php8/lib
+Loaded Configuration File:         (none)</code></pre>
+<p>You can copy <code>php.ini-development</code> or <code>php.ini-production</code> from source directory (and rename it to <code>php.ini</code>) or create new one.</p>
+<p>At this moment, we will create a new empty file and load the extension.</p>
+<pre><code class="language-bash">cd /opt/php/php8/lib
+sudo touch php.ini
+echo 'zend_extension=opcache.so' | sudo tee php.ini </code></pre>
+<p>You can check if everything goes correclty either with <code>-v</code> option or <code>-m</code> option:</p>
+<pre><code class="language-bash">/opt/php/php8/bin/php -v            
+PHP 8.0.0-dev (cli) (built: Apr  5 2019 11:19:45) ( NTS )
+Copyright (c) The PHP Group
+Zend Engine v4.0.0-dev, Copyright (c) Zend Technologies
+    with Zend OPcache v8.0.0-dev, Copyright (c), by Zend Technologies</code></pre>
+<p>Elegantly, you have the latest PHP version. We can say that you have bleeding edge PHP version 🚀. </p>
+<h2>Check JIT</h2>
+<p>To check if JIT works and can optimize your code create simple script <code>jit.php</code>:</p>
+<pre><code class="language-php">for ($i=0; $i&lt;100; $i++) {
+    echo $i;
+}</code></pre>
+<p>First run it and check if works:</p>
+<pre><code class="language-bash">/opt/php/php8/bin/php jit.php</code></pre>
+<p>To enable JIT we must provide additional ini flags: <code>opcache.enable_cli=1</code> <code>opcache.jit_buffer_size=50000000</code> <code>opcache.jit=1235</code></p>
+<pre><code class="language-bash">/opt/php/php8/bin/php -d opcache.enable_cli=1 
+-d opcache.jit_buffer_size=50000000 -d opcache.jit=1235 jit.php</code></pre>
+<p>You will find more details about new settings in <a target="_blank" href="https://wiki.php.net/rfc/jit" rel="nofollow">RFC</a></p>
+<p>At first glance, it does not change anything, if you want to be sure that JIT works add <code>opcache.jit_debug=1</code>:</p>
+<pre><code class="language-bash">/opt/php/php8/bin/php -d opcache.enable_cli=1 
+-d opcache.jit_buffer_size=50000000 -d opcache.jit=1235 
+-d opcache.jit_debug=1 jit.php</code></pre>
+<p>You should see generated assembler code:</p>
+<pre><code class="language-bash">.L1:
+        test $0x1, 0x9(%rdi)
+        jnz .L8
+.L2:
+        mov $0x0, (%rdi)
+        mov $0x4, 0x8(%rdi)
+.L3:
+        mov $EG(exception), %rax
+        cmp $0x0, (%rax)
+        jnz JIT$$exception_handler
+        jmp .L5
+.L4:
+        mov $0x7fd319514630, %r15
+        mov $0x5555cc61c100, %rax
+</code></pre>
+<p>You can also check performance with/without JIT using <code>Zend/bench.php</code> file from the source directory.</p>
+<p>In the next entry, I will present the results of experiments as JIT affects performance in machine learning tasks.</p>
+<p>Happy JITing 😉</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://wiki.php.net/rfc/jit" rel="nofollow" target="_blank">PHP RFC: JIT</a></li>
+															<li><a href="https://www.sammyk.me/compiling-php-from-source-writing-tests-for-php-source" rel="nofollow" target="_blank">Compiling PHP from source</a></li>
+															<li><a href="https://beberlei.de/2019/03/23/playing_with_the_php_jit.html" rel="nofollow" target="_blank">Playing with the PHP JIT</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

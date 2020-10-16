@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	What&#039;s new in PHP-ML 0.7.0 | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="What&#039;s new in PHP-ML 0.7.0">
+<meta name="twitter:description" content="A quick overview of new features, changes and fixes in PHP-ML 0.7.0 version" />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/whats-new-in-php-ml-0-7-0.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="What&#039;s new in PHP-ML 0.7.0" />
+<meta property="og:description" content="A quick overview of new features, changes and fixes in PHP-ML 0.7.0 version" />
+<meta property="og:url" content="https://arkadiuszkondas.com/whats-new-in-php-ml-0-7-0" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/whats-new-in-php-ml-0-7-0.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>What&#039;s new in PHP-ML 0.7.0</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">07. November 2018</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/whats-new-in-php-ml-0-7-0"></span></li>	<li class="post__meta-item">2min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2018/2018-11-07-whats-new-in-php-ml-0-7-0.md">suggest an edit</a></li></ul>
+				<p class="post__description">A quick overview of new features, changes and fixes in PHP-ML 0.7.0 version</p>
+
+				
+				<h2>BC Breaks</h2>
+<p>Before upgrading, make sure you know about backward incompatible changes:</p>
+<ul>
+<li>SVC classifier changed the default kernel type from <code>Kernel::LINEAR</code> to <code>Kernel::RBF</code> <a target="_blank" href="#267">https://github.com/php-ai/php-ml/pull/267</a></li>
+</ul>
+<h2>New features</h2>
+<h3>MnistDataset</h3>
+<p>Nice and shiny new Dataset class: <code>MnistDataset</code>, which allow to load data from IDX data format, originally published on <a target="_blank" href="http://yann.lecun.com/exdb/mnist">http://yann.lecun.com/exdb/mnist</a>.</p>
+<blockquote>
+<p>The MNIST database of handwritten digits, available from this page, has a training set of 60,000 examples, and a test set of 10,000 examples. It is a subset of a larger set available from NIST. The digits have been size-normalized and centered in a fixed-size image.
+It is a good database for people who want to try learning techniques and pattern recognition methods on real-world data while spending minimal efforts on preprocessing and formatting.</p>
+</blockquote>
+<p>You can download files and import it in PHP-ML in seconds:</p>
+<pre><code class="language-php">$trainDataset = new MnistDataset(
+    '/path/to/train-images-idx3-ubyte', 
+    '/path/to/train-labels-idx1-ubyte'
+);</code></pre>
+<h3>SvmDataset</h3>
+<p>Helper class that loads data from SVM-Light format file.</p>
+<pre><code class="language-php">$dataset = new SvmDataset('3x4.svm');</code></pre>
+<h3>KMeans supports associative clustering</h3>
+<p>If you need to keep your identifiers along with yours samples you can use array keys as labels.</p>
+<pre><code class="language-php">$samples = [ 'Label1' =&gt; [1, 1], 'Label2' =&gt; [8, 7], 'Label3' =&gt; [1, 2]];
+
+$kmeans = new KMeans(2);
+$kmeans-&gt;cluster($samples);</code></pre>
+<p><code>$samples</code> are now:</p>
+<pre><code class="language-php">[0 =&gt; [
+    'Label1' =&gt; [1, 1],
+    'Label3' =&gt; [1, 2]
+], 1 =&gt; [
+    'Label2' =&gt; [8, 7]
+]]</code></pre>
+<h2>Changes</h2>
+<h3>Implement &quot;Keep a Changelog&quot; format</h3>
+<p>All notable changes to this project will be documented in <code>CHANGELOG.md</code> file. The format is based on <a target="_blank" href="https://keepachangelog.com/en/1.0.0/">Keep a Changelog</a>.</p>
+<h3>Imputer</h3>
+<p><code>Imputer</code> class throws exception when trying to transform without train data <a target="_blank" href="#314">https://github.com/php-ai/php-ml/pull/314</a>.</p>
+<h3>MLPClassifier</h3>
+<p><code>MLPClassifier</code> return labels in <code>getOutput</code>:</p>
+<pre><code class="language-php">$classifier = new MLPClassifier(2, [2, 2], ['T', 'F']);
+echo $classifier-&gt;getOutput();</code></pre>
+<p>returns:</p>
+<pre><code class="language-php">Array(2) {
+    ["T"] =&gt; double(0.49998073561334)
+    ["F"] =&gt; double(0.5000098880817)
+  }</code></pre>
+<p>instead of:</p>
+<pre><code class="language-php">Array(2) {
+  [0] =&gt; double(0.49998073561334)
+  [1] =&gt; double(0.5000098880817)
+}</code></pre>
+<h2>Fixes</h2>
+<ul>
+<li>SVM is now non-locale aware <a target="_blank" href="#288">https://github.com/php-ai/php-ml/pull/288</a></li>
+<li>Ensure DataTransformer::testSet samples array is not empty <a target="_blank" href="#204">https://github.com/php-ai/php-ml/pull/204</a></li>
+<li>Check if feature exist when predict target in NaiveBayes <a target="_blank" href="#327">https://github.com/php-ai/php-ml/pull/327</a></li>
+</ul>
+<p>Thanks to all contributors.</p>
+<hr />
+<p>You can find full list of changes in release notes: <a target="_blank" href="https://github.com/php-ai/php-ml/releases/tag/0.7.0">https://github.com/php-ai/php-ml/releases/tag/0.7.0</a></p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://github.com/php-ai/php-ml/blob/master/CHANGELOG.md#070---2018-11-07" rel="nofollow" target="_blank">PHP-ML Changelog</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

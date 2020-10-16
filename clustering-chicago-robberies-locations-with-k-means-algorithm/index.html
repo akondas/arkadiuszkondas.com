@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	Clustering Chicago robberies locations with k-means algorithm | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="Clustering Chicago robberies locations with k-means algorithm">
+<meta name="twitter:description" content="Using the real dataset of crimes committed in Chicago, I will divide the robbery locations into a bunch of different clusters. Then I will try to visualize results and answer the question of whether…" />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/clustering-chicago-robberies-locations-with-k-means-algorithm.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Clustering Chicago robberies locations with k-means algorithm" />
+<meta property="og:description" content="Using the real dataset of crimes committed in Chicago, I will divide the robbery locations into a bunch of different clusters. Then I will try to visualize results and answer the question of whether we have chosen well parameters for our algorithm." />
+<meta property="og:url" content="https://arkadiuszkondas.com/clustering-chicago-robberies-locations-with-k-means-algorithm" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/clustering-chicago-robberies-locations-with-k-means-algorithm.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>Clustering Chicago robberies locations with k-means algorithm</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">15. March 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/clustering-chicago-robberies-locations-with-k-means-algorithm"></span></li>	<li class="post__meta-item">6min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-03-15-clustering-chicago-robberies-locations-with-k-means-algorithm.md">suggest an edit</a></li></ul>
+				<p class="post__description">Using the real dataset of crimes committed in Chicago, I will divide the robbery locations into a bunch of different clusters. Then I will try to visualize results and answer the question of whether we have chosen well parameters for our algorithm.</p>
+
+				
+				<h1>Chicago crimes dataset</h1>
+<p>The internet is full of interesting datasets.
+This time I want to show you data extracted from the Chicago Police Department's CLEAR (Citizen Law Enforcement Analysis and Reporting) system.</p>
+<blockquote>
+<p>This dataset reflects reported incidents of crime (with the exception of murders where data exists for each victim) that occurred in the City of Chicago from 2001 to present, minus the most recent seven days. </p>
+</blockquote>
+<p>You can read more and download data from <a target="_blank" href="https://www.kaggle.com/currie32/crimes-in-chicago" rel="nofollow">kaggle.com</a></p>
+<p>At first, I wanted to predict some results about the narcotics crimes, but it turned out that it's happening everywhere:</p>
+<div style="width: 500px; margin:0 auto;">
+<blockquote class="twitter-tweet" data-cards="hidden" data-lang="pl">
+<p lang="en" dir="ltr">Trying to predict narcotics crimes in Chicago ... but I can just assume that everywhere in the city <a href="https://twitter.com/hashtag/clustering?src=hash&amp;ref_src=twsrc%5Etfw">#clustering</a> <a href="https://twitter.com/hashtag/MachineLearning?src=hash&amp;ref_src=twsrc%5Etfw">#MachineLearning</a> 🤔 maybe kidnapping will show more interesting results <a href="https://t.co/zi0MelRGBg">pic.twitter.com/zi0MelRGBg</a></p>— Arkadiusz Kondas (@ArkadiuszKondas) <a href="https://twitter.com/ArkadiuszKondas/status/1104287610997014528?ref_src=twsrc%5Etfw">9 marca 2019</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+<p>Then another idea came to my head. I will try to have fun and put myself in the role of head of the security officer and plan the deployment of
+patrol facilities for my new company.</p>
+<h1>Data preparation and visualization</h1>
+<p>To simplify the whole process I will use only one file <a target="_blank" href="https://www.kaggle.com/currie32/crimes-in-chicago/downloads/Chicago_Crimes_2012_to_2017.csv/1">Chicago_Crimes_2012_to_2017.csv</a>
+where we can find <code>1 456 715</code> records from year 2012 to 2017.
+I want to extract only <code>ROBBERY</code> type, and only two columns: <code>Latitude</code>  and <code>Longitude</code>:</p>
+<pre><code class="language-php">$handle = fopen('Chicago_Crimes_2012_to_2017.csv', 'r');
+$header = fgetcsv($handle);
+
+$lines = [];
+$index = 0;
+$filter = ['ROBBERY'];
+while (($row = fgetcsv($handle)) !== false) {
+    if(!in_array($row[6], $filter)) {
+        continue;
+    }
+
+    if(!is_numeric($row[20]) || !is_numeric($row[21])) {
+        continue;
+    }
+
+    $lines[] = sprintf('%s;%s', $row[20], $row[21]);
+}
+fclose($handle);
+
+file_put_contents('robberies.csv', implode(PHP_EOL, $lines));</code></pre>
+<p>So let's run this script and check generated file:</p>
+<pre><code class="language-bash">➜ head robberies.csv 
+41.793935909;-87.625680278
+41.907274031;-87.722791892
+41.851296671;-87.706458801
+41.775963639;-87.615517372
+41.794879;-87.63179049
+41.799461412;-87.596206318
+41.989599401;-87.660256868
+42.019398729;-87.67543958
+42.004487311;-87.679846425
+42.009087258;-87.690171862</code></pre>
+<p>Everything looks good, but it is always better to try to visualize the data in order to be sure.</p>
+<p><img src="/assets/posts/chicago-robbery.png" alt="chicago robberies" /></p>
+<p>It looks like quite a lot of thugs. As the head of security, I would like to plan my new posts out.
+Let's see how unsupervised learning can help me solve that problem.</p>
+<h1>K-means algorithm</h1>
+<p>To understand the principles of this algorithm, we must introduce one new concept: <code>centroid</code>.
+A centroid is a representative of a given cluster or the center of a given group. Now we can split this algorithm in 4 simple steps:</p>
+<p><strong>Step 1</strong>
+Choice the amount of centroids and the initial arrangement of them in space.
+For this algorithm, we need to predetermine how many groups we want to divide our set.
+Then we place the number of points in the space (). </p>
+<p>The final result depends on the initial placement. Various techniques are used here to optimize its operation.</p>
+<p><strong>Step 2</strong>
+In this step, we calculate the average distances of individual points and assign them to the nearest centroid.</p>
+<p><strong>Step 3</strong>
+We are updating the location of our centroids.
+The new centroid coordinates are the arithmetic mean of the coordinates of all points having its group.</p>
+<p><strong>Final step</strong>
+The second and third steps are repeated until the convergence criterion is reached, which is most often the state in
+which the membership of the points to the classes has not changed.</p>
+<p>You can find graphic visualization of these steps on Naftali Harris blog post: <a target="_blank" href="https://www.naftaliharris.com/blog/visualizing-k-means-clustering/" rel="nofollow">Visualizing K-Means Clustering</a>.</p>
+<h1>K-means with php-ml</h1>
+<p>Ok, so you are wondering how to use k-means in php? With <code>php-ml</code> such things are really simple.</p>
+<pre><code class="language-php">use Phpml\Clustering\KMeans;
+
+$clusterer = new KMeans(3);
+$clusters = $clusterer-&gt;cluster($locations);</code></pre>
+<p>In this way, <code>$clusters</code> variable contains array with 3 arrays of our robberies locations.</p>
+<p><code>$locations</code> must be read from csv file prepared earlier:</p>
+<pre><code class="language-php">$locations = file('robberies.csv');
+foreach ($locations as &amp;$line) {
+    $row = explode(';', $line);
+    $line = [(float) $row[0], (float) $row[1]];
+}</code></pre>
+<p>Stupid simple, but effective. Next I want to save another file with clustered data:</p>
+<pre><code class="language-php">$lines = [];
+foreach ($clusters as $key =&gt; $cluster) {
+    foreach ($cluster as $sample) {
+        $lines[] = sprintf('%s;%s;%s', $key, $sample[0], $sample[1]);
+    }
+}
+
+file_put_contents('robberies-clusters.csv', implode(PHP_EOL, $lines));</code></pre>
+<p>So now I have <code>csv</code> file with following structure: <code>clusterIndex;latitude;longitude</code>.
+With this simple python script I can create nice visualization map:</p>
+<pre><code class="language-python">import csv
+import random
+from staticmap import StaticMap, CircleMarker
+
+m = StaticMap(1000, 900, url_template='http://a.tile.stamen.com/toner/{z}/{x}/{y}.png')
+
+def cluster_to_color(cluster):
+    alpha = 180
+    return {
+        '0': (246, 81, 29,alpha),
+        '1': (255, 180, 0,alpha),
+        '2': (0, 166, 237,alpha),
+        '3': (127, 184, 0,alpha),
+        '4': (67, 188, 20, alpha),
+        '5': (102, 46, 155, alpha),
+        '6': (175, 127, 242, alpha),
+        '7': (146, 181, 29, alpha),
+        '8': (155, 100, 0, alpha),
+        '9': (100, 106, 237, alpha),
+        '10': (27, 84, 0, alpha),
+        '11': (167, 228, 20, alpha),
+        '12': (202, 146, 155, alpha),
+        '13': (75, 187, 42, alpha)
+    }[cluster]
+
+with open('robberies-clusters.csv') as csvfile:
+    reader = csv.reader(csvfile, delimiter=';')
+    for row in reader:
+        marker = CircleMarker((float(row[2]), float(row[1])), cluster_to_color(row[0]), 6)
+        m.add_marker(marker)
+
+image = m.render(center=[-87.684871189, 41.8348221989])
+image.save('robbery-clusters.png')</code></pre>
+<p>Let's plot clustering results on Chicago city map. First <code>k=3</code></p>
+<p><img src="/assets/posts/chicago-robbery-3.png" alt="chicago robberies clustering" /></p>
+<p>Nothing special, how about adding two more (<code>k=5</code>).</p>
+<p><img src="/assets/posts/chicago-robbery-5.png" alt="chicago robberies clustering" /></p>
+<p>What if I want to build 9 headquarters</p>
+<p><img src="/assets/posts/chicago-robbery-9.png" alt="chicago robberies clustering" /></p>
+<p>Or maybe even 15?</p>
+<p><img src="/assets/posts/chicago-robbery-14.png" alt="chicago robberies clustering" /></p>
+<p>It starts to look interesting, doesn't it? 😉</p>
+<h1>Choosing best k</h1>
+<p>One of the main questions that you may encounter while learning this algorithm is: how to choose the best k?
+The answer is not unambiguous. It may depend on many factors: business, technological or pre-imposes.
+I would like to show you one more method.</p>
+<p>After determining the central points of our clusters, we can count the sum of the distances of all points from this cluster with its center.
+This method has its name: <a target="_blank" href="https://hlab.stanford.edu/brian/error_sum_of_squares.html" rel="nofollow">Error Sum of Squares</a> (SSE)</p>
+<pre><code class="language-php">use Phpml\Math\Distance\Euclidean;
+
+function squaredDistance(array $center, array $cluster): float
+{
+    $sum = 0;
+    $metric = new Euclidean();
+    foreach ($cluster as $point) {
+        $sum += $metric-&gt;sqDistance($center, $point);
+    }
+
+    return $sum;
+}</code></pre>
+<p>Unfortunately, at this point, in <code>php-ml</code> isn't possible to get centroids, you have to do it yourself by overwriting method,
+for example <a target="_blank" href="https://gist.github.com/akondas/be142e754f9c7db095eb79895e269acd" rel="nofollow">KMeans.php</a></p>
+<p>In this way we can calculate SSE for each k from 1 to 20:</p>
+<pre><code class="language-php">for ($i=1; $i&lt;21; $i++) {
+    $clusterer = new KMeans($i);
+    $clusters = $clusterer-&gt;cluster($samples);
+    $centronoids = $clusterer-&gt;centronoids();
+
+    $sum = 0;
+    foreach ($centronoids as $key =&gt; $centronoid) {
+        $sum += squaredDistances($centronoid, $clusters[$key]);
+    }
+
+    echo sprintf('SSE (k=%s): %s' . PHP_EOL, $i, $sum);
+}</code></pre>
+<p>For robbery dataset we get following results:</p>
+<pre><code class="language-bash">SSE (k=1): 556.92954501028
+SSE (k=2): 196.07424178192
+SSE (k=3): 154.25644889311
+SSE (k=4): 112.96452863682
+SSE (k=5): 91.08741606063
+SSE (k=6): 73.768755748178
+SSE (k=7): 62.959303138102
+SSE (k=8): 52.128966989257</code></pre>
+<p>Let's plot this data, we will be interested in the place where the graph &quot;bends&quot;:</p>
+<p><a target="_blank" href="/assets/posts/clustering-sse-robbery.svg"><img src="/assets/posts/clustering-sse-robbery.svg" alt="chicago robberies sse vs k" /></a></p>
+<p>As you can see on <code>k=8</code> (more or less) progress significantly slows down and further clustering makes less sense.
+Let's check another dataset. On the <a target="_blank" href="http://cs.joensuu.fi/sipu/datasets/" rel="nofollow">University of Eastern Finland</a>,
+we can find nice gaussian clusters datasets with varying cluster overlap and dimensions. I begin from visualization:</p>
+<p><a target="_blank" href="/assets/posts/clustering-synthetic.svg"><img src="/assets/posts/clustering-synthetic.svg" alt="clustering synthetic dataset" /></a></p>
+<p>Now calculate SSE from <code>k=1</code> to <code>k=20</code>:</p>
+<p><a target="_blank" href="/assets/posts/clustering-sse-synthetic.svg"><img src="/assets/posts/clustering-sse-synthetic.svg" alt="synthetic dataset sse vs k" /></a></p>
+<p>In this case, the deflection of the graph is very clear. Note how helpful is the fact that the data can be visualized.
+For collections with more dimensions, this will no longer be possible.</p>
+<p>For the curious one, I prepared one more example with synthetic dataset (small cluster overlap).</p>
+<p><a target="_blank" href="/assets/posts/clustering-synthetic-multi.svg"><img src="/assets/posts/clustering-synthetic-multi.svg" alt="clustering synthetic dataset" /></a></p>
+<p><a target="_blank" href="/assets/posts/clustering-sse-synthetic-multi.svg"><img src="/assets/posts/clustering-sse-synthetic-multi.svg" alt="synthetic dataset sse vs k" /></a></p>
+<h1>Further exploration</h1>
+<p>In this post, I barely touched the topic of clustering with only one algorithm.
+You can find much more information about clustering in <a target="_blank" href="https://en.wikipedia.org/wiki/Cluster_analysis">Wikipedia</a>.
+As in the previous post <code>scikit-learn</code> package have also very nice and descriptive website about
+<a target="_blank" href="https://scikit-learn.org/stable/modules/clustering.html#clustering" rel="nofollow">clustering</a>.
+The comparison between different types of algorithms is very interesting:</p>
+<p><img src="/assets/posts/sphx_glr_plot_cluster_comparison_001.jpg" alt="clustering comparison" /></p>
+<p>There is also a very nice website that can help with k-means visualization
+<a target="_blank" href="http://web.stanford.edu/class/ee103/visualizations/kmeans/kmeans.html" rel="nofollow">http://web.stanford.edu/class/ee103/visualizations/kmeans/kmeans.html</a></p>
+<p>Happy clustering!</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://www.kaggle.com/currie32/crimes-in-chicago" rel="nofollow" target="_blank">Crimes in Chicago</a></li>
+															<li><a href="http://cs.joensuu.fi/sipu/datasets/" rel="nofollow" target="_blank">Clustering basic benchmark</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

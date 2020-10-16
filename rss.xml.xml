@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<rss version="2.0"
+    xmlns:content="http://purl.org/rss/1.0/modules/content/"
+    xmlns:dc="http://purl.org/dc/elements/1.1/"
+    xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+	<title>Arkadiusz Kondas Posts</title>
+	<link>https://arkadiuszkondas.com/</link>
+	<description>Posts about PHP and Machine Learning.</description>
+	<atom:link href="https://arkadiuszkondas.com/rss.xml" rel="self" type="application/rss+xml" />
+	<pubDate>{date('r')}</pubDate>
+
+						<lastBuildDate>Tue, 26 May 2020 00:00:00 +0000</lastBuildDate>			
+			
+			<item>
+				<title>DMCA, php-ml and copyright boundaries</title>
+				<link>https://arkadiuszkondas.com/dmca-php-ml-and-copyright-boundaries/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/dmca-php-ml-and-copyright-boundaries/</guid>
+				<pubDate>Tue, 26 May 2020 00:00:00 +0000</pubDate>
+				<description>Last friday, DMCA took down my GitHub repository. This post will explain the who, the what and how we came to this situation.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>What is software architecture?</title>
+				<link>https://arkadiuszkondas.com/what-is-software-architecture/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/what-is-software-architecture/</guid>
+				<pubDate>Sun, 24 Nov 2019 00:00:00 +0000</pubDate>
+				<description>Why is the word architect in our industry not always associated well? Should an architect participate in programming? What is software architecture really like? Is it possible to describe architecture in one sentence?</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>Game networking - effective networking you don&#039;t know</title>
+				<link>https://arkadiuszkondas.com/game-networking-effective-networking-you-dont-know/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/game-networking-effective-networking-you-dont-know/</guid>
+				<pubDate>Sat, 19 Oct 2019 00:00:00 +0000</pubDate>
+				<description>How often do you get involved in effective networking? I want to share with you a completely new experience in which I had the opportunity to participate at the DataWorkshop Club Conf conference.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>My thoughts: Superintelligence: Paths, Dangers, Strategies by Nick Bostrom</title>
+				<link>https://arkadiuszkondas.com/superintelligence-paths-dangers-strategies-nick-bostrom/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/superintelligence-paths-dangers-strategies-nick-bostrom/</guid>
+				<pubDate>Thu, 27 Jun 2019 00:00:00 +0000</pubDate>
+				<description>This is a pilot post about my thoughts after reading the book. I&#039;m starting with a very good title about artificial intelligence or an unfinished fable of the sparrows.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>How to run PHP 8 with JIT support using Docker</title>
+				<link>https://arkadiuszkondas.com/how-to-run-php-8-with-jit-support-using-docker/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/how-to-run-php-8-with-jit-support-using-docker/</guid>
+				<pubDate>Fri, 19 Apr 2019 00:00:00 +0000</pubDate>
+				<description>In this post, I will show you how you can start using PHP 8 with JIT support with just one command using Docker.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>The right way to call assertion in PHPUnit</title>
+				<link>https://arkadiuszkondas.com/the-right-way-to-call-assertion-in-phpunit/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/the-right-way-to-call-assertion-in-phpunit/</guid>
+				<pubDate>Fri, 12 Apr 2019 00:00:00 +0000</pubDate>
+				<description>During the preparation of TDD workshops, I began to think about how to write assertions. It turns out that there are several possibilities, but is there the only correct one?</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>Compiling PHP 8 from source with JIT support</title>
+				<link>https://arkadiuszkondas.com/compiling-php-8-from-source-with-jit-support/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/compiling-php-8-from-source-with-jit-support/</guid>
+				<pubDate>Sat, 06 Apr 2019 00:00:00 +0000</pubDate>
+				<description>Initially, this post was to apply to the experiments with JIT alone. However, I encountered some problems at the time of compiling PHP so I decided to share this experience.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>3 Reasons Why PHP is Not Yet Perfect for Machine Learning</title>
+				<link>https://arkadiuszkondas.com/3-reasons-why-php-is-not-yet-perfect-for-machine-learning/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/3-reasons-why-php-is-not-yet-perfect-for-machine-learning/</guid>
+				<pubDate>Fri, 29 Mar 2019 00:00:00 +0000</pubDate>
+				<description>My thoughts on why PHP isn&#039;t yet an ideal environment for the universal use of machine learning. I will discuss the three main reasons that are the cause of the current state of affairs.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>Text data classification with BBC news article dataset</title>
+				<link>https://arkadiuszkondas.com/text-data-classification-with-bbc-news-article-dataset/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/text-data-classification-with-bbc-news-article-dataset/</guid>
+				<pubDate>Fri, 22 Mar 2019 00:00:00 +0000</pubDate>
+				<description>The goal of this post is to explore some of the basic techniques that allow working with text data in a machine learning world. I will show how to analyze a collection of text documents that belong to different categories.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>Clustering Chicago robberies locations with k-means algorithm</title>
+				<link>https://arkadiuszkondas.com/clustering-chicago-robberies-locations-with-k-means-algorithm/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/clustering-chicago-robberies-locations-with-k-means-algorithm/</guid>
+				<pubDate>Fri, 15 Mar 2019 00:00:00 +0000</pubDate>
+				<description>Using the real dataset of crimes committed in Chicago, I will divide the robbery locations into a bunch of different clusters. Then I will try to visualize results and answer the question of whether we have chosen well parameters for our algorithm.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>Predict air pollution with k-Nearest Neighbors and PHP</title>
+				<link>https://arkadiuszkondas.com/predict-air-pollution-with-k-nearest-neighbors-and-php/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/predict-air-pollution-with-k-nearest-neighbors-and-php/</guid>
+				<pubDate>Fri, 08 Mar 2019 00:00:00 +0000</pubDate>
+				<description>Based on air pollution data we will try to predict air quality in a place where we don&#039;t have data. I will present k-Nearest Neighbors algorithm and how to implement such prediction in PHP using php-ml.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>Binary heap implementation in PHP</title>
+				<link>https://arkadiuszkondas.com/binary-heap-implementation-in-php/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/binary-heap-implementation-in-php/</guid>
+				<pubDate>Fri, 01 Mar 2019 00:00:00 +0000</pubDate>
+				<description>Short explanation what is binary heap and how to implement it in pure PHP from scratch. I will show you how to compare it with native solution (SPL). Performance results are surprising.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>When the expert becomes a leader</title>
+				<link>https://arkadiuszkondas.com/when-the-expert-becomes-a-leader/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/when-the-expert-becomes-a-leader/</guid>
+				<pubDate>Fri, 22 Feb 2019 00:00:00 +0000</pubDate>
+				<description>Very often in the life of an expert there is a moment when he wants (or it must) to become a leader. These are two different roles that are very difficult to reconcile with each other. In this post I will present some useful techniques that can help experts become a good leader.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>Write your own simple chess AI in PHP</title>
+				<link>https://arkadiuszkondas.com/write-your-own-simple-chess-ai-in-php/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/write-your-own-simple-chess-ai-in-php/</guid>
+				<pubDate>Fri, 15 Feb 2019 00:00:00 +0000</pubDate>
+				<description>A brief history of how to start writing your own chess engine in PHP. You will learn some basic algorithms, prepare a solid foundation allowing for further development and finally I will consider how you can push your AI further.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>What&#039;s new in PHP-ML 0.7.0</title>
+				<link>https://arkadiuszkondas.com/whats-new-in-php-ml-0-7-0/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/whats-new-in-php-ml-0-7-0/</guid>
+				<pubDate>Wed, 07 Nov 2018 00:00:00 +0000</pubDate>
+				<description>A quick overview of new features, changes and fixes in PHP-ML 0.7.0 version</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
+			
+			<item>
+				<title>Design Patterns - Strategy</title>
+				<link>https://arkadiuszkondas.com/design-patterns-strategy/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/design-patterns-strategy/</guid>
+				<pubDate>Mon, 19 Feb 2018 00:00:00 +0000</pubDate>
+				<description>One of the main assumptions of good project programming is the &#039;Open/closed&#039; principle, which says that classes should be closed for modification, but open to extension. The strategy pattern allows you to easily maintain this standard in your code.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+			  </channel>
+</rss>

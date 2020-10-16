@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	What is software architecture? | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="What is software architecture?">
+<meta name="twitter:description" content="Why is the word architect in our industry not always associated well? Should an architect participate in programming? What is software architecture really like? Is it possible to describe…" />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/what-is-software-architecture.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="What is software architecture?" />
+<meta property="og:description" content="Why is the word architect in our industry not always associated well? Should an architect participate in programming? What is software architecture really like? Is it possible to describe architecture in one sentence?" />
+<meta property="og:url" content="https://arkadiuszkondas.com/what-is-software-architecture" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/what-is-software-architecture.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>What is software architecture?</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">24. November 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/what-is-software-architecture"></span></li>	<li class="post__meta-item">5min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-11-24-what-is-software-architecture.md">suggest an edit</a></li></ul>
+				<p class="post__description">Why is the word architect in our industry not always associated well? Should an architect participate in programming? What is software architecture really like? Is it possible to describe architecture in one sentence?</p>
+
+				
+				<blockquote>
+<p>You don't understand something until you understand it more then one way (Marvin Minsky)</p>
+</blockquote>
+<p>When asked what software architecture is, we will get dozens of different definitions.  Each of them is
+different, but if we delve into it, we will see a certain regularity. We are able to divide these definitions into three different categories.</p>
+<ol>
+<li>Architecture as a set of decisions.</li>
+<li>Architecture as a description of the system structure.</li>
+<li>Architecture as a design process.</li>
+</ol>
+<p>A look at the architecture from all three perspectives shows us the full picture.</p>
+<p>I will try to discuss each of them and then present one common and universal definition of software architecture.</p>
+<h2>Architecture as a set of decisions</h2>
+<p>In Martin Fowler's entry &quot;<a target="_blank" href="http://files.catwell.info/misc/mirror/2003-martin-fowler-who-needs-an-architect.pdf">Who Needs an Architect?</a>&quot; we can read:</p>
+<blockquote>
+<p>There is another style of definition of architecture which is something like &quot;architecture is the set of design decisions that
+must be made early in a project.&quot; I complain about that one, too, saying that architecture is the decisions that you wish
+you could get right early in a project, but that you are not necessarily more likely to get them right than any other.</p>
+</blockquote>
+<p>Sounds pretty sensible. Because what does an architect do? An architect decides whether or not to we're gonna use this
+technology or this pattern. Or will we solve this problem in one way or another. </p>
+<p>Indeed, we can treat architecture as a set of decisions. In banks or corporations we have several types of architects.
+Enterprise architect, solution architect or application architect. Maybe you once wondered how they differ from each other.</p>
+<p>In the perspective of this definition, they differ in the scope of the decisions they take.</p>
+<p>For this reason, architecture can be considered at different levels. Each of these levels has its own patterns and good practices.
+And on each level a different field of knowledge can be useful.</p>
+<p>Ultimately, the role of the architect is to make sure that <strong>all important decisions can be made as late as possible</strong>.
+As time goes by, we gain more and more data to help us choose the right decisions.</p>
+<p>We do not want to make difficult decisions in the early stages of the system development.
+There may be a constraint that we do not yet know about.</p>
+<h2>Architecture as a description of the system structure</h2>
+<p>Decisions have an impact on our system, i.e. they shape its structure.
+We can say that architecture is a collection of elements, relations between them and their properties.</p>
+<p>Comparing this concept with the building industry (which is not always accurate) architecture is site plans, floor plans,
+elevation views, cross-section views and detail drawings. </p>
+<p>As programmers, we often focus on the lowest level of our system. However, the architecture must go beyond this level.
+A running application also includes testing, deployment, monitoring, scaling and maintenance.
+A good description of the structure should also include these elements.</p>
+<p>Ironically, the presentation of the software system structure in each team looks different.
+There is no coherent communication platform. Theoretically, we have UML, but in reality, who really uses it?</p>
+<p>Fortunately, there is a very good and simple technique to create a consistent platform for data exchange.</p>
+<p>The <a target="_blank" href="https://c4model.com/">C4 model</a> by Simon Brown.</p>
+<p><img src="/assets/posts/c4-overview.png" alt="C4 overview" /></p>
+<p>Martin Fowler also writes that architecture is <strong>the shared understanding that the expert developers have of the system design</strong>.</p>
+<p>Visualization and maintenance of this visualization in the form of a <strong>coherent diagram</strong> will help to keep the common
+understanding of the concept of the system in good shape.</p>
+<h2>Architecture as a design process</h2>
+<p>Since we have said before that architecture is a set of decisions, architecture as a process is a decision-making process.
+This is very well illustrated by the <a target="_blank" href="https://pl.wikipedia.org/wiki/OODA">OODA model</a>.
+This model distinguishes 4 basic areas of information processing.</p>
+<p><img src="/assets/posts/ooda.svg" alt="OODA Circle" /></p>
+<ul>
+<li><strong>Observation</strong> consists in collecting data on various aspects of the environment in which we operate.
+The technique called <strong>Event Storming</strong> works very well here, which I will definitely write more about.</li>
+<li><strong>Orientation</strong> is an application of our experience, patterns that we know, techniques, tools to make the right
+decision on the basis of information that comes to us from the environment.</li>
+<li><strong>Decision</strong> we discussed it at the beginning, it is nothing more than choosing one of the possible options for action.</li>
+<li><strong>Action</strong> is implementation of the decision made. Starting the action, we test the decision to provide further data
+for observation (in this way we close the cycle).</li>
+</ul>
+<p>Information processing processes in all four areas are mostly parallel.
+The essence of OODA is the synchronization between observation and orientation; between orientation,
+decision and action; and finally, the monitoring of the impact of actions taken through observations.</p>
+<p>The key is that an architect is a person who makes informed decisions. He or she is able to justify his or her decisions.
+Understands the environment in which he or she makes these decisions.
+Applies tools and <strong>observes the effect of those decisions</strong> in the system.</p>
+<p>Always make sure you have the right feedback from your decisions and that you can measure it effectively.</p>
+<h2>Consistency of the concept</h2>
+<p>It is worth mentioning here the words of Brooks from the book &quot;The mythical man-month&quot;.
+He says that the most important factor influencing the quality is the <strong>consistency of the concept</strong>. </p>
+<p>A clean and elegant application (or system) must present each user with a coherent mental model.
+In this way, the user receives a well-designed interface allowing for the implementation of specific operations.
+Otherwise, why design systems at all?</p>
+<p>I will try to close the whole post in one sentence (collecting all three points in one).</p>
+<p><strong>Software architecture is a coherent concept, for which the architect is responsible by making appropriate decisions in
+the process of designing the system, which affects its structure.</strong></p>
+<p>Do you have any other thoughts about this?
+Let me know in the comments or on the Tweeter.</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://www.youtube.com/watch?v=DngAZyWMGR0" rel="nofollow" target="_blank">Making Architecture Matter - Martin Fowler Keynote</a></li>
+															<li><a href="http://files.catwell.info/misc/mirror/2003-martin-fowler-who-needs-an-architect.pdf" rel="nofollow" target="_blank">Who Needs an Architect?</a></li>
+															<li><a href="https://www.bookdepository.com/Mythical-Man-Month-Frederick-P-Brooks-Jr/9780201835953" rel="nofollow" target="_blank">The Mythical Man-Month : Essays on Software Engineering, Anniversary Edition</a></li>
+															<li><a href="https://c4model.com/" rel="nofollow" target="_blank">The C4 model for visualising software architecture</a></li>
+															<li><a href="https://pragprog.com/book/mkdsa/design-it" rel="nofollow" target="_blank">Design It! From Programmer to Software Architect</a></li>
+															<li><a href="https://martinfowler.com/architecture/" rel="nofollow" target="_blank">Software Architecture Guide</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

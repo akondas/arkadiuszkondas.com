@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	The right way to call assertion in PHPUnit | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="The right way to call assertion in PHPUnit">
+<meta name="twitter:description" content="During the preparation of TDD workshops, I began to think about how to write assertions. It turns out that there are several possibilities, but is there the only correct one?" />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/the-right-way-to-call-assertion-in-phpunit.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="The right way to call assertion in PHPUnit" />
+<meta property="og:description" content="During the preparation of TDD workshops, I began to think about how to write assertions. It turns out that there are several possibilities, but is there the only correct one?" />
+<meta property="og:url" content="https://arkadiuszkondas.com/the-right-way-to-call-assertion-in-phpunit" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/the-right-way-to-call-assertion-in-phpunit.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>The right way to call assertion in PHPUnit</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">12. April 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/the-right-way-to-call-assertion-in-phpunit"></span></li>	<li class="post__meta-item">4min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-04-12-the-right-way-to-call-assertion-in-phpunit.md">suggest an edit</a></li></ul>
+				<p class="post__description">During the preparation of TDD workshops, I began to think about how to write assertions. It turns out that there are several possibilities, but is there the only correct one?</p>
+
+				
+				<p><strong>TLDR:</strong>
+it's not so simple, read to the end, maybe you will learn something.</p>
+<p>Let's start with what the classic test looks like?</p>
+<pre><code class="language-php">use PHPUnit\Framework\TestCase;
+
+class SimpleTest extends TestCase
+{
+    public function testAssertTrue(): void
+    {
+        // Arrange
+
+        // Act
+
+        // Assert
+    }
+}</code></pre>
+<p>We will focus on this part with <code>assert</code>.</p>
+<h2>Assert</h2>
+<p>As it turns out, to call any assertion we have to choose:</p>
+<pre><code class="language-php">$this::assertEquals()
+self::assertEquals()</code></pre>
+<p>This two option looks most naturally and they differ almost nothing.
+<code>$this</code> calls assert from the object itself, <code>self</code> uses static context.
+PHPUnit tests always have public methods, so in this case, there is no difference.</p>
+<pre><code class="language-php">static::assertEquals()</code></pre>
+<p>Here we have <a target="_blank" href="https://www.php.net/manual/en/language.oop5.late-static-bindings.php" rel="nofollow">Late Static Bindings</a>.
+<code>static</code> references the class that was initially called at runtime.
+If you inherit test cases, this option can save your life.
+Otherwise, it is a shame to pay attention to her.</p>
+<pre><code class="language-php">assertEquals()</code></pre>
+<p>Quite an elegant selection and a lot fewer characters.
+A classic call for functions from global scope. Why not?</p>
+<pre><code class="language-php">use PHPUnit\Framework\Assert;
+
+Assert::assertEquals()</code></pre>
+<p>Less popular solution but allows you to be called from anywhere and does not require inheritance from <code>TestCase</code>.
+Sometimes can be useful. It's worth knowing.</p>
+<p>According to the documentation <code>$this-&gt;assertEquals()</code> is another option, but assertions are static function.
+I don't take it into account because it violates the definition.
+It should not work at all, but this is PHP 😠.</p>
+<p>Let us now consider these possibilities on two levels.</p>
+<h2>Popularity</h2>
+<p>I allowed myself to conduct a small survey using Twitter, here are the results:</p>
+<div style="width: 500px; margin:0 auto;">
+<blockquote class="twitter-tweet" data-lang="pl">
+<p lang="en" dir="ltr">What is your favorite way of writing assertions in <a href="https://twitter.com/hashtag/phpunit?src=hash&amp;ref_src=twsrc%5Etfw">#phpunit</a>? <a href="https://twitter.com/hashtag/php?src=hash&amp;ref_src=twsrc%5Etfw">#php</a> <a href="https://twitter.com/hashtag/tdd?src=hash&amp;ref_src=twsrc%5Etfw">#tdd</a></p>— Arkadiusz Kondas (@ArkadiuszKondas) <a href="https://twitter.com/ArkadiuszKondas/status/1116048317648121856?ref_src=twsrc%5Etfw">10 kwietnia 2019</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+<p>As you can see <code>$this::assertEquals()</code> is the winner. Does it mean something to you?</p>
+<h2>Performance</h2>
+<p>Well, if it's not popular, let's consider performance.
+As you know, I always use a decent tool for this <a target="_blank" href="https://github.com/phpbench/phpbench" rel="nofollow">phpbench</a>.
+(you can read more details about phpbench in this blog post: <a target="_blank" href="/binary-heap-implementation-in-php/">Binary heap implementation in PHP</a>).</p>
+<p>Let's write a little benchmark with <code>100000</code> iterations for each option:</p>
+<pre><code class="language-php">use PhpBench\Benchmark\Metadata\Annotations\BeforeMethods;
+use PhpBench\Benchmark\Metadata\Annotations\Iterations;
+use PhpBench\Benchmark\Metadata\Annotations\Revs;
+use PHPUnit\Framework\Assert;
+use PHPUnit\Framework\TestCase;
+
+/**
+ * @BeforeMethods({"init"})
+ */
+final class AssertBench extends TestCase
+{
+    public function init(): void
+    {
+        require __DIR__.'/../../vendor/phpunit/' . 
+        'phpunit/src/Framework/Assert/Functions.php';
+    }
+
+    /**
+     * @Revs(100000)
+     * @Iterations(5)
+     */
+    public function benchAssertThis() : void
+    {
+        $this-&gt;assertEquals(1, 1);
+    }
+
+    /**
+     * @Revs(100000)
+     * @Iterations(5)
+     */
+    public function benchAssertSelf() : void
+    {
+        self::assertEquals(1, 1);
+    }
+
+    /**
+     * @Revs(100000)
+     * @Iterations(5)
+     */
+    public function benchAssertStatic() : void
+    {
+        static::assertEquals(1, 1);
+    }
+
+    /**
+     * @Revs(100000)
+     * @Iterations(5)
+     */
+    public function benchAssertFunction() : void
+    {
+        \assertEquals(1, 1);
+    }
+
+    /**
+     * @Revs(100000)
+     * @Iterations(5)
+     */
+    public function benchAssertStaticClass() : void
+    {
+        Assert::assertEquals(1, 1);
+    }
+}</code></pre>
+<p>As easy as shooting fish in a barrel 😉. Okay, so it's known that it will show you the results.
+You don't have to run it alone, but if you're curious, I encourage you.</p>
+<pre><code class="language-bash">$ vendor/bin/phpbench run benchmarks/PHPUnit/AssertBench.php
+ --report=time --retry-threshold=1 
+
++------------------------+---------+---------+--------+-------+
+| subject                | mode    | mean    | rstdev | diff  |
++------------------------+---------+---------+--------+-------+
+| benchAssertThis        | 0.448μs | 0.448μs | 0.43%  | 1.00x |
+| benchAssertSelf        | 0.458μs | 0.458μs | 0.37%  | 1.02x |
+| benchAssertStatic      | 0.450μs | 0.448μs | 0.53%  | 1.00x |
+| benchAssertFunction    | 0.603μs | 0.602μs | 0.51%  | 1.34x |
+| benchAssertStaticClass | 0.456μs | 0.457μs | 0.35%  | 1.02x |
++------------------------+---------+---------+--------+-------+</code></pre>
+<p>Without major differences, except the call of the function is the slowest.</p>
+<p>Now you know what to choose?</p>
+<h2>Be consistent</h2>
+<p>As you can see, it is difficult to determine the right way.</p>
+<p>Whichever option you choose, you can help yourself.
+<a target="_blank" href="https://github.com/FriendsOfPHP/PHP-CS-Fixer" rel="nofollow">PHP-CS-Fixer</a> has a dedicated fixer for that.</p>
+<p>Use <code>php_unit_test_case_static_method_calls</code> (or <code>PhpCsFixer\Fixer\PhpUnit\PhpUnitTestCaseStaticMethodCallsFixer</code> class).
+You can chosse three available options: <code>this</code>, <code>self</code> and <code>static</code> (currenly <code>static</code> is default one).</p>
+<p>All you have to do is push it into the build pipeline and you can sleep well.</p>
+<p>Enjoy your assertions ☑️.</p>
+<p>P.S.
+My personal choice: <code>self::assertEquals()</code>.</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://phpunit.readthedocs.io/en/8.0/assertions.html#static-vs-non-static-usage-of-assertion-methods" rel="nofollow" target="_blank">Static vs. Non-Static Usage of Assertion Methods</a></li>
+															<li><a href="https://github.com/sebastianbergmann/phpunit/issues/1914" rel="nofollow" target="_blank">Usage of asserts is incorrect? #1914</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

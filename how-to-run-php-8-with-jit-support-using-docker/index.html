@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	How to run PHP 8 with JIT support using Docker | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="How to run PHP 8 with JIT support using Docker">
+<meta name="twitter:description" content="In this post, I will show you how you can start using PHP 8 with JIT support with just one command using Docker." />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/how-to-run-php-8-with-jit-support-using-docker.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="How to run PHP 8 with JIT support using Docker" />
+<meta property="og:description" content="In this post, I will show you how you can start using PHP 8 with JIT support with just one command using Docker." />
+<meta property="og:url" content="https://arkadiuszkondas.com/how-to-run-php-8-with-jit-support-using-docker" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/how-to-run-php-8-with-jit-support-using-docker.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>How to run PHP 8 with JIT support using Docker</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">19. April 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/how-to-run-php-8-with-jit-support-using-docker"></span></li>	<li class="post__meta-item">3min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-04-19-how-to-run-php-8-with-jit-support-using-docker.md">suggest an edit</a></li></ul>
+				<p class="post__description">In this post, I will show you how you can start using PHP 8 with JIT support with just one command using Docker.</p>
+
+				
+				<p>After writing a post about <a target="_blank" href="https://arkadiuszkondas.com/compiling-php-8-from-source-with-jit-support/">Compiling PHP 8 from source with JIT support</a><br />
+I realized that there is a much better and simpler way allowing you to test PHP 8 with JIT on your own.</p>
+<h2>Docker image</h2>
+<p>If you don't know what Docker is (and you should know) please check this <a target="_blank" href="https://rominirani.com/docker-tutorial-series-a7e6ff90a023" rel="nofollow">Tutorial</a> from Romin Irani.</p>
+<p>The Docker image is a very good form for preparing the appropriate version of PHP ready for run on every machine.</p>
+<p>Check official documentation to <a target="_blank" href="https://docs.docker.com/install/" rel="nofollow">install Docker</a> on your machine.</p>
+<p>I prepared Docker image with compiled PHP 8 and it is available on Docker Hub:
+<a target="_blank" href="https://cloud.docker.com/u/akondas/repository/docker/akondas/php">https://cloud.docker.com/u/akondas/repository/docker/akondas/php</a></p>
+<p>Docker image tag: <code>akondas/php:8.0-cli-alpine</code>.</p>
+<p>In the network, you can find similar images that could be suitable for the same.
+However, I wanted to achieve two additional goals:</p>
+<ol>
+<li>learn to create your own images and share them publicly</li>
+<li>prepare an image similar to the official PHP 7.x images</li>
+</ol>
+<p>The second point will be especially necessary for me to create a comprehensive comparison of the php version in terms of performance.</p>
+<h2>Run PHP 8</h2>
+<p>I assume you have installed the Docker or you have already had it before. To run any <code>.php</code> file on PHP 8 from your machine we need:</p>
+<ul>
+<li>download and run the container image<br />
+<code>docker run -it akondas/php:8.0-cli-alpine</code></li>
+<li>mount working directory (so that the container can read files from the actual folder in which it is located)<br />
+<code>-v "$PWD":/usr/src/app</code></li>
+<li>set the working directory to the one assembled above<br />
+<code>-w /usr/src/app</code></li>
+</ul>
+<p>So full command looks like this:</p>
+<pre><code class="language-bash">docker run -it -v "$PWD":/usr/src/app -w /usr/src/app \
+akondas/php:8.0-cli-alpine php script.php</code></pre>
+<h2>Enable JIT support</h2>
+<p>To enable JIT you must provide these four additional parameters:</p>
+<pre><code class="language-bash">-dzend_extension=opcache.so 
+-dopcache.enable_cli=1 
+-dopcache.jit_buffer_size=500000000
+-dopcache.jit=1235</code></pre>
+<p>The first one runs <code>opcache</code>, the others configure JIT.
+You can change their values in this way and check different effects.
+You will find more details about new settings in <a target="_blank" href="https://wiki.php.net/rfc/jit" rel="nofollow">RFC</a></p>
+<h2>Test performance</h2>
+<p>Let's make a simple test script to test the performance of new JIT. I suggest to write a nice and simple Fibonacci function 😈:</p>
+<pre><code class="language-php">function fibonacci($n){
+    return(($n &lt; 2) ? 1 : fibonacci($n - 2) + fibonacci($n - 1));
+}
+
+$n = 32;
+$start = microtime(true);
+$fibonacci = fibonacci($n);
+$stop = microtime(true);
+
+echo sprintf("Fibonacci(%s): %s\nTime: %s", $n, $fibonacci, $stop-$start);</code></pre>
+<p>And now time for the show. First, let's check the result with JIT turned off.</p>
+<pre><code class="language-bash">docker run -it -v "$PWD":/usr/src/app -w /usr/src/app \
+akondas/php:8.0-cli-alpine php fibo.php
+
+Fibonacci(32): 3524578
+Time: 0.17796015739441 </code></pre>
+<p>Ok, JIT, show me what you got 💪:</p>
+<pre><code class="language-bash">docker run -it -v "$PWD":/usr/src/app -w /usr/src/app \
+akondas/php:8.0-cli-alpine php -dzend_extension=opcache.so \
+-dopcache.enable_cli=1 -dopcache.jit_buffer_size=500000000 \
+-dopcache.jit=1235 fibo.php
+
+Fibonacci(32): 3524578
+Time: 0.050444841384888</code></pre>
+<p>So <code>0.1779</code> vs <code>0.0504</code> looks impressive.
+Starting the JIT, in the case of Fibonacci calculation, gave <code>352%</code> of the speed increase 🚄.</p>
+<p><strong>Now is the time for you to test it!</strong> I encourage you to share the results of experiments in the comments.</p>
+<p>Enjoy the JIT.</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://arkadiuszkondas.com/compiling-php-8-from-source-with-jit-support/" rel="nofollow" target="_blank">Compiling PHP 8 from source with JIT support</a></li>
+															<li><a href="https://cloud.docker.com/repository/docker/akondas/php" rel="nofollow" target="_blank">Docker Unofficial Image packaging for PHP 8.0</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

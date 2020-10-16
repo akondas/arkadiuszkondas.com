@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	Predict air pollution with k-Nearest Neighbors and PHP | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="Predict air pollution with k-Nearest Neighbors and PHP">
+<meta name="twitter:description" content="Based on air pollution data we will try to predict air quality in a place where we don&#039;t have data. I will present k-Nearest Neighbors algorithm and how to implement such prediction in PHP using php…" />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/predict-air-pollution-with-k-nearest-neighbors-and-php.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Predict air pollution with k-Nearest Neighbors and PHP" />
+<meta property="og:description" content="Based on air pollution data we will try to predict air quality in a place where we don&#039;t have data. I will present k-Nearest Neighbors algorithm and how to implement such prediction in PHP using php-ml." />
+<meta property="og:url" content="https://arkadiuszkondas.com/predict-air-pollution-with-k-nearest-neighbors-and-php" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/predict-air-pollution-with-k-nearest-neighbors-and-php.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>Predict air pollution with k-Nearest Neighbors and PHP</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">08. March 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/predict-air-pollution-with-k-nearest-neighbors-and-php"></span></li>	<li class="post__meta-item">7min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-03-08-predict-air-pollution-with-k-nearest-neighbors-and-php.md">suggest an edit</a></li></ul>
+				<p class="post__description">Based on air pollution data we will try to predict air quality in a place where we don't have data. I will present k-Nearest Neighbors algorithm and how to implement such prediction in PHP using php-ml.</p>
+
+				
+				<p><strong>Disclaimer</strong>: In this post I won't predict the future only the current state at place where there is no data.
+I will write about the forecast's prediction on next posts, so I encourage you to subscribe my newsletter to not leave the topic.</p>
+<h2>Air pollution</h2>
+<p>For the purposes of this entry, I will use publicly available data from World Air Quality Index project <a target="_blank" href="http://waqi.info/" rel="nofollow">waqi.info</a>.
+You can find nice <a target="_blank" href="https://aqicn.org/api" rel="nofollow">REST API</a>. For example you can grab data for interesting region with simple GET request: </p>
+<pre><code class="language-bash">http://api.waqi.info/map/bounds/?token=your-token&amp;latlng=44.74673324024681,4.921875000000001,56.389583525613055,25.664062500000004</code></pre>
+<p>Example response:</p>
+<pre><code class="language-javascript">{
+  "status": "ok",
+  "data": [
+    {
+      "lat": 51.403007,
+      "lon": 7.208546,
+      "uid": 6093,
+      "aqi": "20"
+    },
+    {
+      "lat": 52.2688736,
+      "lon": 10.5267696,
+      "uid": 6202,
+      "aqi": "11"
+    }
+  ]
+}</code></pre>
+<p>A few different figures in response should show that apply some machine learning hangs in the air 🏭.
+There is geographic coordinates (<code>lat</code> and <code>lon</code>) and two other values available.</p>
+<p>The main parameter that we can try to predict is AQI (<code>aqi</code> from json). What AQI means?</p>
+<blockquote>
+<p>The AQI scale used for indexing the real-time pollution is based on the latest US EPA standard, using the Instant Cast reporting formula.</p>
+</blockquote>
+<p>On Waqi website we can find a nice table with explanations:</p>
+<p><img src="/assets/posts/air-quality.png" alt="air quality index" /></p>
+<p>To make the task a bit easier, we will change the numerical values into labels (according to the scale given).
+We will also throw out the station number (<code>uid</code>) because wouldn't need it. The whole will be converted to CSV format.</p>
+<p>You can view the ready script here <a target="_blank" href="https://github.com/php-ai/php-ml-examples/blob/master/preparation/aqcin2csv.php">aqcin2csv.php</a>,
+but I encourage you to work independently.</p>
+<p>Prepared data should have the following formula:</p>
+<pre><code class="language-csv">51.403007;7.208546;good
+52.2688736;10.5267696;good
+52.235083;5.181552;good
+47.5292;9.9267;good
+47.9704873;17.7852936;moderate
+51.4625;13.526666666667;moderate
+48.7344444;19.1128073;good</code></pre>
+<p>As you can see, preliminary data preparation is also part of the tedious work of date scientist.
+Sometimes you have to work a lot to have the right to watch fireworks.
+Sometimes, despite the hard work, the show is gone 😔.</p>
+<p>But it is worth trying, even path to the goal can teach a lot and give even more satisfaction than the goal itself.</p>
+<p>The data is already pre-processed, we can go to discuss the algorithm.</p>
+<h2>k-Nearest Neighbors</h2>
+<p>The algorithm of k-Nearest Neighbors it's a pretty simple algorithm for classification (supervised learning).
+Principle of its operation consists in determining <code>k</code> nearest neighbors of the searched value.
+The search is usually based on some metrics. In this case, it will be a <a target="_blank" href="https://en.wikipedia.org/wiki/Metric_(mathematics)" rel="nofollow">distance measure</a>.
+Based on the neighbors found, it is able to assign the appropriate label for the data you are looking for.
+We choose the most frequently appearing, from among found <code>k</code> neighbors.</p>
+<p>In our case, the label we are looking for will be one of the following values:
+<code>good</code>, <code>moderate</code>, <code>unhealthy for sensitive</code>, <code>unhealthy</code>, <code>very unhealthy</code> or <code>hazardous</code>.</p>
+<p>The input data gonna be geographical coordinates, for example: <code>51.403007</code> and <code>7.208546</code>.
+You can find input data in this file: <a target="_blank" href="https://github.com/php-ai/php-ml-examples/blob/master/data/air.csv" rel="nofollow">air.csv</a> (712 samples).</p>
+<p>Before we start to play, we still have one more important thing to do.</p>
+<h2>Visualization</h2>
+<blockquote>
+<p>I believe that visualization is one of the most powerful means of achieving personal goals.
+[<strong>Harvey Mackay</strong>]</p>
+</blockquote>
+<p>One of the basic skills of a data scientist is data visualization. A good data visualization.
+Let's see what the data from the csv file looks like on the map (<a target="_blank" href="https://github.com/php-ai/php-ml-examples/blob/master/visualization/aqcin.py" rel="nofollow">aqcin.py</a>). </p>
+<p><img src="/assets/posts/air-pollution-1.png" alt="air pollution" /></p>
+<p>As you can see, we can distinguish clear clusters of good and bad air.
+Therefore, k-Nearest Neighbors should be fit for classification.</p>
+<h2>Prediction with PHP-ML</h2>
+<p>Train and predict script with <a target="_blank" href="https://php-ml.org">php-ml</a> is very simple:</p>
+<pre><code class="language-php">use Phpml\Classification\KNearestNeighbors;
+use Phpml\Dataset\CsvDataset;
+
+$estimator = new KNearestNeighbors();
+$estimator-&gt;train($dataset-&gt;getSamples(), $dataset-&gt;getTargets());
+$predicted = $estimator-&gt;predict([$sample]);</code></pre>
+<p>but today I will try to explore our collection more closely.</p>
+<p>We are start from trying to predict air quality for each point (without itself) based on its selected neighbors.
+In addition, I also want to measure its correctness for different <code>k</code> (the number of nearest neighbors). Let's write
+a script for range from <code>k=1</code> to <code>k=10</code>:</p>
+<pre><code class="language-php">use Phpml\Classification\KNearestNeighbors;
+use Phpml\Dataset\CsvDataset;
+
+require 'vendor/autoload.php';
+
+$dataset = new CsvDataset('air.csv', 2, false, ';');
+
+foreach (range(1, 10) as $k) {
+    $correct = 0;
+    foreach ($dataset-&gt;getSamples() as $index =&gt; $sample) {
+        $estimator = new KNearestNeighbors($k);
+        $estimator-&gt;train($other = removeIndex($index, $dataset-&gt;getSamples()), removeIndex($index, $dataset-&gt;getTargets()));
+
+        $predicted = $estimator-&gt;predict([$sample]);
+
+        if ($predicted[0] === $dataset-&gt;getTargets()[$index]) {
+            $correct++;
+        }
+    }
+
+    echo sprintf('Accuracy (k=%s): %.02f%% correct: %s', $k, ($correct / count($dataset-&gt;getSamples())) * 100, $correct) . PHP_EOL;
+}
+
+function removeIndex($index, $array): array
+{
+    unset($array[$index]);
+    return $array;
+}</code></pre>
+<p>Are you curious about the results? 🤔</p>
+<pre><code class="language-bash">Accuracy (k=1): 72.19% correct: 514
+Accuracy (k=2): 71.63% correct: 510
+Accuracy (k=3): 74.44% correct: 530
+Accuracy (k=4): 72.05% correct: 513
+Accuracy (k=5): 74.30% correct: 529
+Accuracy (k=6): 73.46% correct: 523
+Accuracy (k=7): 74.02% correct: 527
+Accuracy (k=8): 74.44% correct: 530
+Accuracy (k=9): 75.84% correct: 540
+Accuracy (k=10): 74.44% correct: 530</code></pre>
+<p>As you can see <code>k=9</code> has the most hits. Unfortunately, the values themselves don't show much information about our model.
+In order to visualize this, we will predict the result for the whole point grid. We can do it with a simple script:</p>
+<pre><code class="language-php">use Phpml\Classification\KNearestNeighbors;
+use Phpml\Dataset\CsvDataset;
+
+require 'vendor/autoload.php';
+
+$minLat = 41.34343606848294;
+$maxLat = 57.844750992891;
+$minLng = -16.040039062500004;
+$maxLng = 29.311523437500004;
+
+$step = 0.1;
+$k = 1;
+
+$dataset = new CsvDataset('air.csv', 2, false, ';');
+$estimator = new KNearestNeighbors($k);
+$estimator-&gt;train($dataset-&gt;getSamples(), $dataset-&gt;getTargets());
+
+$lines = [];
+for($lat=$minLat; $lat&lt;$maxLat; $lat+=$step) {
+    for($lng=$minLng; $lng&lt;$maxLng; $lng+=$step) {
+        $lines[] = sprintf('%s;%s;%s', $lat, $lng, $estimator-&gt;predict([[$lat, $lng]])[0]);
+    }
+}
+
+file_put_contents('airGrid.csv', implode(PHP_EOL, $lines));</code></pre>
+<p>Let's see what the visualization of prediction looks like for <code>k=1</code></p>
+<p><img src="/assets/posts/air-pollution-k1.png" alt="air pollution prediction for k=1" /></p>
+<p>We see lots of abrupt changes from one color to another with sharp boundaries.
+As we increase the number of neighbors to <code>k=3</code>, we see smoother regions for each color (air quality).</p>
+<p><img src="/assets/posts/air-pollution-k3.png" alt="air pollution prediction for k=3" /></p>
+<p>Following this trail, we can generate more maps. Next for <code>k=5</code> and <code>k-9</code>:</p>
+<p><img src="/assets/posts/air-pollution-k5.png" alt="air pollution prediction for k=5" /></p>
+<p><img src="/assets/posts/air-pollution-k9.png" alt="air pollution prediction for k=9" /></p>
+<p>In this way, you can visualize your model. Every model works a little differently but the map will let you choose the
+one that suits you best. Remember that very often there is no unambiguous answer.</p>
+<p>The sheer number of neighbors is not all possibilities of change.
+You can still change the way in which we count the distance between points.</p>
+<pre><code class="language-php">use Phpml\Math\Distance\Minkowski;
+use Phpml\Classification\KNearestNeighbors;
+
+$estimator = new KNearestNeighbors($k, new Minkowski());</code></pre>
+<p>I leave you the pleasure of further exploration. 😉</p>
+<h2>The Curse of Dimensionality</h2>
+<p>I hope that in this way you already understand how the algorithm of k-Nearest Neighbors works.
+However, it have a significant problem. </p>
+<p>First, the visualization of larger numbers of dimensions is quite troublesome (3 is still sensible).</p>
+<p>The second is a feature of multidimensional spaces called <code>Curse of Dimensionality</code>. Points in such spaces are more
+distant from each other the more dimensions we have. </p>
+<p>To better understand this we will generate random points (<code>10000</code> pairs) in subsequent spaces: from 1 dimension to 300 dimensions 🤯.
+For each such space, we calculate the average and minimum distance of these points.</p>
+<pre><code class="language-php">use Phpml\Math\Distance\Euclidean;
+use Phpml\Math\Statistic\Mean;
+
+$dimensions = range(1, 300);
+$pointsCount = 10000;
+$metric = new Euclidean();
+
+foreach ($dimensions as $dimension) {
+    $distances = [];
+    for ($i = 0; $i &lt; $pointsCount; $i++) {
+        $distances[] = $metric-&gt;distance(randomPoint($dimension), randomPoint($dimension));
+    }
+
+    echo Mean::arithmetic($distances) . ';' . min($distances) . PHP_EOL;
+}
+
+function randomPoint(int $dimensions): array
+{
+    return array_map(function($index){
+        return random_int(1, 10);
+    }, range(1, $dimensions));
+}</code></pre>
+<p>Then we will carry the results on the graph:</p>
+<p><img src="/assets/posts/curse-of-dimensionality.svg" alt="curse of dimensionality" /></p>
+<p>As you can see as the amount of dimensions increases, the average and minimum distance between points also increases.
+We can say that multidimensional spaces are less dense or simply more extensive (for the same amount of data).</p>
+<p>We can imagine it differently. Let's see how the same amount of randomly generated points looks in two- and three-dimensional space.</p>
+<p><img src="/assets/posts/random-points-2d.svg" alt="random points 2d" /></p>
+<p>Adding the next space to the same amount of data means that their distances from each other increase.</p>
+<p><img src="/assets/posts/random-points-3d.svg" alt="random points 3d" /></p>
+<p>For this reason, if you intend to use k-Nearest Neighbors with a collection of data with a large number of features,
+it is probably a good idea to use some sort of dimensional reduction algorithm first.</p>
+<h2>Where to explore more</h2>
+<p>If you are still hungry about the counting of neighbors then you can read a very good entry from the documentation
+of the <code>scikit-learn</code> package: <a target="_blank" href="https://scikit-learn.org/stable/modules/neighbors.html" rel="nofollow">Nearest Neighbors</a></p>
+<p>In this post, I used the brute force method to predict results, but there is much better and faster implementation
+using the k-d tree algorithm. I will try to describe it in the next post. Not necessarily the next one. Subscribe to
+my newsletter if you don't want to miss post that you are interested in.</p>
+<p>Enjoy your Nearest Neighbors.</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://aqicn.org/api/pl/" rel="nofollow" target="_blank">World&#039;s Air Pollution: Real-time Air Quality Index API</a></li>
+															<li><a href="https://scikit-learn.org/stable/modules/neighbors.html" rel="nofollow" target="_blank">scikit-learn: Nearest Neighbors</a></li>
+															<li><a href="https://php-ml.org/" rel="nofollow" target="_blank">PHP-ML</a></li>
+															<li><a href="https://en.wikipedia.org/wiki/Curse_of_dimensionality" rel="nofollow" target="_blank">Curse of dimensionality</a></li>
+															<li><a href="https://jakevdp.github.io/PythonDataScienceHandbook/04.12-three-dimensional-plotting.html" rel="nofollow" target="_blank">3D Plotting in Matplotlib</a></li>
+															<li><a href="https://github.com/komoot/staticmap" rel="nofollow" target="_blank">Static Map - library for creating map images with lines and markers.</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

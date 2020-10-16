@@ -1,0 +1,110 @@
+{
+  "version": "https://jsonfeed.org/version/1",
+  "title": "Arkadiusz Kondas Posts",
+  "home_page_url": "https://arkadiuszkondas.com/",
+  "feed_url": "https://arkadiuszkondas.com/feed.json",
+  "description": "Posts about PHP and Machine Learning",
+  "user_comment": "This feed allows you to read the posts from this site in any feed reader that supports the JSON Feed format.",
+  "favicon": "https://arkadiuszkondas.com/favicon.ico",
+  "author": {
+    "name": "Arkadiusz Kondas"
+  },
+  "items": [
+                        {
+        "id": "https://arkadiuszkondas.com/dmca-php-ml-and-copyright-boundaries/",
+        "url": "https://arkadiuszkondas.com/dmca-php-ml-and-copyright-boundaries/",
+        "title": "DMCA, php-ml and copyright boundaries",
+        "content_text": "Last friday, DMCA took down my GitHub repository. This post will explain the who, the what and how we came to this situation.",
+                "date_published": "2020-05-26T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/what-is-software-architecture/",
+        "url": "https://arkadiuszkondas.com/what-is-software-architecture/",
+        "title": "What is software architecture?",
+        "content_text": "Why is the word architect in our industry not always associated well? Should an architect participate in programming? What is software architecture really like? Is it possible to describe architecture in one sentence?",
+                "date_published": "2019-11-24T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/game-networking-effective-networking-you-dont-know/",
+        "url": "https://arkadiuszkondas.com/game-networking-effective-networking-you-dont-know/",
+        "title": "Game networking - effective networking you don&#039;t know",
+        "content_text": "How often do you get involved in effective networking? I want to share with you a completely new experience in which I had the opportunity to participate at the DataWorkshop Club Conf conference.",
+                "date_published": "2019-10-19T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/superintelligence-paths-dangers-strategies-nick-bostrom/",
+        "url": "https://arkadiuszkondas.com/superintelligence-paths-dangers-strategies-nick-bostrom/",
+        "title": "My thoughts: Superintelligence: Paths, Dangers, Strategies by Nick Bostrom",
+        "content_text": "This is a pilot post about my thoughts after reading the book. I&#039;m starting with a very good title about artificial intelligence or an unfinished fable of the sparrows.",
+                "date_published": "2019-06-27T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/how-to-run-php-8-with-jit-support-using-docker/",
+        "url": "https://arkadiuszkondas.com/how-to-run-php-8-with-jit-support-using-docker/",
+        "title": "How to run PHP 8 with JIT support using Docker",
+        "content_text": "In this post, I will show you how you can start using PHP 8 with JIT support with just one command using Docker.",
+                "date_published": "2019-04-19T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/the-right-way-to-call-assertion-in-phpunit/",
+        "url": "https://arkadiuszkondas.com/the-right-way-to-call-assertion-in-phpunit/",
+        "title": "The right way to call assertion in PHPUnit",
+        "content_text": "During the preparation of TDD workshops, I began to think about how to write assertions. It turns out that there are several possibilities, but is there the only correct one?",
+                "date_published": "2019-04-12T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/compiling-php-8-from-source-with-jit-support/",
+        "url": "https://arkadiuszkondas.com/compiling-php-8-from-source-with-jit-support/",
+        "title": "Compiling PHP 8 from source with JIT support",
+        "content_text": "Initially, this post was to apply to the experiments with JIT alone. However, I encountered some problems at the time of compiling PHP so I decided to share this experience.",
+                "date_published": "2019-04-06T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/3-reasons-why-php-is-not-yet-perfect-for-machine-learning/",
+        "url": "https://arkadiuszkondas.com/3-reasons-why-php-is-not-yet-perfect-for-machine-learning/",
+        "title": "3 Reasons Why PHP is Not Yet Perfect for Machine Learning",
+        "content_text": "My thoughts on why PHP isn&#039;t yet an ideal environment for the universal use of machine learning. I will discuss the three main reasons that are the cause of the current state of affairs.",
+                "date_published": "2019-03-29T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/text-data-classification-with-bbc-news-article-dataset/",
+        "url": "https://arkadiuszkondas.com/text-data-classification-with-bbc-news-article-dataset/",
+        "title": "Text data classification with BBC news article dataset",
+        "content_text": "The goal of this post is to explore some of the basic techniques that allow working with text data in a machine learning world. I will show how to analyze a collection of text documents that belong to different categories.",
+                "date_published": "2019-03-22T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/clustering-chicago-robberies-locations-with-k-means-algorithm/",
+        "url": "https://arkadiuszkondas.com/clustering-chicago-robberies-locations-with-k-means-algorithm/",
+        "title": "Clustering Chicago robberies locations with k-means algorithm",
+        "content_text": "Using the real dataset of crimes committed in Chicago, I will divide the robbery locations into a bunch of different clusters. Then I will try to visualize results and answer the question of whether we have chosen well parameters for our algorithm.",
+                "date_published": "2019-03-15T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/predict-air-pollution-with-k-nearest-neighbors-and-php/",
+        "url": "https://arkadiuszkondas.com/predict-air-pollution-with-k-nearest-neighbors-and-php/",
+        "title": "Predict air pollution with k-Nearest Neighbors and PHP",
+        "content_text": "Based on air pollution data we will try to predict air quality in a place where we don&#039;t have data. I will present k-Nearest Neighbors algorithm and how to implement such prediction in PHP using php-ml.",
+                "date_published": "2019-03-08T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/binary-heap-implementation-in-php/",
+        "url": "https://arkadiuszkondas.com/binary-heap-implementation-in-php/",
+        "title": "Binary heap implementation in PHP",
+        "content_text": "Short explanation what is binary heap and how to implement it in pure PHP from scratch. I will show you how to compare it with native solution (SPL). Performance results are surprising.",
+                "date_published": "2019-03-01T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/when-the-expert-becomes-a-leader/",
+        "url": "https://arkadiuszkondas.com/when-the-expert-becomes-a-leader/",
+        "title": "When the expert becomes a leader",
+        "content_text": "Very often in the life of an expert there is a moment when he wants (or it must) to become a leader. These are two different roles that are very difficult to reconcile with each other. In this post I will present some useful techniques that can help experts become a good leader.",
+                "date_published": "2019-02-22T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/write-your-own-simple-chess-ai-in-php/",
+        "url": "https://arkadiuszkondas.com/write-your-own-simple-chess-ai-in-php/",
+        "title": "Write your own simple chess AI in PHP",
+        "content_text": "A brief history of how to start writing your own chess engine in PHP. You will learn some basic algorithms, prepare a solid foundation allowing for further development and finally I will consider how you can push your AI further.",
+                "date_published": "2019-02-15T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/whats-new-in-php-ml-0-7-0/",
+        "url": "https://arkadiuszkondas.com/whats-new-in-php-ml-0-7-0/",
+        "title": "What&#039;s new in PHP-ML 0.7.0",
+        "content_text": "A quick overview of new features, changes and fixes in PHP-ML 0.7.0 version",
+                "date_published": "2018-11-07T00:00:00+00:00"
+      },                            {
+        "id": "https://arkadiuszkondas.com/design-patterns-strategy/",
+        "url": "https://arkadiuszkondas.com/design-patterns-strategy/",
+        "title": "Design Patterns - Strategy",
+        "content_text": "One of the main assumptions of good project programming is the &#039;Open/closed&#039; principle, which says that classes should be closed for modification, but open to extension. The strategy pattern allows you to easily maintain this standard in your code.",
+                "date_published": "2018-02-19T00:00:00+00:00"
+      }        ]
+}

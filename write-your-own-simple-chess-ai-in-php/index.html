@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	Write your own simple chess AI in PHP | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="Write your own simple chess AI in PHP">
+<meta name="twitter:description" content="A brief history of how to start writing your own chess engine in PHP. You will learn some basic algorithms, prepare a solid foundation allowing for further development and finally I will consider how…" />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/write-your-own-simple-chess-ai-in-php.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Write your own simple chess AI in PHP" />
+<meta property="og:description" content="A brief history of how to start writing your own chess engine in PHP. You will learn some basic algorithms, prepare a solid foundation allowing for further development and finally I will consider how you can push your AI further." />
+<meta property="og:url" content="https://arkadiuszkondas.com/write-your-own-simple-chess-ai-in-php" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/write-your-own-simple-chess-ai-in-php.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>Write your own simple chess AI in PHP</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">15. February 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/write-your-own-simple-chess-ai-in-php"></span></li>	<li class="post__meta-item">15min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-02-15-write-your-own-simple-chess-ai-in-php.md">suggest an edit</a></li></ul>
+				<p class="post__description">A brief history of how to start writing your own chess engine in PHP. You will learn some basic algorithms, prepare a solid foundation allowing for further development and finally I will consider how you can push your AI further.</p>
+
+				
+				<p>At the end of this article you will find all the links you are interested in, among them the source code for the entire engine.</p>
+<h2>PHP vs Chess ♛</h2>
+<p>At the outset, let me point out that PHP will be responsible only for calculating the best next move.
+Visualization and the game itself will take place in the browser. Knowing the rules of playing chess is required.</p>
+<p>To calculate the correct movements and check if the game was finished, we will use <a target="_blank" href="https://github.com/jhlywa/chess.js">chess.js</a>.
+Next, <a target="_blank" href="https://chessboardjs.com/">chessboard.js</a> will help us with chessboard visualization.</p>
+<p><img src="/assets/posts/chessboard.png" alt="chessboard" /></p>
+<p>With the help of the two above we can create initial boilerplate, that allow us to test and check our chess AI buddy.
+You can find whole template in <a target="_blank" href="https://github.com/akondas/php-grandmaster/blob/master/public/index.html">index.html</a>,
+but I will show you the most important part:</p>
+<pre><code class="language-js">var loadMove = function () {
+    $.post('/api.php', {
+        "state": game.fen()
+    }, function(data) {
+        // ...
+        game.move(data.move);
+        // ...
+    }, 'json');
+};</code></pre>
+<p>As you can see, we will be creating one RESTwanabe endpoint, that will return next best move, calculated for given
+state of the game: <code>game.fen()</code>. What FEN is, you'll probably ask:</p>
+<blockquote>
+<p>Forsyth–Edwards Notation (FEN) is a standard notation for describing a particular board position of a chess game (source: <a target="_blank" href="https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">wikipedia</a>)</p>
+</blockquote>
+<p>So for each player move we will send current state to PHP backend and we will be waiting (let's hope not too long) for a decision on the best move.</p>
+<h2>Round 1: Random move strategy</h2>
+<p>In first round our task is very simple: return any possible random move. With little help of
+<a target="_blank" href="https://github.com/akondas/chess.php">chess.php</a> library (which is my improved for performance fork from port of chess.js) we can safely
+generate every possible move and return the random one. We want to also create nice and clean code so how to start?</p>
+<p>Let's begin with simple contract:</p>
+<pre><code class="language-php">namespace Grandmaster;
+
+interface Strategy
+{
+    public function nextMove(string $state): ?string;
+}</code></pre>
+<p>Now, let's assume, that chess.php is not only one (and sure not best) chess library solution.
+We would like to not coupled our project with any specific implementation, so we need another contract:</p>
+<pre><code class="language-php">interface Chessboard
+{
+    public function setState(string $fen): void;
+
+    /**
+     * @return string[]
+     */
+    public function moves(): array;
+}</code></pre>
+<p>This will allow us, in the future, to change any implementation to other. In the meantime, let's make a quick
+implementation with chess.php:</p>
+<pre><code class="language-php">namespace Grandmaster\Chessboard;
+
+use Grandmaster\Chessboard;
+use Ryanhs\Chess\Chess;
+
+final class ChessphpChessboard implements Chessboard
+{
+    /**
+     * @var Chess
+     */
+    private $chess;
+
+    public function __construct()
+    {
+        $this-&gt;chess = new Chess();
+    }
+
+    public function setState(string $fen): void
+    {
+        if ($this-&gt;chess-&gt;load($fen) === false) {
+            throw new InvalidFenException(sprintf('Given "%s" FEN is invalid', $fen));
+        }
+    }
+
+    /**
+     * @return string[]
+     */
+    public function moves(): array
+    {
+        return $this-&gt;chess-&gt;moves();
+    }
+}</code></pre>
+<p>So far so good. Now, as you probably guessed, implementation of our first strategy will be very easy:</p>
+<pre><code class="language-php">namespace Grandmaster\Strategy;
+
+use Grandmaster\Chessboard;
+use Grandmaster\Strategy;
+
+final class RandomMove implements Strategy
+{
+    /**
+     * @var Chessboard
+     */
+    private $board;
+
+    public function __construct(Chessboard $board)
+    {
+        $this-&gt;board = $board;
+    }
+
+    public function nextMove(string $state): ?string
+    {
+        $this-&gt;board-&gt;setState($state);
+        $moves = $this-&gt;board-&gt;moves();
+
+        if (count($moves) === 0) {
+            return null;
+        }
+
+        return $moves[array_rand($moves)];
+    }
+}</code></pre>
+<p>Live example: <em>Chess AI with <code>RandomMove</code> strategy</em></p>
+<div class="board-wrapper">
+    <div id="board-1" class="board"></div>
+    <div id="board-1-loader" class="loader"><span>Invoking lambda ...</span></div>
+    Time*: <span class="time"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
+    <br><br>
+    Move history:<br><div class="move-history"></div>
+</div>
+<h2>Round 2: Position evaluation</h2>
+<p>Ok, since you can play chess with a new artificial friend, let's add some more power to it.
+We can assign a relative point value to each piece, based on human experience and learning (<a target="_blank" href="https://www.chessprogramming.org/Point_Value">Point Value</a>).</p>
+<pre><code class="language-php">namespace Grandmaster\Pieces;
+
+interface PointValue
+{
+    public const PAWN = 100;
+    public const KNIGHT = 350;
+    public const BISHOP = 350;
+    public const ROOK = 525;
+    public const QUEEN = 1000;
+    public const KING = 10000;
+}</code></pre>
+<p>We will need another contract <code>Evaluator</code>. It will be able to return the current value of the board, which will
+allow us to choose the best possible move. A positive value means a white advantage, a negative black one.</p>
+<pre><code class="language-php">namespace Grandmaster;
+
+interface Evaluator
+{
+    public function evaluate(Chessboard $board): int;
+}</code></pre>
+<p>Based on the above, we can implement <code>MaterialEvaluator</code>:</p>
+<pre><code class="language-php">namespace Grandmaster\Evaluator;
+
+final class MaterialEvaluator implements Evaluator
+{
+    public function evaluate(Chessboard $board): int
+    {
+        // array_reduce is cleaner, but performance is the key here
+        $sum = 0;
+        foreach ($board-&gt;board() as $piece) {
+            $sum += $this-&gt;getPieceValue($piece);
+        }
+
+        return $sum;
+    }
+
+    private function getPieceValue(?array $piece): int
+    {
+        if ($piece === null) {
+            return 0;
+        }
+        $color = $piece['color'] === 'w' ? 1 : -1;
+
+        switch ($piece['type']) {
+            case 'p':
+                return PointValue::PAWN * $color;
+            case 'r':
+                return PointValue::ROOK * $color;
+            case 'n':
+                return PointValue::KNIGHT * $color;
+            case 'b':
+                return PointValue::BISHOP * $color;
+            case 'q':
+                return PointValue::QUEEN * $color;
+            case 'k':
+                return PointValue::KING * $color;
+            default:
+                return 0;
+        }
+    }
+
+}</code></pre>
+<p>As you can see, we sum up the value of all the pieces on the board (for black ones they will be negative values).
+Now we are ready to implement <code>PositionEvaluation</code> strategy:</p>
+<pre><code class="language-php">    public function nextMove(string $state): ?string
+    {
+        $this-&gt;board-&gt;setState($state);
+        $moves = $this-&gt;board-&gt;moves();
+        $whiteTurn = $this-&gt;board-&gt;isWhiteTurn();
+        $bestValue = $whiteTurn ? PHP_INT_MAX : PHP_INT_MIN;
+        $bestMove = null;
+
+        if (count($moves) === 0) {
+            return null;
+        }
+
+        foreach ($moves as $san) {
+            $this-&gt;board-&gt;move($san);
+            $newValue = $this-&gt;evaluator-&gt;evaluate($this-&gt;board) * ($whiteTurn ? 1 : -1);
+            if ($whiteTurn ? $newValue &lt; $bestValue : $newValue &gt; $bestValue) {
+                $bestMove = $san;
+                $bestValue = $newValue;
+            }
+            $this-&gt;board-&gt;undo();
+        }
+
+        return $bestMove;
+    }</code></pre>
+<p>So in current moment our friend will kill the piece if he can do it. Not too much, but it starts to spin, be vigilant 😉.</p>
+<p>Live example: <em>Chess AI with <code>PositionEvaluation</code> strategy</em></p>
+<div class="board-wrapper">
+    <div id="board-2" class="board"></div>
+    <div id="board-2-loader" class="loader"><span>Invoking lambda ...</span></div>
+    Time*: <span class="time"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
+    <br><br>
+    Move history:<br><div class="move-history"></div>
+</div>
+<h2>Round 3: Search the tree</h2>
+<p>Now we will do a classic brute force attack. We will make every move possible and evaluate
+value of the board for everyone. Then we can generate another move (deeper level) and recalculate the value again.
+Such an algorithm is called <code>Minimax</code>. </p>
+<p>At the very end, we return the highest or lowest value, depending on whether the movement was white or black.
+From this also the name (<code>Minimax</code>) itself, we want to either maximize or minimize the result.</p>
+<p>The strength of this algorithm depends on the depth of the search. At this point, only the performance of our
+machine and the libraries used limits us.</p>
+<p>Let's add another contract:</p>
+<pre><code class="language-php">namespace Grandmaster;
+
+interface Search
+{
+    public function bestMove(Chessboard $board): ?string;
+}</code></pre>
+<p>The implementation will be a little bigger, but we can show her heart (full code <a target="_blank" href="https://github.com/akondas/php-grandmaster/blob/master/src/Search/MinimaxFullSearch.php">MinimaxFullSearch</a>):</p>
+<pre><code class="language-php">    private function minimax(int $depth, Chessboard $board): int
+    {
+        if ($depth === 0) {
+            return -$this-&gt;evaluator-&gt;evaluate($board);
+        }
+
+        if ($board-&gt;isWhiteTurn()) {
+            $bestValue = 99999;
+            foreach ($board-&gt;moves() as $san) {
+                $board-&gt;move($san);
+                $bestValue = min($bestValue, $this-&gt;minimax($depth - 1, $board));
+                $board-&gt;undo();
+            }
+        } else {
+            $bestValue = -99999;
+            foreach ($board-&gt;moves() as $san) {
+                $board-&gt;move($san);
+                $bestValue = max($bestValue, $this-&gt;minimax($depth - 1, $board));
+                $board-&gt;undo();
+            }
+        }
+
+        return $bestValue;
+    }</code></pre>
+<p>Let's see how it looks in practice for depth: 3. I also added the number of evaluated moves.</p>
+<p>Live example: <em>Chess AI with <code>TreeSearch</code> strategy (brute force)</em></p>
+<div class="board-wrapper">
+    <div id="board-3" class="board"></div>
+    <div id="board-3-loader" class="loader"><span>Invoking lambda ...</span></div>
+    Time*: <span class="time"></span><br>
+    Moves evaluated: <span class="movesEvaluated"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
+    <br><br>
+    Move history:<br><div class="move-history"></div>
+</div>
+<p>Our friend starts to understand some basic patterns.
+But the algorithm itself unnecessarily analyzes all the possibilities that eats resources. We will try to improve.</p>
+<h2>Round 4: Cutting off leaves</h2>
+<p>A tricky trick is coming: <code>Alpha–beta pruning</code> - a search algorithm that reduces the number of nodes that must be
+solved in the search trees.</p>
+<p>Now during the search of the tree we will get rid of the paths, which we know would give a worse result than currently
+the best. This will save you the analysis of deeper paths and save resources. In the end, why analyze the next move,
+knowing that the previous one was hopeless.</p>
+<p><img src="/assets/posts/ab_pruning.jpg" alt="alpha_beta_pruning" /></p>
+<p>This will require a minor correction in the code:</p>
+<pre><code class="language-php">    private function minimax(int $depth, int $alpha, int $beta, Chessboard $board): int
+    {
+        if ($depth === 0) {
+            return -$this-&gt;evaluator-&gt;evaluate($board);
+        }
+
+        if ($board-&gt;isWhiteTurn()) {
+            $bestValue = 99999;
+            foreach ($board-&gt;moves() as $san) {
+                $board-&gt;move($san);
+                $bestValue = min($bestValue, $this-&gt;minimax($depth - 1, $alpha, $beta, $board));
+                $board-&gt;undo();
+                $beta = min($beta, $bestValue);
+                if ($beta &lt;= $alpha) {
+                    return $bestValue;
+                }
+            }
+        } else {
+            $bestValue = -99999;
+            foreach ($board-&gt;moves() as $san) {
+                $board-&gt;move($san);
+                $bestValue = max($bestValue, $this-&gt;minimax($depth - 1, $alpha, $beta, $board));
+                $board-&gt;undo();
+                $alpha = max($alpha, $bestValue);
+                if ($beta &lt;= $alpha) {
+                    return $bestValue;
+                }
+            }
+        }
+
+        return $bestValue;
+    }</code></pre>
+<p>Note now how much less evaluated are the moves for the same move.</p>
+<p>Live example: <em>Chess AI with <code>TreeSearch</code> strategy with alpha-beta pruning</em></p>
+<div class="board-wrapper">
+    <div id="board-4" class="board"></div>
+    <div id="board-4-loader" class="loader"><span>Invoking lambda ...</span></div>
+    Time*: <span class="time"></span><br>
+    Moves evaluated: <span class="movesEvaluated"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
+    <br><br>
+    Move history:<br><div class="move-history"></div>
+</div>
+<h2>Round 5: Position matters</h2>
+<p>In chess, not only the piece has meanings but also the position it occupies.
+For example, a pawn moved forward two spaces is worth more than in its initial position.
+For simplicity, we will use a ready-made  and battle tested &quot;Piece-Square Tables&quot;
+from Chessprogramming wiki - <a target="_blank" href="https://www.chessprogramming.org/Simplified_Evaluation_Function">Simplified Evaluation Function</a>.</p>
+<p>We will need the value of all figures and colors:</p>
+<pre><code class="language-php">
+namespace Grandmaster\Pieces;
+
+interface PositionValue
+{
+    public const PAWN_WHITE = [
+        [0,  0,  0,  0,  0,  0,  0,  0],
+        [50, 50, 50, 50, 50, 50, 50, 50],
+        [10, 10, 20, 30, 30, 20, 10, 10],
+        [5,  5, 10, 25, 25, 10,  5,  5],
+        [0,  0,  0, 20, 20,  0,  0,  0],
+        [5, -5,-10,  0,  0,-10, -5,  5],
+        [5, 10, 10,-20,-20, 10, 10,  5],
+        [0,  0,  0,  0,  0,  0,  0,  0]
+    ];
+
+    // ...
+
+    public const KING_BLACK = [
+        [20, 30, 10,  0,  0, 10, 30, 20],
+        [20, 20,  0,  0,  0,  0, 20, 20],
+        [-10,-20,-20,-20,-20,-20,-20,-10],
+        [-20,-30,-30,-40,-40,-30,-30,-20],
+        [-30,-40,-40,-50,-50,-40,-40,-30],
+        [-30,-40,-40,-50,-50,-40,-40,-30],
+        [-30,-40,-40,-50,-50,-40,-40,-30],
+        [-30,-40,-40,-50,-50,-40,-40,-30],
+    ];
+}</code></pre>
+<p>This will allow us to implement new <code>PositionEvaluator</code> which thanks to the interface <code>Evaluator</code> can be easily and quickly exchanged.</p>
+<p>Wait ✋. Not so fast. We also want to take into account the value of the piece itself (from <code>MaterialEvaluator</code>).
+It's time to add one more <code>Evaluator</code>:</p>
+<pre><code class="language-php">namespace Grandmaster\Evaluator;
+
+use Grandmaster\Chessboard;
+use Grandmaster\Evaluator;
+
+final class CombinedEvaluator implements Evaluator
+{
+    /**
+     * @var Evaluator[]
+     */
+    private $evaluators;
+
+    public function __construct(array $evaluators)
+    {
+        $this-&gt;evaluators = array_map(function (Evaluator $evaluator): Evaluator {
+            return $evaluator;
+        }, $evaluators);
+    }
+
+    public function evaluate(Chessboard $board): int
+    {
+        $sum = 0;
+        foreach ($this-&gt;evaluators as $evaluator) {
+            $sum += $evaluator-&gt;evaluate($board);
+        }
+
+        return $sum;
+    }
+}</code></pre>
+<p>Such an implementation will allow for further development and preservation of the &quot;<a target="_blank" href="https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle">Open–closed principle</a>&quot;.
+This should also significantly improve the abilities of our artificial bro. Let's find out.</p>
+<p>Live example: <em>Chess AI with <code>CombinedEvaluator</code> and <code>TreeSearch</code> strategy</em></p>
+<div class="board-wrapper">
+    <div id="board-5" class="board"></div>
+    <div id="board-5-loader" class="loader"><span>Invoking lambda ...</span></div>
+    Time*: <span class="time"></span><br>
+    Moves evaluated: <span class="movesEvaluated"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
+    <br><br>
+    Move history:<br><div class="move-history"></div>
+</div>
+<h2>Future rounds</h2>
+<p>In fact, this is only the beginning of the road, but at this stage our AI can think and do not forgive mistakes.
+At least for the occasional player (like me). However, it is bad at the endings. </p>
+<p>The code is also suitable for further development and should be easy to
+maintain thanks to the good isolation of interfaces.</p>
+<p>In the next rounds you can:</p>
+<ul>
+<li>learn to recognize the end game (f.e. both sides have no queens)</li>
+<li>change position values for king in the end game</li>
+<li>evaluate known patterns</li>
+<li>tuning performance to allow deeper search within a reasonable time</li>
+</ul>
+<p>At the end, go to <a target="_blank" href="https://www.chessprogramming.org/Main_Page">Chess Programming Wiki</a> where you will find more knowledge.  </p>
+<p>In subsequent posts we will try deploy our little chess engine to mythical serverless solution: AWS Lambda. </p>
+<p>That's it!</p>
+<script src="/assets/js/chessboard-0.3.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.2/chess.js"></script>
+<script src="https://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="/assets/js/chess.js"></script>
+<link rel="stylesheet" href="/assets/css/chess.css?v=2" />
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://github.com/akondas/php-grandmaster" rel="nofollow" target="_blank">PHP Grandmaster source code</a></li>
+															<li><a href="https://www.chessprogramming.org/Main_Page" rel="nofollow" target="_blank">Chess Programming Wiki</a></li>
+															<li><a href="https://github.com/akondas/chess.php" rel="nofollow" target="_blank">Chess.php - PHP chess library</a></li>
+															<li><a href="https://medium.freecodecamp.org/simple-chess-ai-step-by-step-1d55a9266977" rel="nofollow" target="_blank">A step-by-step guide to building a simple chess AI</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

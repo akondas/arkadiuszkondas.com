@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	Text data classification with BBC news article dataset | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="Text data classification with BBC news article dataset">
+<meta name="twitter:description" content="The goal of this post is to explore some of the basic techniques that allow working with text data in a machine learning world. I will show how to analyze a collection of text documents that belong…" />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/text-data-classification-with-bbc-news-article-dataset.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Text data classification with BBC news article dataset" />
+<meta property="og:description" content="The goal of this post is to explore some of the basic techniques that allow working with text data in a machine learning world. I will show how to analyze a collection of text documents that belong to different categories." />
+<meta property="og:url" content="https://arkadiuszkondas.com/text-data-classification-with-bbc-news-article-dataset" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/text-data-classification-with-bbc-news-article-dataset.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>Text data classification with BBC news article dataset</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">22. March 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/text-data-classification-with-bbc-news-article-dataset"></span></li>	<li class="post__meta-item">7min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-03-22-text-data-classification-with-bbc-news-article-dataset.md">suggest an edit</a></li></ul>
+				<p class="post__description">The goal of this post is to explore some of the basic techniques that allow working with text data in a machine learning world. I will show how to analyze a collection of text documents that belong to different categories.</p>
+
+				
+				<p>Let’s start from the question: where to find interesting dataset?
+We want some kind of text data.</p>
+<h2>BBC Dataset</h2>
+<p>One of the most popular problem in text data classification is matching news category based on it content or even only on its title.
+So, on Science Foundation Ireland website we can find very nice dataset with:</p>
+<ul>
+<li>2225 documents from the BBC news website corresponding to stories in five topical areas from 2004-2005.</li>
+<li>5 class labels (business, entertainment, politics, sport, tech)</li>
+</ul>
+<p><a target="_blank" href="http://mlg.ucd.ie/datasets/bbc.html">http://mlg.ucd.ie/datasets/bbc.html</a></p>
+<p>Let's see what's in the archive after downloading (we want raw text files):</p>
+<pre><code class="language-bash">➜ find . -type d -exec sh -c 'echo "{} : $(find "{}" -type f | wc -l)" file\(s\)' \;         
+./business : 510 file(s)
+./tech : 401 file(s)
+./entertainment : 386 file(s)
+./politics : 417 file(s)
+./sport : 511 file(s)</code></pre>
+<p>Looks great, each folder represent one category and contains files with news in plaintext:</p>
+<pre><code class="language-bash">➜ cd business &amp;&amp; ls | head -n 3
+001.txt
+002.txt
+003.txt</code></pre>
+<pre><code class="language-bash">➜ cat 001.txt| head -n 3
+Ad sales boost Time Warner profit
+
+Quarterly profits at US media giant TimeWarner jumped 76% to $1.13bn 
+(£600m) for the three months to December, from $639m year-earlier.</code></pre>
+<p>So it happens that loading this data into php will be super simple. Thanks to <code>FilesDataset</code> (from <a target="_blank" href="https://php-ml.org/">php-ml</a>) we must provide only root
+directory path:</p>
+<pre><code class="language-php">use Phpml\Dataset\FilesDataset;
+
+$dataset = new FilesDataset('data/bbc');</code></pre>
+<p>Samples and corresponding labels (targets) are automatically loaded into memory. </p>
+<h2>Train/test split</h2>
+<p>In order to test the accuracy of the trained model, we need to split our dataset to two separate groups: train and test dataset.
+We could take 10% of samples randomly but this approach can lead us to a bad solution. </p>
+<p>For example, all samples of type
+<code>tech</code> could be taken to test dataset and our model will never have a chance to see them while training.
+This is something we prefer to avoid.</p>
+<p>You can fix this by using <code>StratifiedRandomSplit</code>. With <code>StratifiedRandomSplit</code> distribution of samples takes into
+account their targets and try to divide them equally.
+You can adjust number of samples in each group with <code>$testSize</code> param (from 0 to 1, default: 0.3).</p>
+<pre><code class="language-php">$split = new StratifiedRandomSplit($dataset, 0.2);
+$samples = $split-&gt;getTrainSamples();
+
+echo $samples[0]; // Mutant book wins Guardian prize ...</code></pre>
+<h2>Bags of words</h2>
+<p>If we want to perform machine learning on text documents, we first need to transform the text into numerical
+feature vectors. One of the easiest way is to use bags of words representation.</p>
+<p>One may ask how to build such representation?</p>
+<p>First, we must extract all the words from all samples (<strong>build a dictionary</strong>). Then for each word we can assign
+an index (integer) and count number of occurrences in a given sample. In this way, we can build a feature vector with words counts.</p>
+<p>Consider an example dataset with 3 samples:</p>
+<pre><code class="language-php">$samples = [
+    'Lorem ipsum dolor sit amet dolor',
+    'Mauris placerat ipsum dolor',
+    'Mauris diam eros fringilla diam',
+];</code></pre>
+<p>Lets build vocabulary:</p>
+<pre><code class="language-php">    $vocabulary = [
+        0 =&gt; 'Lorem',
+        1 =&gt; 'ipsum',
+        2 =&gt; 'dolor',
+        3 =&gt; 'sit',
+        4 =&gt; 'amet',
+        5 =&gt; 'Mauris',
+        6 =&gt; 'placerat',
+        7 =&gt; 'diam',
+        8 =&gt; 'eros',
+        9 =&gt; 'fringilla',
+    ];</code></pre>
+<p>Now for each sample we can count occurrences of each word and save it to array:</p>
+<pre><code class="language-php">$tokensCounts = [
+    [0 =&gt; 1, 1 =&gt; 1, 2 =&gt; 2, 3 =&gt; 1, 4 =&gt; 1, 5 =&gt; 0, 6 =&gt; 0, 7 =&gt; 0, 8 =&gt; 0, 9 =&gt; 0],
+    [0 =&gt; 0, 1 =&gt; 1, 2 =&gt; 1, 3 =&gt; 0, 4 =&gt; 0, 5 =&gt; 1, 6 =&gt; 1, 7 =&gt; 0, 8 =&gt; 0, 9 =&gt; 0],
+    [0 =&gt; 0, 1 =&gt; 0, 2 =&gt; 0, 3 =&gt; 0, 4 =&gt; 0, 5 =&gt; 1, 6 =&gt; 0, 7 =&gt; 2, 8 =&gt; 1, 9 =&gt; 1],
+];</code></pre>
+<p>Looks like a lot of work 😫, but this is exactly what <code>TokenCountVectorizer</code> from <a target="_blank" href="https://php-ml.org/">php-ml</a> is doing.
+We can event choose <code>Tokenizer</code> class - tell how to extrac words from text (using spaces or regular expressions).</p>
+<p>There is even more, what about words: <code>am</code>, <code>an</code>, <code>and</code> etc.? We can use build in <code>StopWords</code> to remove it from dataset.</p>
+<pre><code class="language-php">use Phpml\Tokenization\WordTokenizer;
+use Phpml\FeatureExtraction\StopWords\English;
+use Phpml\FeatureExtraction\TokenCountVectorizer;
+
+$vectorizer = new TokenCountVectorizer(new WordTokenizer, new English());
+$vectorizer-&gt;fit($samples);
+$vectorizer-&gt;transform($samples);</code></pre>
+<p>So now our <code>$samples</code> are ready to train. Lets build quick model using <code>SVC</code> algorithm:</p>
+<pre><code class="language-php">use Phpml\Classification\SVC;
+use Phpml\Metric\Accuracy;
+
+$classifier = new SVC();
+$classifier-&gt;train($samples, $split-&gt;getTrainLabels());
+
+$testSamples = $split-&gt;getTestSamples();
+$vectorizer-&gt;transform($testSamples);
+
+$predicted = $classifier-&gt;predict($testSamples);
+
+echo 'Accuracy: ' . Accuracy::score($split-&gt;getTestLabels(), $predicted);</code></pre>
+<p>Accuracy equals <code>1</code> if all predicted samples are correct and <code>0</code> if none of them were guessed.</p>
+<p>In our case we can see:</p>
+<pre><code class="language-bash">Accuracy: 0.6507</code></pre>
+<p>Not so bad, but we can do it better.</p>
+<h2>From occurrences to frequencies</h2>
+<p>In a large text corpus, some words will be very present (e.g. <code>the</code>, <code>a</code>, <code>is</code>) hence carrying very little meaningful
+information about the actual contents of the document. If we train a classifier with those data then very frequent terms
+would shadow the frequencies of rarer yet more interesting terms.</p>
+<p>In order to re-weight the count features into floating point values suitable for usage by a classifier, it is very common
+to use the tf–idf transform.</p>
+<p>Of course, not always such transformations give better results. It is always best to test a few variants.</p>
+<pre><code class="language-php">use Phpml\FeatureExtraction\TfIdfTransformer;
+
+$transformer = new TfIdfTransformer();
+$transformer-&gt;fit($samples);
+$transformer-&gt;transform($samples);</code></pre>
+<p>⚠️ <strong>Remember to also transform sample that you want to predict.</strong>
+This is a common problem that people forget about.</p>
+<pre><code class="language-php">$testSamples = $split-&gt;getTestSamples();
+$vectorizer-&gt;transform($testSamples);
+$transformer-&gt;transform($testSamples);
+
+$predicted = $classifier-&gt;predict($testSamples);</code></pre>
+<p>Ok, we cane now check current accuracy of our model:</p>
+<pre><code class="language-bash">Accuracy: 0.7522</code></pre>
+<p>There is one more interesting technique.</p>
+<h2>N-grams to the rescue</h2>
+<p>Bag of words can't capture phrases and expressions of many words, effectively ignoring dependence on the order of words.
+It also doesn't include potential spelling or derivative errors.</p>
+<p>With the rescue we can use <code>N-grams</code> concept.</p>
+<p>N-grams are like a sliding window that moves across the word - a continuous sequence of characters of the specified length.
+Example is worth thousand words:</p>
+<p>n-grams with <code>min=1</code> and <code>max=2</code>:</p>
+<pre><code class="language-php">$text = 'Quick Fox';
+$ngrams = ['Q', 'u', 'i', 'c', 'k', 'Qu', 'ui', 
+    'ic', 'ck', 'F', 'o', 'x', 'Fo', 'ox'];</code></pre>
+<p>n-grams with <code>min=3</code> and <code>max=3</code>:</p>
+<pre><code class="language-php">$text = 'Quick Fox';
+$ngrams = ['Qui', 'uic', 'ick', 'Fox', 'oxe', 'xes'];</code></pre>
+<p>Now lets check how N-grams can help with news data that we want classify:</p>
+<pre><code class="language-php">$vectorizer = new TokenCountVectorizer(new NGramTokenizer(1, 3), new English());</code></pre>
+<p>Now our script outputs:</p>
+<pre><code class="language-bash">Accuracy: 0.9522</code></pre>
+<p>This looks like very decent model 🚀. Well done 💪.</p>
+<p>You can try to add <code>Kernel::LINEAR</code> and lower test dataset to achieve <code>0.9955</code>, but I recommend you try it yourself and experiment.</p>
+<h2>Bigger picture</h2>
+<p>Our model requires transformation with two transformers, same as data that we want to predict. We can use one more
+component from <code>php-ml</code> to make it cleaner and easier to persists.</p>
+<p>In machine learning, it is common to run a sequence of algorithms to process and learn from dataset. For example:</p>
+<ul>
+<li>Split each document’s text into tokens.</li>
+<li>Convert each document’s words into a numerical feature vector</li>
+<li>Learn a prediction model using the feature vectors and labels.</li>
+</ul>
+<p><code>php-ml</code> represents such a workflow as a <code>Pipeline</code>, which consists sequence of transformers and a estimator.</p>
+<pre><code class="language-php">use Phpml\Classification\SVC;
+use Phpml\FeatureExtraction\StopWords\English;
+use Phpml\FeatureExtraction\TfIdfTransformer;
+use Phpml\FeatureExtraction\TokenCountVectorizer;
+use Phpml\Metric\Accuracy;
+use Phpml\Pipeline;
+use Phpml\Tokenization\NGramTokenizer;
+
+$pipeline = new Pipeline([
+    new TokenCountVectorizer(new NGramTokenizer(1, 3), new English()),
+    new TfIdfTransformer()
+], new SVC());
+$pipeline-&gt;train($split-&gt;getTrainSamples(), $split-&gt;getTrainLabels());
+
+$predicted = $pipeline-&gt;predict($split-&gt;getTestSamples());
+
+echo 'Accuracy: ' . Accuracy::score($split-&gt;getTestLabels(), $predicted);</code></pre>
+<p><code>Pipline</code> accepts two parameters:</p>
+<ul>
+<li><code>$transformers</code> - sequence of objects that implements Transformer interface</li>
+<li><code>$estimator</code> - Estimator that can train and predict</li>
+</ul>
+<p><code>Pipeline</code> have also one more advantage. Can be persisted.</p>
+<h2>Save the model</h2>
+<p>In the end, it's a good idea to save the model so that it will not be re-trained every time.
+You can do this with <code>ModelManager</code>:</p>
+<pre><code class="language-php">use Phpml\ModelManager;
+
+$modelManager = new ModelManager();
+$modelManager-&gt;saveToFile($pipeline, 'bbc.phpml');</code></pre>
+<p>You can check that with <code>SVC</code> algorithm you need <code>~50</code> seconds (on my laptop) to train the model.</p>
+<p>Now you can use this file to restore trained model and predict new sample 🚀</p>
+<pre><code class="language-php">use Phpml\ModelManager;
+
+$modelManager = new ModelManager();
+$model = $modelManager-&gt;restoreFromFile('bbc.phpml');
+
+$text = 'Some news'; // or load it from request, api, cli, etc.
+
+echo $model-&gt;predict([$text]);</code></pre>
+<p>With prepared model timing is much more better:</p>
+<pre><code class="language-bash">Model loaded in 1.3793s
+Predicted category: tech in 1.260704s</code></pre>
+<p>Ready to use code can be found on <a target="_blank" href="https://github.com/php-ai/php-ml-examples/tree/master/classification" rel="nofollow">https://github.com/php-ai/php-ml-examples/tree/master/classification</a>
+in files: <code>bbc.php</code>, <code>bbcPipeline.php</code> and <code>bbcRestored.php</code>.</p>
+<p>You can also try <code>NaiveBayes</code> classifier, which is much faster and achieves very good results for these data.</p>
+<p>Happy n-gram tokenization 😉.</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="http://mlg.ucd.ie/files/publications/greene06icml.pdf" rel="nofollow" target="_blank">D. Greene and P. Cunningham. &#039;Practical Solutions to the Problem of Diagonal Dominance in Kernel Document Clustering&#039;, Proc. ICML 2006.</a></li>
+															<li><a href="http://mlg.ucd.ie/datasets/bbc.html" rel="nofollow" target="_blank">BBC Dataset</a></li>
+															<li><a href="https://github.com/php-ai/php-ml-examples" rel="nofollow" target="_blank">php-ml-examples</a></li>
+															<li><a href="https://scikit-learn.org/stable/modules/feature_extraction.html" rel="nofollow" target="_blank">Feature extraction</a></li>
+															<li><a href="https://www.elastic.co/guide/en/elasticsearch/reference/current/analysis-ngram-tokenizer.html" rel="nofollow" target="_blank">NGram Tokenizer</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

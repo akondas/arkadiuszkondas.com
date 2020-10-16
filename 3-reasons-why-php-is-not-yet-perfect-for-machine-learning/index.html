@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	3 Reasons Why PHP is Not Yet Perfect for Machine Learning | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="3 Reasons Why PHP is Not Yet Perfect for Machine Learning">
+<meta name="twitter:description" content="My thoughts on why PHP isn&#039;t yet an ideal environment for the universal use of machine learning. I will discuss the three main reasons that are the cause of the current state of affairs." />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/3-reasons-why-php-is-not-yet-perfect-for-machine-learning.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="3 Reasons Why PHP is Not Yet Perfect for Machine Learning" />
+<meta property="og:description" content="My thoughts on why PHP isn&#039;t yet an ideal environment for the universal use of machine learning. I will discuss the three main reasons that are the cause of the current state of affairs." />
+<meta property="og:url" content="https://arkadiuszkondas.com/3-reasons-why-php-is-not-yet-perfect-for-machine-learning" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/3-reasons-why-php-is-not-yet-perfect-for-machine-learning.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>3 Reasons Why PHP is Not Yet Perfect for Machine Learning</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">29. March 2019</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/3-reasons-why-php-is-not-yet-perfect-for-machine-learning"></span></li>	<li class="post__meta-item">4min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2019/2019-03-29-3-reasons-why-php-is-not-yet-perfect-for-machine-learning.md">suggest an edit</a></li></ul>
+				<p class="post__description">My thoughts on why PHP isn't yet an ideal environment for the universal use of machine learning. I will discuss the three main reasons that are the cause of the current state of affairs.</p>
+
+				
+				<p>Let's get straight to the points.</p>
+<h2>1. No possibility of visualization</h2>
+<blockquote>
+<p>...make both calculations and graphs. Both sorts of output should be studied; each will contribute to understanding.
+F. J. Anscombe, 1973 </p>
+</blockquote>
+<p>Let's ask yourself a very simple question: What do these graphs have in common?
+(these are simple collections of points: <code>x</code> and <code>y</code>)</p>
+<p><img src="/assets/posts/all-dinos-grey.jpg" alt="all dinos" /></p>
+<p>The answer is very simple and surprising: a common set of metrics. All this graph have very similar (with accuracy to the second place):</p>
+<p>X Mean: <code>54.26</code><br />
+Y Mean: <code>47.83</code><br />
+X SD: <code>16.76</code><br />
+Y SD: <code>26.93</code><br />
+Corr.: <code>-0.06</code>  </p>
+<p>Surprised? This isn't the end. Say hello to datasaurus:</p>
+<p><img src="/assets/posts/dino.jpg" alt="Datasaurus" /></p>
+<p>Yes, points from this graph have identical metrics showed above 🤯. </p>
+<p>I hope I convinced you that a fundamental part of the machine learning process is data visualization.</p>
+<p>Currently, in PHP we don't have any support like there is in <code>python</code> world. I can show you how easy is to plot a graph
+to check if your predicted data don't remind a dinosaur.</p>
+<pre><code class="language-python">import pandas as pd
+import matplotlib.pyplot as plt
+
+data = pd.read_csv('dino.csv',header=None)
+plt.scatter(data[0], data[1], color='red');</code></pre>
+<p>That's it. 4 line of code. Perfect.</p>
+<p>PHP: 0 - Python: 1</p>
+<h2>2. No support for PHP in Jupyter Notebook</h2>
+<p><a target="_blank" href="https://jupyter.org/" rel="nofollow">Jupyter Notebook</a> is unbeatable for learning machine learning.
+You can prepare, inspect, visualize data and train your model using only the browser. </p>
+<p>All thanks to the deadly ability to mix code (<code>Julia</code>, <code>Python</code> and <code>R</code>) , text (<code>markdown</code>) and visualization (<code>img</code>).</p>
+<p>Below is an example of a notebook fragment:
+<img src="/assets/posts/crime-notebook.png" alt="Crime notebook" /></p>
+<p>In the Machine Learning world, you will spend a lot of time analyzing the data.
+You will want to keep notes, experiment and train various types of models. And of course, help yourself with visualization.</p>
+<p>I will leave you an interesting example of criminal data analysis:
+<a target="_blank" href="https://www.kaggle.com/fahd09/eda-of-crime-in-chicago-2005-2016" rel="nofollow">Understanding Crime in Chicago</a></p>
+<p>I don't need to mention that such a notebook is also ideal for versioning.</p>
+<p>PHP: 0 - Python: 2</p>
+<h2>3. No GPU support</h2>
+<p>Until the moment your dataset does not exceed the gigabytes or you will not use deep learning, you will not need
+to use the GPU. Nevertheless, such a moment can come. Then what?</p>
+<p>Take the example of <a target="_blank" href="https://www.tensorflow.org/" rel="nofollow">TensorFlow</a>, which in comparison to other environments of neural networks
+is distinguished by the function of distributed computing. It gives you the possibility of full control on the way of
+separating calculations between the graphics device (GPU) or local processor (CPU). There are many different strategies to choose from.</p>
+<p>For example, you can decide where to put your variables. Here we put <code>a</code> variable on GPU and <code>b</code> constant on CPU</p>
+<pre><code class="language-python">with tf.device('/gpu:0'):
+    a = tf.Variable(15.12)
+
+with tf.device('/cpu:0'):
+    b = tf.constant(3.14)</code></pre>
+<p>This is only the beginning. You can set up a whole server farm for work. You can also use <a target="_blank" href="https://cloud.google.com/tpu/" rel="nofollow">TPU</a> - Tensor Processing Unit.
+Dedicated computation unit that can accelerate machine learning to rocket speed 🚀.</p>
+<p>In PHP we can find one interesting repo: <a target="_blank" href="https://github.com/dnishiyama85/PHPMatrix">dnishiyama85/PHPMatrix</a></p>
+<blockquote>
+<p>This is a PHP extension which computes float matrix products. It supports
+OpenBLAS sgemm and cuBLAS sgemm function.</p>
+</blockquote>
+<p>But in my opinion, the whole GPU topic at this moment crawls like a baby.</p>
+<p>I don't know if there is any point in comparing anything here, but let's summarize for peace:
+PHP: 0 - Python: 3</p>
+<h2>Conclusions</h2>
+<p>As you can see I have chosen 3 very important reasons why PHP isn't an ideal choice for learning and using Machine Learning.
+It does not mean that it will be like this all the time. </p>
+<p>I remind you that PHP was made to display simple HTML sites. Currently, you can use it to build enterprise-class systems.
+Let's take for example Spotify: </p>
+<blockquote>
+<p>The music streaming service relies on Symfony to maintain more than 75 million active users.
+There are almost 600 thousand requests per second, according to the website, and a huge traffic that comes from mobile devices. </p>
+</blockquote>
+<div style="width: 500px; margin:0 auto;">
+<blockquote class="twitter-tweet" data-cards="hidden" data-lang="pl">
+<p lang="en" dir="ltr"><a href="http://t.co/xHF41AM1vW">http://t.co/xHF41AM1vW</a> is powered by the <a href="https://twitter.com/symfony?ref_src=twsrc%5Etfw">@symfony</a> framework and many great packages from <a href="http://t.co/0kWedwWmS4">http://t.co/0kWedwWmS4</a> using Composer by <a href="https://twitter.com/seldaek?ref_src=twsrc%5Etfw">@seldaek</a></p>— Spotify Engineering (@SpotifyEng) <a href="https://twitter.com/SpotifyEng/status/595972071609339905?ref_src=twsrc%5Etfw">6 maja 2015</a>
+</blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+<p>Ironically, Spotify has one of the largest server farms dedicated to Machine Learning:
+<a target="_blank" href="https://medium.com/s/story/spotifys-discover-weekly-how-machine-learning-finds-your-new-music-19a41ab76efe" rel="nofollow">How Does Spotify Know You So Well?</a></p>
+<p>Perhaps time will show the demand for ML in PHP, but as long as the above-mentioned problems are not resolved, we have nothing to count on.</p>
+<p>But don't be sad. I will show you my favorite quote:</p>
+<blockquote>
+<p>Those who are crazy enough to think they can change the world usually do.</p>
+</blockquote>
+<p>So if you follow me on <a target="_blank" href="https://twitter.com/ArkadiuszKondas">Twitter</a>, you know that changes are coming ... 😨</p>
+<p>I do not know if I can achieve anything alone, but perhaps all of this will give birth to an ecosystem that will be able
+to develop itself freely.</p>
+<p>Thanks for reading.</p>
+<p>P.S.</p>
+<p>In the next post, I will wonder why PHP can be quite well suited to the learning and production use of machine learning.</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://www.autodeskresearch.com/publications/samestats" rel="nofollow" target="_blank">Same Stats, Different Graphs: Generating Datasets with Varied Appearance and Identical Statistics through Simulated Annealing</a></li>
+															<li><a href="https://matplotlib.org/" rel="nofollow" target="_blank">matplotlib</a></li>
+															<li><a href="https://www.tensorflow.org/" rel="nofollow" target="_blank">TensorFlow</a></li>
+															<li><a href="https://jupyter.org/" rel="nofollow" target="_blank">Jupyter Notebook</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>
