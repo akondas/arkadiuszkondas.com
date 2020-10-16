@@ -1,5 +1,11 @@
 parameters:
     projects:
+        - name: Repman
+          title: "PHP Repository Manager: packagist proxy and host for private packages"
+          description: "Repman is a PHP repository manager. Main features: free and open source, works as a proxy for packagist.org (speeds up your local builds), hosts your private packages, allows to create individual access tokens, supports private package import from GitHub, GitLab and Bitbucket with one click, REST API and security scanner"
+          repository: https://github.com/repman-io/repman
+          image: /assets/thumbs/repman.png
+
         -
             name: Munus
             title: "Power of object-oriented programming with the elegance of functional programming."
@@ -11,7 +17,7 @@ parameters:
             name: PHP-ML
             title: "Fresh approach to Machine Learning in PHP. Algorithms, Cross Validation, Neural Network, Preprocessing, Feature Extraction and much more in one library."
             description: "PHP-ML is a library for experimenting with Machine Learning in PHP, PHP-ML gives you an easy to use common API for training your bot and making it do predictions based on input data. It offers a variety of different algorithms for pattern recognition and complex statistics calculations."
-            repository: https://github.com/php-ai/php-ml
+            repository: https://gitlab.com/php-ai/php-ml
             image: /assets/thumbs/php-ml-logo.png
 
         -   name: php-grandmaster
