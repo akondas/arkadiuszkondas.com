@@ -14,14 +14,18 @@
     },
     "require": {
         "symplify/statie": "^5.3",
-        "tovic/parsedown-extra-plugin": "dev-master#82b9e16af200d572654809b0e7b5923d57bb3a68",
-        "php-ai/php-ml": "^0.7.0"
+        "tovic/parsedown-extra-plugin": "^1.1",
+        "php-ai/php-ml": "^0.7.0",
+        "latte/latte": "2.5.7"
     },
     "require-dev": {
         "phpstan/phpstan": "^0.10",
         "symplify/easy-coding-standard": "^5.3"
     },
     "scripts": {
+      "post-install-cmd": "@patch-vendor",
+      "post-update-cmd": "@patch-vendor",
+      "patch-vendor": "php patches/apply.php",
       "check": [
         "@ecs",
         "@phpstan"
@@ -29,6 +33,6 @@
       "ecs": "ecs check src",
       "fix": "ecs check --fix src",
       "phpstan": "phpstan analyse -l max src --ansi",
-      "build": "statie generate site --output=dist"
+      "build": "vendor/bin/statie generate site --output=dist"
     }
 }

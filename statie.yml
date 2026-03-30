@@ -6,8 +6,6 @@ imports:
 
 parameters:
     github_repository_source_directory: 'https://github.com/akondas/arkadiuszkondas.com/tree/master/site'
-    markdown_headline_anchors: true
-
     # other constants
     author: 'Arkadiusz Kondas'
     email: 'arkadiusz.kondas@gmail.com'
@@ -24,6 +22,7 @@ parameters:
     generators:
         posts:
             route_prefix: ''
+            has_headline_anchors: false
 
 services:
     ParsedownExtra:

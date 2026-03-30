@@ -9,7 +9,7 @@ title: Projects
 	{% endif %}
 
 	<h2><a href="{{ project.repository }}">{{ project.name }}</a></h2>
-	<h3>{{ project.title }}</h3>
+	{% if project.title is defined %}<h3>{{ project.title }}</h3>{% endif %}
 	<p>{{ project.description|raw }}</p>
 	<p><a href="{{ project.repository }}" class="link--more">Github</a><p>
 {% endfor %}
