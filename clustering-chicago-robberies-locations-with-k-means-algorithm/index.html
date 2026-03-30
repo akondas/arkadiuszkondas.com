@@ -82,7 +82,7 @@
 
 				
 				<h1>Chicago crimes dataset</h1>
-<p>The internet is full of interesting datasets.
+<p>The internet is full of interesting datasets. 
 This time I want to show you data extracted from the Chicago Police Department's CLEAR (Citizen Law Enforcement Analysis and Reporting) system.</p>
 <blockquote>
 <p>This dataset reflects reported incidents of crime (with the exception of murders where data exists for each victim) that occurred in the City of Chicago from 2001 to present, minus the most recent seven days. </p>
@@ -90,10 +90,9 @@ This time I want to show you data extracted from the Chicago Police Department's
 <p>You can read more and download data from <a target="_blank" href="https://www.kaggle.com/currie32/crimes-in-chicago" rel="nofollow">kaggle.com</a></p>
 <p>At first, I wanted to predict some results about the narcotics crimes, but it turned out that it's happening everywhere:</p>
 <div style="width: 500px; margin:0 auto;">
-<blockquote class="twitter-tweet" data-cards="hidden" data-lang="pl">
-<p lang="en" dir="ltr">Trying to predict narcotics crimes in Chicago ... but I can just assume that everywhere in the city <a href="https://twitter.com/hashtag/clustering?src=hash&amp;ref_src=twsrc%5Etfw">#clustering</a> <a href="https://twitter.com/hashtag/MachineLearning?src=hash&amp;ref_src=twsrc%5Etfw">#MachineLearning</a> 🤔 maybe kidnapping will show more interesting results <a href="https://t.co/zi0MelRGBg">pic.twitter.com/zi0MelRGBg</a></p>— Arkadiusz Kondas (@ArkadiuszKondas) <a href="https://twitter.com/ArkadiuszKondas/status/1104287610997014528?ref_src=twsrc%5Etfw">9 marca 2019</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
+<blockquote class="twitter-tweet" data-cards="hidden" data-lang="pl"><p lang="en" dir="ltr">Trying to predict narcotics crimes in Chicago ... but I can just assume that everywhere in the city <a href="https://twitter.com/hashtag/clustering?src=hash&amp;ref_src=twsrc%5Etfw">#clustering</a> <a href="https://twitter.com/hashtag/MachineLearning?src=hash&amp;ref_src=twsrc%5Etfw">#MachineLearning</a> 🤔 maybe kidnapping will show more interesting results <a href="https://t.co/zi0MelRGBg">pic.twitter.com/zi0MelRGBg</a></p>&mdash; Arkadiusz Kondas (@ArkadiuszKondas) <a href="https://twitter.com/ArkadiuszKondas/status/1104287610997014528?ref_src=twsrc%5Etfw">9 marca 2019</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
 <p>Then another idea came to my head. I will try to have fun and put myself in the role of head of the security officer and plan the deployment of
 patrol facilities for my new company.</p>
 <h1>Data preparation and visualization</h1>
@@ -137,17 +136,17 @@ file_put_contents('robberies.csv', implode(PHP_EOL, $lines));</code></pre>
 <p>It looks like quite a lot of thugs. As the head of security, I would like to plan my new posts out.
 Let's see how unsupervised learning can help me solve that problem.</p>
 <h1>K-means algorithm</h1>
-<p>To understand the principles of this algorithm, we must introduce one new concept: <code>centroid</code>.
+<p>To understand the principles of this algorithm, we must introduce one new concept: <code>centroid</code>. 
 A centroid is a representative of a given cluster or the center of a given group. Now we can split this algorithm in 4 simple steps:</p>
 <p><strong>Step 1</strong>
-Choice the amount of centroids and the initial arrangement of them in space.
-For this algorithm, we need to predetermine how many groups we want to divide our set.
+Choice the amount of centroids and the initial arrangement of them in space. 
+For this algorithm, we need to predetermine how many groups we want to divide our set. 
 Then we place the number of points in the space (). </p>
 <p>The final result depends on the initial placement. Various techniques are used here to optimize its operation.</p>
 <p><strong>Step 2</strong>
 In this step, we calculate the average distances of individual points and assign them to the nearest centroid.</p>
 <p><strong>Step 3</strong>
-We are updating the location of our centroids.
+We are updating the location of our centroids. 
 The new centroid coordinates are the arithmetic mean of the coordinates of all points having its group.</p>
 <p><strong>Final step</strong>
 The second and third steps are repeated until the convergence criterion is reached, which is most often the state in
@@ -175,7 +174,7 @@ foreach ($clusters as $key =&gt; $cluster) {
 }
 
 file_put_contents('robberies-clusters.csv', implode(PHP_EOL, $lines));</code></pre>
-<p>So now I have <code>csv</code> file with following structure: <code>clusterIndex;latitude;longitude</code>.
+<p>So now I have <code>csv</code> file with following structure: <code>clusterIndex;latitude;longitude</code>. 
 With this simple python script I can create nice visualization map:</p>
 <pre><code class="language-python">import csv
 import random
@@ -223,7 +222,7 @@ image.save('robbery-clusters.png')</code></pre>
 <p>One of the main questions that you may encounter while learning this algorithm is: how to choose the best k?
 The answer is not unambiguous. It may depend on many factors: business, technological or pre-imposes.
 I would like to show you one more method.</p>
-<p>After determining the central points of our clusters, we can count the sum of the distances of all points from this cluster with its center.
+<p>After determining the central points of our clusters, we can count the sum of the distances of all points from this cluster with its center. 
 This method has its name: <a target="_blank" href="https://hlab.stanford.edu/brian/error_sum_of_squares.html" rel="nofollow">Error Sum of Squares</a> (SSE)</p>
 <pre><code class="language-php">use Phpml\Math\Distance\Euclidean;
 
@@ -237,7 +236,7 @@ function squaredDistance(array $center, array $cluster): float
 
     return $sum;
 }</code></pre>
-<p>Unfortunately, at this point, in <code>php-ml</code> isn't possible to get centroids, you have to do it yourself by overwriting method,
+<p>Unfortunately, at this point, in <code>php-ml</code> isn't possible to get centroids, you have to do it yourself by overwriting method, 
 for example <a target="_blank" href="https://gist.github.com/akondas/be142e754f9c7db095eb79895e269acd" rel="nofollow">KMeans.php</a></p>
 <p>In this way we can calculate SSE for each k from 1 to 20:</p>
 <pre><code class="language-php">for ($i=1; $i&lt;21; $i++) {
@@ -261,10 +260,10 @@ SSE (k=5): 91.08741606063
 SSE (k=6): 73.768755748178
 SSE (k=7): 62.959303138102
 SSE (k=8): 52.128966989257</code></pre>
-<p>Let's plot this data, we will be interested in the place where the graph &quot;bends&quot;:</p>
+<p>Let's plot this data, we will be interested in the place where the graph "bends":</p>
 <p><a target="_blank" href="/assets/posts/clustering-sse-robbery.svg"><img src="/assets/posts/clustering-sse-robbery.svg" alt="chicago robberies sse vs k" /></a></p>
 <p>As you can see on <code>k=8</code> (more or less) progress significantly slows down and further clustering makes less sense.
-Let's check another dataset. On the <a target="_blank" href="http://cs.joensuu.fi/sipu/datasets/" rel="nofollow">University of Eastern Finland</a>,
+Let's check another dataset. On the <a target="_blank" href="http://cs.joensuu.fi/sipu/datasets/" rel="nofollow">University of Eastern Finland</a>, 
 we can find nice gaussian clusters datasets with varying cluster overlap and dimensions. I begin from visualization:</p>
 <p><a target="_blank" href="/assets/posts/clustering-synthetic.svg"><img src="/assets/posts/clustering-synthetic.svg" alt="clustering synthetic dataset" /></a></p>
 <p>Now calculate SSE from <code>k=1</code> to <code>k=20</code>:</p>
@@ -277,11 +276,11 @@ For collections with more dimensions, this will no longer be possible.</p>
 <h1>Further exploration</h1>
 <p>In this post, I barely touched the topic of clustering with only one algorithm.
 You can find much more information about clustering in <a target="_blank" href="https://en.wikipedia.org/wiki/Cluster_analysis">Wikipedia</a>.
-As in the previous post <code>scikit-learn</code> package have also very nice and descriptive website about
-<a target="_blank" href="https://scikit-learn.org/stable/modules/clustering.html#clustering" rel="nofollow">clustering</a>.
+As in the previous post <code>scikit-learn</code> package have also very nice and descriptive website about 
+<a target="_blank" href="https://scikit-learn.org/stable/modules/clustering.html#clustering" rel="nofollow">clustering</a>. 
 The comparison between different types of algorithms is very interesting:</p>
 <p><img src="/assets/posts/sphx_glr_plot_cluster_comparison_001.jpg" alt="clustering comparison" /></p>
-<p>There is also a very nice website that can help with k-means visualization
+<p>There is also a very nice website that can help with k-means visualization 
 <a target="_blank" href="http://web.stanford.edu/class/ee103/visualizations/kmeans/kmeans.html" rel="nofollow">http://web.stanford.edu/class/ee103/visualizations/kmeans/kmeans.html</a></p>
 <p>Happy clustering!</p>
 

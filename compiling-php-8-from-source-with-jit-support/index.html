@@ -81,11 +81,13 @@
 				<p class="post__description">Initially, this post was to apply to the experiments with JIT alone. However, I encountered some problems at the time of compiling PHP so I decided to share this experience.</p>
 
 				
-				<p><em>
-<strong>UPDATE (2019-04-19)</strong><br />
-If you want you can use prepared docker image from my other blog post:
-<a target="_blank" href="/how-to-run-php-8-with-jit-support-using-docker/">How to run PHP 8 with JIT support using Docker</a>.
-</em></p>
+				<ul>
+<li><strong>UPDATE (2019-04-19)</strong><br />
+If you want you can use prepared docker image from my other blog post: 
+<a target="_blank" href="/how-to-run-php-8-with-jit-support-using-docker/">How to run PHP 8 with JIT support using Docker</a>.</li>
+<li>
+</li>
+</ul>
 <p>If you don't know what JIT is and why it will we implemented in PHP 8 please read Joe Watkins <a target="_blank" href="https://blog.krakjoe.ninja/2019/03/php-gr8.html" rel="nofollow">PHP GR8</a> blog post.</p>
 <p>In my opinion, the more people will be able to experiment with JIT the better it will be.</p>
 <p>Let's start at the very beginning. The process outlined in this post applies to Ubuntu,
@@ -95,7 +97,7 @@ but the rest of the systems will look the same (with some exceptions: Windows, s
 <pre><code class="language-bash">sudo apt-get update
 sudo apt-get install git build-essential 
 libgccjit-6-dev libzip-dev autoconf re2c bison libxml2-dev -y</code></pre>
-<p>It may turn out that this is not enough. There is then a general rule: try to install missing dependency with <code>lib</code> prefix
+<p>It may turn out that this is not enough. There is then a general rule: try to install missing dependency with <code>lib</code> prefix 
 and/or <code>-dev</code> suffix. For example, when you encounter an error like this (in configure step):</p>
 <pre><code class="language-bash">configure: error: xml2-config not found. 
 Please check your libxml2 installation.</code></pre>
@@ -176,12 +178,12 @@ Copyright (c) The PHP Group
 Zend Engine v4.0.0-dev, Copyright (c) Zend Technologies</code></pre>
 <p>It starts to get interesting.</p>
 <h2>Enable extension</h2>
-<p>And this is the point about which I completely forgot. Without it, there will be no support for JIT because
+<p>And this is the point about which I completely forgot. Without it, there will be no support for JIT because 
 it is an integral part of <code>opcache</code>.</p>
 <blockquote>
 <p>PHP JIT is implemented as an almost independent part of OPcache. It may be enabled/disabled at PHP compile time and at run-time.</p>
 </blockquote>
-<p>We want to enable <code>opcache</code> extension. Since there is no configuration file you can create new one.
+<p>We want to enable <code>opcache</code> extension. Since there is no configuration file you can create new one. 
 First lets check correct path:</p>
 <pre><code class="language-bash">$ /opt/php/php8/bin/php --ini
 Configuration File (php.ini) Path: /opt/php/php8/lib

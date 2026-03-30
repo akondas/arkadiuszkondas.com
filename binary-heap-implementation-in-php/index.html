@@ -81,15 +81,15 @@
 				<p class="post__description">Short explanation what is binary heap and how to implement it in pure PHP from scratch. I will show you how to compare it with native solution (SPL). Performance results are surprising.</p>
 
 				
-				<p>The main motivation to create this implementation was a need to create a different structure (kd-tree) for my
-machine learning library <a target="_blank" href="http://php-ml.org">php-ml</a>. This is also an interesting research, so I decided that it
+				<p>The main motivation to create this implementation was a need to create a different structure (kd-tree) for my 
+machine learning library <a target="_blank" href="http://php-ml.org">php-ml</a>. This is also an interesting research, so I decided that it 
 is worth sharing. </p>
 <h2>Heap</h2>
 <p>Heap is a special data structure that is based on a tree and finds use in many algorithms.
 A typical data structure, which can be built using a heap, is a <a target="_blank" href="https://en.wikipedia.org/wiki/Priority_queue" rel="nofollow">priority queue</a>.
 The heap also used for one of the most popular and efficient sorting algorithms - <a target="_blank" href="https://en.wikipedia.org/wiki/Heapsort" rel="nofollow">heap sort</a>.</p>
 <p>The heap is defined in such a way, that the root of the heap is smaller or larger than its children's nodes.</p>
-<p>If the parent node has a higher value than the children's nodes, we have dealing with <code>max-heap</code>, and if the parent
+<p>If the parent node has a higher value than the children's nodes, we have dealing with <code>max-heap</code>, and if the parent 
 node has a smaller value than children's nodes, we're talking about a <code>min-heap</code>.</p>
 <p>Example of <code>min-heap</code>:</p>
 <p><img src="/assets/posts/heap.svg" alt="binary min heap" /></p>
@@ -100,10 +100,10 @@ node has a smaller value than children's nodes, we're talking about a <code>min-
 <p>The binary heap is a full <a target="_blank" href="https://en.wikipedia.org/wiki/Binary_tree" rel="nofollow">binary tree</a>, which all internal levels are completely filled and the last level can be filled in
 completely or partially. As we are dealing with a binary structure, most of the operations can be done in a logarithmic time.</p>
 <p>Most popular way to implement a binary heap is to use an array. If we assume that the root is under index 1, its elements
-children will be located under indexes 2 and 3. This order can be generally written down as follows:
+children will be located under indexes 2 and 3. This order can be generally written down as follows: 
 index <code>i</code> indicates parent, index <code>2*i</code> - left child, and <code>2*i + 1</code> - right child.</p>
 <h3>Implementation</h3>
-<p>At the beginning let's assume that elements of the heap can be any elements <code>mixed[]</code>.
+<p>At the beginning let's assume that elements of the heap can be any elements <code>mixed[]</code>. 
 Such elements can't be compared using <code>&gt;</code> or <code>&lt;</code> operator, so we need some kind of <code>callable $scoreFunction</code>.</p>
 <pre><code class="language-php">final class BinaryHeap
 {
@@ -165,7 +165,7 @@ public function nodes(): array
 }</code></pre>
 <p>As you can see, <code>peek</code> is really simple without any complexity (<code>O(1)</code>).
 Now a more difficult part. </p>
-<p>When an element needs to be added to the heap, it is placed at the end of the array and must &quot;bubble&quot; up by repeatedly
+<p>When an element needs to be added to the heap, it is placed at the end of the array and must "bubble" up by repeatedly
 exchanging it from the parent until we find a parent that is smaller than the new node.</p>
 <pre><code class="language-php">public function push($node): void
 {
@@ -249,7 +249,7 @@ private function sinkDown(int $index): void
     }</code></pre>
 <p>You can find full working code in <a target="_blank" href="https://github.com/php-ai/php-data-structures">php-ai/php-data-structures</a>.</p>
 <h2>Performance 🚀</h2>
-<p>After happy coding we need to check how our solution is compared to other approaches.
+<p>After happy coding we need to check how our solution is compared to other approaches. 
 Consider how you can draw from the collection the smallest possible value differently.</p>
 <p><strong>sort</strong><br />
 You can sort the array and extract the first element from it (works only for primitives) .</p>
@@ -291,17 +291,17 @@ $heap-&gt;insert(...);
 echo $heap-&gt;top();</code></pre>
 <h3>Benchmarks</h3>
 <p>A simple script will not provide good quality performance tests. It also doesn't ensure their good stability.
-Fortunately, there is a very good designed project in <code>PHP</code> land:
+Fortunately, there is a very good designed project in <code>PHP</code> land: 
 <a target="_blank" href="https://github.com/phpbench/phpbench">phpbench/phpbench</a> (thanks to <a target="_blank" href="https://twitter.com/dantleech" rel="nofollow">@dantleech</a>).</p>
 <p>For me <strong>Retry Threshold</strong> is the most important feature:</p>
 <blockquote>
 <p>PHPBench is able to dramatically improve the stability of your benchmarks by retrying the iteration set until all the
 deviations in time between iterations fit within a given margin of error.</p>
 </blockquote>
-<p>This means that <code>phpbench</code> will keep repeating tests until their average time stabilizes.
+<p>This means that <code>phpbench</code> will keep repeating tests until their average time stabilizes. 
 This gives us confidence that no other processes (running in the background) will affect our tests.</p>
 <p>We will run script with <code>--retry-threshold=2</code>, what will mean, that each iteration can have a maximum of 2% deviation over time.</p>
-<p>Let's say clearly what we will tests: we will draw 10,000 random numbers from the range.
+<p>Let's say clearly what we will tests: we will draw 10,000 random numbers from the range. 
 Then we will measure the time of adding the next random number to our collection and extract the minimum from it.
 You can check full benchmark script in <a target="_blank" href="https://github.com/php-ai/php-data-structures/blob/master/benchmarks/Heap/BinaryHeapBench.php">BinaryHeapBench</a>.</p>
 <p>Lets run benchmarks and see what's happened. Here are results for <code>10 000</code> random numbers:</p>
@@ -322,14 +322,14 @@ The picture is worth a thousand words so simple chart illustrate it better.</p>
 <p><a target="_blank" href="/assets/posts/heap-performance.svg"><img src="/assets/posts/heap-performance.svg" alt="heap performance" /></a></p>
 <p>Surprised? 🤯</p>
 <p>As you can see, our implementation may not be the fastest, but it <strong>maintains an order of magnitude the same as the native solution</strong>.
-To be sure of the stability of the solution, we will now do a series of tests.
+To be sure of the stability of the solution, we will now do a series of tests. 
 We will increase the number of items in array to search: from 10x to 100000x 😱. Have no fear, Mr. Kondas is here 😂.</p>
 <p><a target="_blank" href="/assets/posts/heap-performance-series.svg"><img src="/assets/posts/heap-performance-series.svg" alt="heap performance series" /></a></p>
 <p>The chart has been cropped (since <code>sort</code> have dramatic times above 10000 elements), you can see original chart <a target="_blank" href="/assets/posts/heap-performance-series-raw.svg" rel="nofollow">here</a>.
 You can find data collected in benchmarks in sources list under this post.</p>
 <h3>Summary</h3>
 <p>As you can see <code>BinaryHeap</code> has very good performance while maintaining flexibility.
-We have conducted a series of tests with good stability (<code>--retry-threshold</code>). You can use <code>scoreFunction</code> to
+We have conducted a series of tests with good stability (<code>--retry-threshold</code>). You can use <code>scoreFunction</code> to 
 implement any heap: from min to max and a whole bunch of others. You can install it using composer: <code>php-ai/php-data-structures</code>.</p>
 <p>Happy heaping 😉</p>
 

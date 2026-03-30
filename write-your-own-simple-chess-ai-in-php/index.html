@@ -83,13 +83,13 @@
 				
 				<p>At the end of this article you will find all the links you are interested in, among them the source code for the entire engine.</p>
 <h2>PHP vs Chess ♛</h2>
-<p>At the outset, let me point out that PHP will be responsible only for calculating the best next move.
+<p>At the outset, let me point out that PHP will be responsible only for calculating the best next move. 
 Visualization and the game itself will take place in the browser. Knowing the rules of playing chess is required.</p>
 <p>To calculate the correct movements and check if the game was finished, we will use <a target="_blank" href="https://github.com/jhlywa/chess.js">chess.js</a>.
 Next, <a target="_blank" href="https://chessboardjs.com/">chessboard.js</a> will help us with chessboard visualization.</p>
 <p><img src="/assets/posts/chessboard.png" alt="chessboard" /></p>
 <p>With the help of the two above we can create initial boilerplate, that allow us to test and check our chess AI buddy.
-You can find whole template in <a target="_blank" href="https://github.com/akondas/php-grandmaster/blob/master/public/index.html">index.html</a>,
+You can find whole template in <a target="_blank" href="https://github.com/akondas/php-grandmaster/blob/master/public/index.html">index.html</a>, 
 but I will show you the most important part:</p>
 <pre><code class="language-js">var loadMove = function () {
     $.post('/api.php', {
@@ -100,14 +100,14 @@ but I will show you the most important part:</p>
         // ...
     }, 'json');
 };</code></pre>
-<p>As you can see, we will be creating one RESTwanabe endpoint, that will return next best move, calculated for given
+<p>As you can see, we will be creating one RESTwanabe endpoint, that will return next best move, calculated for given 
 state of the game: <code>game.fen()</code>. What FEN is, you'll probably ask:</p>
 <blockquote>
 <p>Forsyth–Edwards Notation (FEN) is a standard notation for describing a particular board position of a chess game (source: <a target="_blank" href="https://en.wikipedia.org/wiki/Forsyth%E2%80%93Edwards_Notation">wikipedia</a>)</p>
 </blockquote>
 <p>So for each player move we will send current state to PHP backend and we will be waiting (let's hope not too long) for a decision on the best move.</p>
 <h2>Round 1: Random move strategy</h2>
-<p>In first round our task is very simple: return any possible random move. With little help of
+<p>In first round our task is very simple: return any possible random move. With little help of 
 <a target="_blank" href="https://github.com/akondas/chess.php">chess.php</a> library (which is my improved for performance fork from port of chess.js) we can safely
 generate every possible move and return the random one. We want to also create nice and clean code so how to start?</p>
 <p>Let's begin with simple contract:</p>
@@ -117,7 +117,7 @@ interface Strategy
 {
     public function nextMove(string $state): ?string;
 }</code></pre>
-<p>Now, let's assume, that chess.php is not only one (and sure not best) chess library solution.
+<p>Now, let's assume, that chess.php is not only one (and sure not best) chess library solution. 
 We would like to not coupled our project with any specific implementation, so we need another contract:</p>
 <pre><code class="language-php">interface Chessboard
 {
@@ -128,7 +128,7 @@ We would like to not coupled our project with any specific implementation, so we
      */
     public function moves(): array;
 }</code></pre>
-<p>This will allow us, in the future, to change any implementation to other. In the meantime, let's make a quick
+<p>This will allow us, in the future, to change any implementation to other. In the meantime, let's make a quick 
 implementation with chess.php:</p>
 <pre><code class="language-php">namespace Grandmaster\Chessboard;
 
@@ -196,12 +196,14 @@ final class RandomMove implements Strategy
 <div class="board-wrapper">
     <div id="board-1" class="board"></div>
     <div id="board-1-loader" class="loader"><span>Invoking lambda ...</span></div>
-    Time*: <span class="time"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
-    <br><br>
-    Move history:<br><div class="move-history"></div>
+    Time*: <span class="time"></span><br />
+    <small>*php time on AWS Lambda, http request latency not included</small>
+    <br /><br />
+    Move history:<br />
+    <div class="move-history"></div>
 </div>
 <h2>Round 2: Position evaluation</h2>
-<p>Ok, since you can play chess with a new artificial friend, let's add some more power to it.
+<p>Ok, since you can play chess with a new artificial friend, let's add some more power to it. 
 We can assign a relative point value to each piece, based on human experience and learning (<a target="_blank" href="https://www.chessprogramming.org/Point_Value">Point Value</a>).</p>
 <pre><code class="language-php">namespace Grandmaster\Pieces;
 
@@ -214,7 +216,7 @@ interface PointValue
     public const QUEEN = 1000;
     public const KING = 10000;
 }</code></pre>
-<p>We will need another contract <code>Evaluator</code>. It will be able to return the current value of the board, which will
+<p>We will need another contract <code>Evaluator</code>. It will be able to return the current value of the board, which will 
 allow us to choose the best possible move. A positive value means a white advantage, a negative black one.</p>
 <pre><code class="language-php">namespace Grandmaster;
 
@@ -295,15 +297,17 @@ Now we are ready to implement <code>PositionEvaluation</code> strategy:</p>
 <div class="board-wrapper">
     <div id="board-2" class="board"></div>
     <div id="board-2-loader" class="loader"><span>Invoking lambda ...</span></div>
-    Time*: <span class="time"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
-    <br><br>
-    Move history:<br><div class="move-history"></div>
+    Time*: <span class="time"></span><br />
+    <small>*php time on AWS Lambda, http request latency not included</small>
+    <br /><br />
+    Move history:<br />
+    <div class="move-history"></div>
 </div>
 <h2>Round 3: Search the tree</h2>
 <p>Now we will do a classic brute force attack. We will make every move possible and evaluate
-value of the board for everyone. Then we can generate another move (deeper level) and recalculate the value again.
+value of the board for everyone. Then we can generate another move (deeper level) and recalculate the value again. 
 Such an algorithm is called <code>Minimax</code>. </p>
-<p>At the very end, we return the highest or lowest value, depending on whether the movement was white or black.
+<p>At the very end, we return the highest or lowest value, depending on whether the movement was white or black. 
 From this also the name (<code>Minimax</code>) itself, we want to either maximize or minimize the result.</p>
 <p>The strength of this algorithm depends on the depth of the search. At this point, only the performance of our
 machine and the libraries used limits us.</p>
@@ -344,18 +348,20 @@ interface Search
 <div class="board-wrapper">
     <div id="board-3" class="board"></div>
     <div id="board-3-loader" class="loader"><span>Invoking lambda ...</span></div>
-    Time*: <span class="time"></span><br>
-    Moves evaluated: <span class="movesEvaluated"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
-    <br><br>
-    Move history:<br><div class="move-history"></div>
+    Time*: <span class="time"></span><br />
+    Moves evaluated: <span class="movesEvaluated"></span><br />
+    <small>*php time on AWS Lambda, http request latency not included</small>
+    <br /><br />
+    Move history:<br />
+    <div class="move-history"></div>
 </div>
-<p>Our friend starts to understand some basic patterns.
+<p>Our friend starts to understand some basic patterns. 
 But the algorithm itself unnecessarily analyzes all the possibilities that eats resources. We will try to improve.</p>
 <h2>Round 4: Cutting off leaves</h2>
 <p>A tricky trick is coming: <code>Alpha–beta pruning</code> - a search algorithm that reduces the number of nodes that must be
 solved in the search trees.</p>
-<p>Now during the search of the tree we will get rid of the paths, which we know would give a worse result than currently
-the best. This will save you the analysis of deeper paths and save resources. In the end, why analyze the next move,
+<p>Now during the search of the tree we will get rid of the paths, which we know would give a worse result than currently 
+the best. This will save you the analysis of deeper paths and save resources. In the end, why analyze the next move, 
 knowing that the previous one was hopeless.</p>
 <p><img src="/assets/posts/ab_pruning.jpg" alt="alpha_beta_pruning" /></p>
 <p>This will require a minor correction in the code:</p>
@@ -396,15 +402,17 @@ knowing that the previous one was hopeless.</p>
 <div class="board-wrapper">
     <div id="board-4" class="board"></div>
     <div id="board-4-loader" class="loader"><span>Invoking lambda ...</span></div>
-    Time*: <span class="time"></span><br>
-    Moves evaluated: <span class="movesEvaluated"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
-    <br><br>
-    Move history:<br><div class="move-history"></div>
+    Time*: <span class="time"></span><br />
+    Moves evaluated: <span class="movesEvaluated"></span><br />
+    <small>*php time on AWS Lambda, http request latency not included</small>
+    <br /><br />
+    Move history:<br />
+    <div class="move-history"></div>
 </div>
 <h2>Round 5: Position matters</h2>
 <p>In chess, not only the piece has meanings but also the position it occupies.
 For example, a pawn moved forward two spaces is worth more than in its initial position.
-For simplicity, we will use a ready-made  and battle tested &quot;Piece-Square Tables&quot;
+For simplicity, we will use a ready-made  and battle tested "Piece-Square Tables" 
 from Chessprogramming wiki - <a target="_blank" href="https://www.chessprogramming.org/Simplified_Evaluation_Function">Simplified Evaluation Function</a>.</p>
 <p>We will need the value of all figures and colors:</p>
 <pre><code class="language-php">
@@ -437,7 +445,7 @@ interface PositionValue
     ];
 }</code></pre>
 <p>This will allow us to implement new <code>PositionEvaluator</code> which thanks to the interface <code>Evaluator</code> can be easily and quickly exchanged.</p>
-<p>Wait ✋. Not so fast. We also want to take into account the value of the piece itself (from <code>MaterialEvaluator</code>).
+<p>Wait ✋. Not so fast. We also want to take into account the value of the piece itself (from <code>MaterialEvaluator</code>). 
 It's time to add one more <code>Evaluator</code>:</p>
 <pre><code class="language-php">namespace Grandmaster\Evaluator;
 
@@ -468,21 +476,23 @@ final class CombinedEvaluator implements Evaluator
         return $sum;
     }
 }</code></pre>
-<p>Such an implementation will allow for further development and preservation of the &quot;<a target="_blank" href="https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle">Open–closed principle</a>&quot;.
+<p>Such an implementation will allow for further development and preservation of the "<a target="_blank" href="https://en.wikipedia.org/wiki/Open%E2%80%93closed_principle">Open–closed principle</a>".
 This should also significantly improve the abilities of our artificial bro. Let's find out.</p>
 <p>Live example: <em>Chess AI with <code>CombinedEvaluator</code> and <code>TreeSearch</code> strategy</em></p>
 <div class="board-wrapper">
     <div id="board-5" class="board"></div>
     <div id="board-5-loader" class="loader"><span>Invoking lambda ...</span></div>
-    Time*: <span class="time"></span><br>
-    Moves evaluated: <span class="movesEvaluated"></span><br><small>*php time on AWS Lambda, http request latency not included</small>
-    <br><br>
-    Move history:<br><div class="move-history"></div>
+    Time*: <span class="time"></span><br />
+    Moves evaluated: <span class="movesEvaluated"></span><br />
+    <small>*php time on AWS Lambda, http request latency not included</small>
+    <br /><br />
+    Move history:<br />
+    <div class="move-history"></div>
 </div>
 <h2>Future rounds</h2>
-<p>In fact, this is only the beginning of the road, but at this stage our AI can think and do not forgive mistakes.
+<p>In fact, this is only the beginning of the road, but at this stage our AI can think and do not forgive mistakes. 
 At least for the occasional player (like me). However, it is bad at the endings. </p>
-<p>The code is also suitable for further development and should be easy to
+<p>The code is also suitable for further development and should be easy to 
 maintain thanks to the good isolation of interfaces.</p>
 <p>In the next rounds you can:</p>
 <ul>

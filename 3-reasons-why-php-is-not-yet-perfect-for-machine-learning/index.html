@@ -115,17 +115,17 @@ You can prepare, inspect, visualize data and train your model using only the bro
 <p>All thanks to the deadly ability to mix code (<code>Julia</code>, <code>Python</code> and <code>R</code>) , text (<code>markdown</code>) and visualization (<code>img</code>).</p>
 <p>Below is an example of a notebook fragment:
 <img src="/assets/posts/crime-notebook.png" alt="Crime notebook" /></p>
-<p>In the Machine Learning world, you will spend a lot of time analyzing the data.
+<p>In the Machine Learning world, you will spend a lot of time analyzing the data. 
 You will want to keep notes, experiment and train various types of models. And of course, help yourself with visualization.</p>
-<p>I will leave you an interesting example of criminal data analysis:
+<p>I will leave you an interesting example of criminal data analysis: 
 <a target="_blank" href="https://www.kaggle.com/fahd09/eda-of-crime-in-chicago-2005-2016" rel="nofollow">Understanding Crime in Chicago</a></p>
 <p>I don't need to mention that such a notebook is also ideal for versioning.</p>
 <p>PHP: 0 - Python: 2</p>
 <h2>3. No GPU support</h2>
-<p>Until the moment your dataset does not exceed the gigabytes or you will not use deep learning, you will not need
+<p>Until the moment your dataset does not exceed the gigabytes or you will not use deep learning, you will not need 
 to use the GPU. Nevertheless, such a moment can come. Then what?</p>
 <p>Take the example of <a target="_blank" href="https://www.tensorflow.org/" rel="nofollow">TensorFlow</a>, which in comparison to other environments of neural networks
-is distinguished by the function of distributed computing. It gives you the possibility of full control on the way of
+is distinguished by the function of distributed computing. It gives you the possibility of full control on the way of 
 separating calculations between the graphics device (GPU) or local processor (CPU). There are many different strategies to choose from.</p>
 <p>For example, you can decide where to put your variables. Here we put <code>a</code> variable on GPU and <code>b</code> constant on CPU</p>
 <pre><code class="language-python">with tf.device('/gpu:0'):
@@ -141,23 +141,22 @@ Dedicated computation unit that can accelerate machine learning to rocket speed 
 OpenBLAS sgemm and cuBLAS sgemm function.</p>
 </blockquote>
 <p>But in my opinion, the whole GPU topic at this moment crawls like a baby.</p>
-<p>I don't know if there is any point in comparing anything here, but let's summarize for peace:
+<p>I don't know if there is any point in comparing anything here, but let's summarize for peace: 
 PHP: 0 - Python: 3</p>
 <h2>Conclusions</h2>
 <p>As you can see I have chosen 3 very important reasons why PHP isn't an ideal choice for learning and using Machine Learning.
 It does not mean that it will be like this all the time. </p>
-<p>I remind you that PHP was made to display simple HTML sites. Currently, you can use it to build enterprise-class systems.
+<p>I remind you that PHP was made to display simple HTML sites. Currently, you can use it to build enterprise-class systems. 
 Let's take for example Spotify: </p>
 <blockquote>
-<p>The music streaming service relies on Symfony to maintain more than 75 million active users.
+<p>The music streaming service relies on Symfony to maintain more than 75 million active users. 
 There are almost 600 thousand requests per second, according to the website, and a huge traffic that comes from mobile devices. </p>
 </blockquote>
 <div style="width: 500px; margin:0 auto;">
-<blockquote class="twitter-tweet" data-cards="hidden" data-lang="pl">
-<p lang="en" dir="ltr"><a href="http://t.co/xHF41AM1vW">http://t.co/xHF41AM1vW</a> is powered by the <a href="https://twitter.com/symfony?ref_src=twsrc%5Etfw">@symfony</a> framework and many great packages from <a href="http://t.co/0kWedwWmS4">http://t.co/0kWedwWmS4</a> using Composer by <a href="https://twitter.com/seldaek?ref_src=twsrc%5Etfw">@seldaek</a></p>— Spotify Engineering (@SpotifyEng) <a href="https://twitter.com/SpotifyEng/status/595972071609339905?ref_src=twsrc%5Etfw">6 maja 2015</a>
-</blockquote>
-<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script></div>
-<p>Ironically, Spotify has one of the largest server farms dedicated to Machine Learning:
+<blockquote class="twitter-tweet" data-cards="hidden" data-lang="pl"><p lang="en" dir="ltr"><a href="http://t.co/xHF41AM1vW">http://t.co/xHF41AM1vW</a> is powered by the <a href="https://twitter.com/symfony?ref_src=twsrc%5Etfw">@symfony</a> framework and many great packages from <a href="http://t.co/0kWedwWmS4">http://t.co/0kWedwWmS4</a> using Composer by <a href="https://twitter.com/seldaek?ref_src=twsrc%5Etfw">@seldaek</a></p>&mdash; Spotify Engineering (@SpotifyEng) <a href="https://twitter.com/SpotifyEng/status/595972071609339905?ref_src=twsrc%5Etfw">6 maja 2015</a></blockquote>
+<script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+<p>Ironically, Spotify has one of the largest server farms dedicated to Machine Learning: 
 <a target="_blank" href="https://medium.com/s/story/spotifys-discover-weekly-how-machine-learning-finds-your-new-music-19a41ab76efe" rel="nofollow">How Does Spotify Know You So Well?</a></p>
 <p>Perhaps time will show the demand for ML in PHP, but as long as the above-mentioned problems are not resolved, we have nothing to count on.</p>
 <p>But don't be sad. I will show you my favorite quote:</p>

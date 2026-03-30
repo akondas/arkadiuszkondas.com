@@ -117,10 +117,10 @@ $dataset = new FilesDataset('data/bbc');</code></pre>
 <h2>Train/test split</h2>
 <p>In order to test the accuracy of the trained model, we need to split our dataset to two separate groups: train and test dataset.
 We could take 10% of samples randomly but this approach can lead us to a bad solution. </p>
-<p>For example, all samples of type
+<p>For example, all samples of type 
 <code>tech</code> could be taken to test dataset and our model will never have a chance to see them while training.
 This is something we prefer to avoid.</p>
-<p>You can fix this by using <code>StratifiedRandomSplit</code>. With <code>StratifiedRandomSplit</code> distribution of samples takes into
+<p>You can fix this by using <code>StratifiedRandomSplit</code>. With <code>StratifiedRandomSplit</code> distribution of samples takes into 
 account their targets and try to divide them equally.
 You can adjust number of samples in each group with <code>$testSize</code> param (from 0 to 1, default: 0.3).</p>
 <pre><code class="language-php">$split = new StratifiedRandomSplit($dataset, 0.2);
@@ -128,7 +128,7 @@ $samples = $split-&gt;getTrainSamples();
 
 echo $samples[0]; // Mutant book wins Guardian prize ...</code></pre>
 <h2>Bags of words</h2>
-<p>If we want to perform machine learning on text documents, we first need to transform the text into numerical
+<p>If we want to perform machine learning on text documents, we first need to transform the text into numerical 
 feature vectors. One of the easiest way is to use bags of words representation.</p>
 <p>One may ask how to build such representation?</p>
 <p>First, we must extract all the words from all samples (<strong>build a dictionary</strong>). Then for each word we can assign
@@ -186,7 +186,7 @@ echo 'Accuracy: ' . Accuracy::score($split-&gt;getTestLabels(), $predicted);</co
 <pre><code class="language-bash">Accuracy: 0.6507</code></pre>
 <p>Not so bad, but we can do it better.</p>
 <h2>From occurrences to frequencies</h2>
-<p>In a large text corpus, some words will be very present (e.g. <code>the</code>, <code>a</code>, <code>is</code>) hence carrying very little meaningful
+<p>In a large text corpus, some words will be very present (e.g. <code>the</code>, <code>a</code>, <code>is</code>) hence carrying very little meaningful 
 information about the actual contents of the document. If we train a classifier with those data then very frequent terms
 would shadow the frequencies of rarer yet more interesting terms.</p>
 <p>In order to re-weight the count features into floating point values suitable for usage by a classifier, it is very common
@@ -197,7 +197,7 @@ to use the tf–idf transform.</p>
 $transformer = new TfIdfTransformer();
 $transformer-&gt;fit($samples);
 $transformer-&gt;transform($samples);</code></pre>
-<p>⚠️ <strong>Remember to also transform sample that you want to predict.</strong>
+<p>⚠️ <strong>Remember to also transform sample that you want to predict.</strong> 
 This is a common problem that people forget about.</p>
 <pre><code class="language-php">$testSamples = $split-&gt;getTestSamples();
 $vectorizer-&gt;transform($testSamples);
@@ -208,7 +208,7 @@ $predicted = $classifier-&gt;predict($testSamples);</code></pre>
 <pre><code class="language-bash">Accuracy: 0.7522</code></pre>
 <p>There is one more interesting technique.</p>
 <h2>N-grams to the rescue</h2>
-<p>Bag of words can't capture phrases and expressions of many words, effectively ignoring dependence on the order of words.
+<p>Bag of words can't capture phrases and expressions of many words, effectively ignoring dependence on the order of words. 
 It also doesn't include potential spelling or derivative errors.</p>
 <p>With the rescue we can use <code>N-grams</code> concept.</p>
 <p>N-grams are like a sliding window that moves across the word - a continuous sequence of characters of the specified length.
@@ -227,7 +227,7 @@ $ngrams = ['Qui', 'uic', 'ick', 'Fox', 'oxe', 'xes'];</code></pre>
 <p>This looks like very decent model 🚀. Well done 💪.</p>
 <p>You can try to add <code>Kernel::LINEAR</code> and lower test dataset to achieve <code>0.9955</code>, but I recommend you try it yourself and experiment.</p>
 <h2>Bigger picture</h2>
-<p>Our model requires transformation with two transformers, same as data that we want to predict. We can use one more
+<p>Our model requires transformation with two transformers, same as data that we want to predict. We can use one more 
 component from <code>php-ml</code> to make it cleaner and easier to persists.</p>
 <p>In machine learning, it is common to run a sequence of algorithms to process and learn from dataset. For example:</p>
 <ul>

@@ -94,68 +94,68 @@ different, but if we delve into it, we will see a certain regularity. We are abl
 <p>A look at the architecture from all three perspectives shows us the full picture.</p>
 <p>I will try to discuss each of them and then present one common and universal definition of software architecture.</p>
 <h2>Architecture as a set of decisions</h2>
-<p>In Martin Fowler's entry &quot;<a target="_blank" href="http://files.catwell.info/misc/mirror/2003-martin-fowler-who-needs-an-architect.pdf">Who Needs an Architect?</a>&quot; we can read:</p>
+<p>In Martin Fowler's entry "<a target="_blank" href="http://files.catwell.info/misc/mirror/2003-martin-fowler-who-needs-an-architect.pdf">Who Needs an Architect?</a>" we can read:</p>
 <blockquote>
-<p>There is another style of definition of architecture which is something like &quot;architecture is the set of design decisions that
-must be made early in a project.&quot; I complain about that one, too, saying that architecture is the decisions that you wish
+<p>There is another style of definition of architecture which is something like "architecture is the set of design decisions that
+must be made early in a project." I complain about that one, too, saying that architecture is the decisions that you wish
 you could get right early in a project, but that you are not necessarily more likely to get them right than any other.</p>
 </blockquote>
-<p>Sounds pretty sensible. Because what does an architect do? An architect decides whether or not to we're gonna use this
+<p>Sounds pretty sensible. Because what does an architect do? An architect decides whether or not to we're gonna use this 
 technology or this pattern. Or will we solve this problem in one way or another. </p>
 <p>Indeed, we can treat architecture as a set of decisions. In banks or corporations we have several types of architects.
 Enterprise architect, solution architect or application architect. Maybe you once wondered how they differ from each other.</p>
 <p>In the perspective of this definition, they differ in the scope of the decisions they take.</p>
-<p>For this reason, architecture can be considered at different levels. Each of these levels has its own patterns and good practices.
+<p>For this reason, architecture can be considered at different levels. Each of these levels has its own patterns and good practices. 
 And on each level a different field of knowledge can be useful.</p>
-<p>Ultimately, the role of the architect is to make sure that <strong>all important decisions can be made as late as possible</strong>.
+<p>Ultimately, the role of the architect is to make sure that <strong>all important decisions can be made as late as possible</strong>. 
 As time goes by, we gain more and more data to help us choose the right decisions.</p>
-<p>We do not want to make difficult decisions in the early stages of the system development.
+<p>We do not want to make difficult decisions in the early stages of the system development. 
 There may be a constraint that we do not yet know about.</p>
 <h2>Architecture as a description of the system structure</h2>
 <p>Decisions have an impact on our system, i.e. they shape its structure.
 We can say that architecture is a collection of elements, relations between them and their properties.</p>
-<p>Comparing this concept with the building industry (which is not always accurate) architecture is site plans, floor plans,
+<p>Comparing this concept with the building industry (which is not always accurate) architecture is site plans, floor plans, 
 elevation views, cross-section views and detail drawings. </p>
-<p>As programmers, we often focus on the lowest level of our system. However, the architecture must go beyond this level.
-A running application also includes testing, deployment, monitoring, scaling and maintenance.
+<p>As programmers, we often focus on the lowest level of our system. However, the architecture must go beyond this level. 
+A running application also includes testing, deployment, monitoring, scaling and maintenance. 
 A good description of the structure should also include these elements.</p>
-<p>Ironically, the presentation of the software system structure in each team looks different.
+<p>Ironically, the presentation of the software system structure in each team looks different. 
 There is no coherent communication platform. Theoretically, we have UML, but in reality, who really uses it?</p>
 <p>Fortunately, there is a very good and simple technique to create a consistent platform for data exchange.</p>
 <p>The <a target="_blank" href="https://c4model.com/">C4 model</a> by Simon Brown.</p>
 <p><img src="/assets/posts/c4-overview.png" alt="C4 overview" /></p>
 <p>Martin Fowler also writes that architecture is <strong>the shared understanding that the expert developers have of the system design</strong>.</p>
-<p>Visualization and maintenance of this visualization in the form of a <strong>coherent diagram</strong> will help to keep the common
+<p>Visualization and maintenance of this visualization in the form of a <strong>coherent diagram</strong> will help to keep the common 
 understanding of the concept of the system in good shape.</p>
 <h2>Architecture as a design process</h2>
 <p>Since we have said before that architecture is a set of decisions, architecture as a process is a decision-making process.
-This is very well illustrated by the <a target="_blank" href="https://pl.wikipedia.org/wiki/OODA">OODA model</a>.
+This is very well illustrated by the <a target="_blank" href="https://pl.wikipedia.org/wiki/OODA">OODA model</a>. 
 This model distinguishes 4 basic areas of information processing.</p>
 <p><img src="/assets/posts/ooda.svg" alt="OODA Circle" /></p>
 <ul>
-<li><strong>Observation</strong> consists in collecting data on various aspects of the environment in which we operate.
+<li><strong>Observation</strong> consists in collecting data on various aspects of the environment in which we operate. 
 The technique called <strong>Event Storming</strong> works very well here, which I will definitely write more about.</li>
-<li><strong>Orientation</strong> is an application of our experience, patterns that we know, techniques, tools to make the right
+<li><strong>Orientation</strong> is an application of our experience, patterns that we know, techniques, tools to make the right 
 decision on the basis of information that comes to us from the environment.</li>
 <li><strong>Decision</strong> we discussed it at the beginning, it is nothing more than choosing one of the possible options for action.</li>
-<li><strong>Action</strong> is implementation of the decision made. Starting the action, we test the decision to provide further data
+<li><strong>Action</strong> is implementation of the decision made. Starting the action, we test the decision to provide further data 
 for observation (in this way we close the cycle).</li>
 </ul>
-<p>Information processing processes in all four areas are mostly parallel.
-The essence of OODA is the synchronization between observation and orientation; between orientation,
+<p>Information processing processes in all four areas are mostly parallel. 
+The essence of OODA is the synchronization between observation and orientation; between orientation, 
 decision and action; and finally, the monitoring of the impact of actions taken through observations.</p>
-<p>The key is that an architect is a person who makes informed decisions. He or she is able to justify his or her decisions.
-Understands the environment in which he or she makes these decisions.
+<p>The key is that an architect is a person who makes informed decisions. He or she is able to justify his or her decisions. 
+Understands the environment in which he or she makes these decisions. 
 Applies tools and <strong>observes the effect of those decisions</strong> in the system.</p>
 <p>Always make sure you have the right feedback from your decisions and that you can measure it effectively.</p>
 <h2>Consistency of the concept</h2>
-<p>It is worth mentioning here the words of Brooks from the book &quot;The mythical man-month&quot;.
+<p>It is worth mentioning here the words of Brooks from the book "The mythical man-month". 
 He says that the most important factor influencing the quality is the <strong>consistency of the concept</strong>. </p>
-<p>A clean and elegant application (or system) must present each user with a coherent mental model.
+<p>A clean and elegant application (or system) must present each user with a coherent mental model. 
 In this way, the user receives a well-designed interface allowing for the implementation of specific operations.
 Otherwise, why design systems at all?</p>
 <p>I will try to close the whole post in one sentence (collecting all three points in one).</p>
-<p><strong>Software architecture is a coherent concept, for which the architect is responsible by making appropriate decisions in
+<p><strong>Software architecture is a coherent concept, for which the architect is responsible by making appropriate decisions in 
 the process of designing the system, which affects its structure.</strong></p>
 <p>Do you have any other thoughts about this?
 Let me know in the comments or on the Tweeter.</p>

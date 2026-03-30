@@ -81,7 +81,7 @@
 				<p class="post__description">Based on air pollution data we will try to predict air quality in a place where we don't have data. I will present k-Nearest Neighbors algorithm and how to implement such prediction in PHP using php-ml.</p>
 
 				
-				<p><strong>Disclaimer</strong>: In this post I won't predict the future only the current state at place where there is no data.
+				<p><strong>Disclaimer</strong>: In this post I won't predict the future only the current state at place where there is no data. 
 I will write about the forecast's prediction on next posts, so I encourage you to subscribe my newsletter to not leave the topic.</p>
 <h2>Air pollution</h2>
 <p>For the purposes of this entry, I will use publicly available data from World Air Quality Index project <a target="_blank" href="http://waqi.info/" rel="nofollow">waqi.info</a>.
@@ -115,7 +115,7 @@ There is geographic coordinates (<code>lat</code> and <code>lon</code>) and two 
 <p><img src="/assets/posts/air-quality.png" alt="air quality index" /></p>
 <p>To make the task a bit easier, we will change the numerical values into labels (according to the scale given).
 We will also throw out the station number (<code>uid</code>) because wouldn't need it. The whole will be converted to CSV format.</p>
-<p>You can view the ready script here <a target="_blank" href="https://github.com/php-ai/php-ml-examples/blob/master/preparation/aqcin2csv.php">aqcin2csv.php</a>,
+<p>You can view the ready script here <a target="_blank" href="https://github.com/php-ai/php-ml-examples/blob/master/preparation/aqcin2csv.php">aqcin2csv.php</a>, 
 but I encourage you to work independently.</p>
 <p>Prepared data should have the following formula:</p>
 <pre><code class="language-csv">51.403007;7.208546;good
@@ -126,13 +126,13 @@ but I encourage you to work independently.</p>
 51.4625;13.526666666667;moderate
 48.7344444;19.1128073;good</code></pre>
 <p>As you can see, preliminary data preparation is also part of the tedious work of date scientist.
-Sometimes you have to work a lot to have the right to watch fireworks.
+Sometimes you have to work a lot to have the right to watch fireworks. 
 Sometimes, despite the hard work, the show is gone 😔.</p>
 <p>But it is worth trying, even path to the goal can teach a lot and give even more satisfaction than the goal itself.</p>
 <p>The data is already pre-processed, we can go to discuss the algorithm.</p>
 <h2>k-Nearest Neighbors</h2>
-<p>The algorithm of k-Nearest Neighbors it's a pretty simple algorithm for classification (supervised learning).
-Principle of its operation consists in determining <code>k</code> nearest neighbors of the searched value.
+<p>The algorithm of k-Nearest Neighbors it's a pretty simple algorithm for classification (supervised learning). 
+Principle of its operation consists in determining <code>k</code> nearest neighbors of the searched value. 
 The search is usually based on some metrics. In this case, it will be a <a target="_blank" href="https://en.wikipedia.org/wiki/Metric_(mathematics)" rel="nofollow">distance measure</a>.
 Based on the neighbors found, it is able to assign the appropriate label for the data you are looking for.
 We choose the most frequently appearing, from among found <code>k</code> neighbors.</p>
@@ -160,7 +160,7 @@ $estimator = new KNearestNeighbors();
 $estimator-&gt;train($dataset-&gt;getSamples(), $dataset-&gt;getTargets());
 $predicted = $estimator-&gt;predict([$sample]);</code></pre>
 <p>but today I will try to explore our collection more closely.</p>
-<p>We are start from trying to predict air quality for each point (without itself) based on its selected neighbors.
+<p>We are start from trying to predict air quality for each point (without itself) based on its selected neighbors. 
 In addition, I also want to measure its correctness for different <code>k</code> (the number of nearest neighbors). Let's write
 a script for range from <code>k=1</code> to <code>k=10</code>:</p>
 <pre><code class="language-php">use Phpml\Classification\KNearestNeighbors;
@@ -237,7 +237,7 @@ As we increase the number of neighbors to <code>k=3</code>, we see smoother regi
 <p>Following this trail, we can generate more maps. Next for <code>k=5</code> and <code>k-9</code>:</p>
 <p><img src="/assets/posts/air-pollution-k5.png" alt="air pollution prediction for k=5" /></p>
 <p><img src="/assets/posts/air-pollution-k9.png" alt="air pollution prediction for k=9" /></p>
-<p>In this way, you can visualize your model. Every model works a little differently but the map will let you choose the
+<p>In this way, you can visualize your model. Every model works a little differently but the map will let you choose the 
 one that suits you best. Remember that very often there is no unambiguous answer.</p>
 <p>The sheer number of neighbors is not all possibilities of change.
 You can still change the way in which we count the distance between points.</p>
@@ -250,7 +250,7 @@ $estimator = new KNearestNeighbors($k, new Minkowski());</code></pre>
 <p>I hope that in this way you already understand how the algorithm of k-Nearest Neighbors works.
 However, it have a significant problem. </p>
 <p>First, the visualization of larger numbers of dimensions is quite troublesome (3 is still sensible).</p>
-<p>The second is a feature of multidimensional spaces called <code>Curse of Dimensionality</code>. Points in such spaces are more
+<p>The second is a feature of multidimensional spaces called <code>Curse of Dimensionality</code>. Points in such spaces are more 
 distant from each other the more dimensions we have. </p>
 <p>To better understand this we will generate random points (<code>10000</code> pairs) in subsequent spaces: from 1 dimension to 300 dimensions 🤯.
 For each such space, we calculate the average and minimum distance of these points.</p>
@@ -284,13 +284,13 @@ We can say that multidimensional spaces are less dense or simply more extensive 
 <p><img src="/assets/posts/random-points-2d.svg" alt="random points 2d" /></p>
 <p>Adding the next space to the same amount of data means that their distances from each other increase.</p>
 <p><img src="/assets/posts/random-points-3d.svg" alt="random points 3d" /></p>
-<p>For this reason, if you intend to use k-Nearest Neighbors with a collection of data with a large number of features,
+<p>For this reason, if you intend to use k-Nearest Neighbors with a collection of data with a large number of features, 
 it is probably a good idea to use some sort of dimensional reduction algorithm first.</p>
 <h2>Where to explore more</h2>
-<p>If you are still hungry about the counting of neighbors then you can read a very good entry from the documentation
+<p>If you are still hungry about the counting of neighbors then you can read a very good entry from the documentation 
 of the <code>scikit-learn</code> package: <a target="_blank" href="https://scikit-learn.org/stable/modules/neighbors.html" rel="nofollow">Nearest Neighbors</a></p>
 <p>In this post, I used the brute force method to predict results, but there is much better and faster implementation
-using the k-d tree algorithm. I will try to describe it in the next post. Not necessarily the next one. Subscribe to
+using the k-d tree algorithm. I will try to describe it in the next post. Not necessarily the next one. Subscribe to 
 my newsletter if you don't want to miss post that you are interested in.</p>
 <p>Enjoy your Nearest Neighbors.</p>
 
