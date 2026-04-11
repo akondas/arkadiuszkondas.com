@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+		<meta charset="utf-8">
+<title>
+	Slow code reviews: the silent velocity killer | Arkadiusz Kondas | Software Architect and Data Scientist
+</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="google-site-verification" content="MU-mYXXVQILTbPp2VGm6FVvg9Q-oXXfFaHVJrjv14vI" />
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-52176613-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'UA-52176613-1');
+</script>
+
+<link rel="icon" type="image/png" href="/favicon-32x32.png" sizes="32x32">
+<link rel="icon" type="image/png" href="/favicon-16x16.png" sizes="16x16">
+<link rel="alternate" type="application/rss+xml" title="Arkadiusz Kondas Posts" href="/rss.xml">
+<link rel="alternate" type="application/json" title="Arkadiusz Kondas Posts" href="/feed.json">
+
+<link rel="stylesheet" href="/assets/css/styles.css">
+		<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@ArkadiuszKondas">
+<meta name="twitter:title" content="Slow code reviews: the silent velocity killer">
+<meta name="twitter:description" content="Your team ships fast, your CI is green, your sprints look healthy. But there is a silent killer hiding in plain sight: slow code reviews. Let me show you the numbers." />
+<meta name="twitter:image" content="https://arkadiuszkondas.com/assets/posts/slow-code-reviews-the-silent-velocity-killer.png" />
+<meta property="og:type" content="article" />
+<meta property="og:title" content="Slow code reviews: the silent velocity killer" />
+<meta property="og:description" content="Your team ships fast, your CI is green, your sprints look healthy. But there is a silent killer hiding in plain sight: slow code reviews. Let me show you the numbers." />
+<meta property="og:url" content="https://arkadiuszkondas.com/slow-code-reviews-the-silent-velocity-killer" />
+<meta property="og:image" content="https://arkadiuszkondas.com/assets/posts/slow-code-reviews-the-silent-velocity-killer.png" />
+	</head>
+    <body>
+	    <div class="wrapper wrapper--side">
+			<nav role="navigation">
+    <ul class="nav">
+        <li class="nav__item nav__item--logo">
+            <a href="/">
+                <div class="logo">
+                    <div class="logo__background"><img
+	src="https://www.gravatar.com/avatar/1e5883eecce756d56cccd9192fa6f4df?size=200"
+	alt=""
+	class="logo__image">
+</div>
+                </div>
+                Arkadiusz Kondas
+            </a> <strong class="title">software architect</strong>
+        </li>
+        <li class="nav__item"><a href="/about">about</a></li>
+        <li class="nav__item"><a href="/">posts</a></li>
+        <li class="nav__item"><a href="/books">books</a></li>
+        <li class="nav__item"><a href="/workshops">workshops</a></li>
+        <li class="nav__item"><a href="/talks">talks</a></li>
+        <li class="nav__item"><a href="/projects">projects</a></li>
+        <li class="nav__divider"></li>
+        <li class="nav__item">
+            <a href="https://twitter.com/ArkadiuszKondas" title="twitter" target="_blank"><i class="icon-twitter"></i><span class="sr-only">twitter</span></a>
+            <a href="https://github.com/akondas" title="github" target="_blank"><i class="icon-github-circled"></i><span class="sr-only">github</span></a>
+            <a href="https://www.linkedin.com/in/arkadiuszkondas" title="linkedin" target="_blank"><i class="icon-linkedin"></i><span class="sr-only">linkedin</span></a>
+            <a href="https://arkadiuszkondas.com/rss.xml" title="RSS feed" target="_blank"><i class="icon-rss"></i><span class="sr-only">RSS feed</span></a>
+        </li>
+    </ul>
+</nav>
+			<div role="contentinfo" class="footer">
+    <p>&copy; 2019 <a href="mailto:arkadiusz.kondas@gmail.com">Arkadiusz Kondas</a><span class="footer__extended">, follow me <a href="twitter://user?screen_name=ArkadiuszKondas">@ArkadiuszKondas</a></span></p>
+</div>
+		</div>
+
+		<div class="wrapper wrapper--content">
+			<main role="main" class="content">
+				<h1>Slow code reviews: the silent velocity killer</h1>
+				
+
+<ul class="post__meta">
+	<li class="post__meta-item">11. April 2026</li>
+	<li class="post__meta-item"><span class="disqus-comment-count" data-disqus-url="https://arkadiuszkondas.com/slow-code-reviews-the-silent-velocity-killer"></span></li>	<li class="post__meta-item">17min to read</li>	<li class="post__meta-item"><a href="https://github.com/akondas/arkadiuszkondas.com/edit/master/site/_posts/2026/2026-04-11-slow-code-reviews-the-silent-velocity-killer.md">suggest an edit</a></li></ul>
+				<p class="post__description">Your team ships fast, your CI is green, your sprints look healthy. But there is a silent killer hiding in plain sight: slow code reviews. Let me show you the numbers.</p>
+
+				
+				<p>Your CI pipeline runs in 4 minutes. Your deployments are fully automated. Sprint velocity looks great on paper. And yet features take weeks to reach production.</p>
+<p>Where does all that time go?</p>
+<p>I will tell you where. It sits in your pull request queue, silently rotting.</p>
+<h2>The numbers nobody talks about</h2>
+<p>Graphite research across thousands of repositories shows that the median PR with reviews takes <strong>14 hours to merge</strong>. The average across all teams? <strong>128 hours</strong>. That's more than 5 working days for a single pull request.</p>
+<p>Read that again. Your engineer finishes a feature in the morning, opens a PR, and the next meaningful thing that happens to that code is... tomorrow. Or the day after. Or next week. The code just sits there, getting stale like bread on the counter 🤯.</p>
+<p>And the worst part? Most teams have no idea this is happening. They track sprint velocity, deployment frequency, even lines of code. But nobody is watching the queue.</p>
+<p>I know because I was one of those managers. When I first pulled TTFR numbers for my own team, I was convinced the tool was broken. It wasn't broken. We were just blind to where the time actually went.</p>
+<h2>The metrics that reveal the problem</h2>
+<p>If you want to fix slow code reviews, you need to measure them. Not with gut feeling, not with "it feels like reviews are slow". With actual numbers. Here are the metrics every engineering manager should track.</p>
+<h3>Time to First Review (TTFR)</h3>
+<p>This is the single most important metric. It measures the time between a PR being opened and the first reviewer commenting or approving.</p>
+<p>The median organization averages <strong>15 hours</strong> for TTFR. The fastest quartile is under 10 hours. The slowest? Over 23 hours. Google aims for same-day response and achieves median review completion in under 4 hours.</p>
+<p>LinearB benchmarks break it down further: elite teams achieve pickup time under 1 hour, healthy teams under 4 hours, and anything over a full business day needs improvement. One important detail: LinkedIn measures this at P50 and P90 in <strong>business hours</strong>, not calendar hours. Weekends and nights don't count. If your tool measures in calendar time, your numbers look worse than reality. Make sure you know which one you are tracking.</p>
+<p>Workweave's research across their customer base adds a concrete cost: PR turnaround under 3 hours maintains baseline developer productivity. Once it crosses 8 hours, productivity drops by a factor of 2.1x. Not because people stop working. Because they start working on the wrong things.</p>
+<p>Why does this matter so much? Because TTFR sets the pace for everything that follows. A PR that sits untouched for a day signals to the author: "move on to something else." And that is exactly what they do. They pull in new work, increase WIP, and start the death spiral I will describe later.</p>
+<h3>Review Cycle Time</h3>
+<p>The full elapsed time from PR opened to PR merged. This includes wait time (idle, nobody looking), review time (active examination), and rework time (addressing feedback and re-review).</p>
+<p>Here's the thing most people miss: <strong>wait time typically dwarfs everything else</strong>. The actual review takes 20 minutes. The rework takes an hour. But the waiting between rounds? Days.</p>
+<p>Break this metric down into its components. Haystack decomposes review time into three sub-phases: <strong>First Response Time</strong> (how quickly someone looks at it), <strong>Rework Time</strong> (how long the author spends addressing feedback), and <strong>Idle Completion Time</strong> (dead time between final revision and merge). Each phase has different causes and different fixes. Lumping them together hides where the real problem is.</p>
+<p>If your cycle time is 3 days and the active work totals 2 hours, you have a process problem, not a capacity problem.</p>
+<p>This distinction matters more than it sounds. A PR's lifecycle is made of <strong>wait time</strong> (sitting in a queue, nobody looking), <strong>think time</strong> (a reviewer actively reading and evaluating), and <strong>rework time</strong> (the author addressing feedback). When I talk about slow reviews being a problem, I mean the wait time, not the thinking. A reviewer who spends 45 focused minutes on a PR the same morning it was opened is infinitely more valuable than one who spends 10 distracted minutes three days later. The first is fast and thorough. The second is slow and shallow. The goal is to compress the wait, not the thought.</p>
+<h3>PR Size Distribution</h3>
+<p>Research consistently shows that code reviews are most effective when the number of modified lines stays <strong>under 400 lines</strong>. Google takes this much further. Their median change is only 24 lines.</p>
+<p>Track the distribution of PR sizes on your team. If you see a lot of PRs above 400 lines, you have found a root cause. Large PRs are slow to review because reviewers cannot maintain focus. They get skimmed instead of reviewed. And that 2,000-line PR that sat in the queue for a week? Nobody actually reviewed it thoroughly. They approved it to make it go away. Be honest, you have done it too. I have.</p>
+<h3>Number of Review Rounds</h3>
+<p>How many back-and-forth cycles does a typical PR go through before it gets merged? One round (submit, review, approve) is healthy. Two rounds is normal for complex changes. Three or more rounds is a red flag.</p>
+<p>High round counts multiply wait time. If each round adds a day of wait time, a PR that goes through 4 rounds takes a week just in queue time, even if the total active review time is under an hour.</p>
+<p>Track your average rounds per PR. If it's consistently above 2, investigate why. Common causes: unclear requirements, missing coding standards, PRs that are too large to review effectively in one pass, or reviewers who nitpick instead of focusing on what matters.</p>
+<h3>Review Depth</h3>
+<p>Review rounds tell you how many times the feedback loop runs. Review depth tells you whether anything meaningful happens inside each loop.</p>
+<p>A "review" that consists of clicking Approve on a 500-line PR with zero comments is not a review. It's a checkbox. LinearB calls this out explicitly: they flag shallow reviews (approval with no comments on large PRs) as a risk signal. Code Climate goes further and classifies every review comment by size: Large (20+ words, likely substantive), Regular (8-20 words), or Trivial (fewer than 8 words). Pluralsight Flow measures review coverage at the hunk level: what percentage of changed code sections actually received a comment.</p>
+<p>Workweave's data makes the tradeoff concrete. Teams with review quality scores above 75 (on their AI-assessed scale) had <strong>61% fewer bugs</strong>. The cost? A <strong>38% reduction in review speed</strong>. That's the real question every engineering manager must answer: how much speed are you willing to trade for quality? Most teams never make this choice consciously. They just rubber-stamp and hope for the best.</p>
+<p>If you only measure review speed, you'll optimize for fast approvals. Pair it with a depth metric and you optimize for fast <em>and</em> meaningful reviews. I learned this the hard way when my team's TTFR looked great but our production incidents kept climbing. Fast approvals, zero substance.</p>
+<h3>Author Response Time</h3>
+<p>Almost every review metric focuses on the reviewer. How fast did they pick up the PR? How many comments did they leave? But the feedback loop has two sides.</p>
+<p>Author response time measures how long the PR author takes to address reviewer feedback and push updates. Haystack tracks this as "Follow-up Time" and found it's often the hidden bottleneck. A reviewer responds within 2 hours, the author takes 2 days to address the feedback. From the outside, the PR looks stuck "in review." In reality, the reviewer did their job. The author moved on to other work and never came back.</p>
+<p>This connects directly to the WIP death spiral. When an author has 3 other things in progress, addressing review feedback drops to the bottom of the priority list. The PR ages, the branch gets stale, merge conflicts appear, and eventually the rework costs more than the original implementation.</p>
+<p>Track the time between "changes requested" and the author's next push. If it's consistently over a day, your team has an author responsiveness problem, not a reviewer speed problem.</p>
+<h3>Reviewer Load Distribution</h3>
+<p>Not all reviewers are created equal. In most teams, one or two senior engineers end up reviewing 60-70% of all PRs. They become the bottleneck nobody talks about. On one of my teams, our senior backend engineer was reviewing so many PRs that his own feature work was constantly late. We blamed him for being slow. Turns out he was just drowning in everyone else's code.</p>
+<p>Track the number of open PRs assigned to each reviewer. If someone has 8 pending reviews while others have 1, you don't have a review speed problem, you have a load balancing problem. Google's internal tooling uses the Gini coefficient to quantify this inequality. A Gini of 0 means perfectly even distribution. A Gini approaching 1 means one person reviews everything. Most teams have never computed this number, but any spreadsheet can do it.</p>
+<p>High reviewer load leads to longer queues, context switching fatigue, and eventually rubber-stamping. Three LGTMs on a PR that nobody actually read. That is worse than a slow review. A slow review might eventually surface a problem. A rubber-stamped review gives you the false confidence that the code was vetted when it wasn't.</p>
+<p>There is a second dimension here that getDX and the "Software Engineering at Google" book both emphasize: <strong>knowledge distribution</strong>. Track how many distinct people have reviewed code in a given directory or module over the past quarter. If only one person ever reviews the authentication module, that's not just a load problem. It's a bus factor problem. When that person goes on vacation, nobody can meaningfully review auth changes. Reviews either stall or get rubber-stamped by someone who doesn't understand the code. Distribute review work not just for speed, but for organizational resilience.</p>
+<h3>Rework Rate</h3>
+<p>The 2025 DORA report introduced rework rate as the 5th official DORA metric. It measures the ratio of deployments made to fix bugs versus planned feature work.</p>
+<p>Why does this belong in a code review article? Because rework is the downstream cost of poor reviews. When reviews are rushed (because the queue is too long and everyone is under pressure to approve faster), bugs escape to production. Those bugs generate unplanned work that further slows down the team, including the reviewers.</p>
+<p>As AI tools increase PR volume and size, reviewers face cognitive overload and miss subtle bugs. The result: a documented 9% increase in bug rates, directly driving higher rework rates.</p>
+<p>Workweave's research adds an interesting angle here. They compared teams with mandatory code reviews against teams without. Teams with reviews produced 3.7 bugs per developer. Teams without produced 8.9 bugs per developer (2.4x more). But the bug reduction has diminishing returns: the biggest improvement comes from going from zero reviews to just 0.5 reviews per PR on average. After that, each additional review adds less protection. This means a quick, focused review from one person catches most problems. Three slow reviews from three people rarely catch three times as much.</p>
+<p>One important warning from getDX: never track rework rate in isolation. Always pair it with a quality metric like change failure rate or escaped defect rate. A team can have low rework simply because nobody bothers to fix the bugs they ship.</p>
+<h3>Flow Efficiency</h3>
+<p>This is the ratio of active work time to total elapsed time. Dragan Stepanovic's research across 40,000+ PRs shows that flow efficiency in async code review workflows is extremely low.</p>
+<p>If a PR takes 3 days from open to merge, but the actual human work (writing code, reviewing, addressing feedback) totals 3 hours, your flow efficiency is about 4%. The other 96% is just waiting.</p>
+<p>Most teams have never calculated this number. When they do, it's a wake-up call.</p>
+<h3>Escaped Defects</h3>
+<p>The rate of bugs that make it to production despite code review. If you track post-merge bugs and correlate them with their PRs, you can measure how effective your reviews actually are.</p>
+<p>A study by Capers Jones analyzing over 12,000 software projects found that formal code reviews detected 60-65% of hidden defects, while informal reviews caught fewer than 50%. Microsoft research adds something interesting here: reviewers primarily improve maintainability, not catch bugs. If your team thinks reviews are for bug catching but your escaped defect rate is high, the process isn't delivering what you think it is.</p>
+<h3>Approval-to-Merge Time</h3>
+<p>This is the metric that nobody tracks and everybody wastes time on. It measures the gap between the final approval on a PR and the moment it actually gets merged.</p>
+<p>Think about it. The code is written. The review is done. Everyone agrees it is good. And then... it sits there. For hours. Sometimes days.</p>
+<p>Haystack calls this "Idle Completion Time" and treats it as the third sub-phase of review cycle time. Common causes: CI pipelines that take too long to run after approval, merge conflicts from a branch that went stale during review, deploy freezes, or simply nobody clicking the merge button because the author moved on to other work.</p>
+<p>Haystack recommends keeping this under 1 hour. If yours is higher, look at your CI pipeline speed and whether you have auto-merge enabled for approved PRs. This is often the easiest metric to fix because it's pure process friction, no human behavior change required.</p>
+<h3>PR Revert Rate</h3>
+<p>The percentage of merged PRs that get reverted. getDX defines it as: (number of reverted PRs) / (total PRs, excluding the revert PRs themselves).</p>
+<p>This is different from escaped defects. Escaped defects require incident tracking, post-mortems, and correlating production bugs back to specific PRs. That's slow and often incomplete. Reverts are immediate and unambiguous. A revert means the review process let something through that it shouldn't have.</p>
+<p>Track this metric over time. A rising revert rate after introducing AI coding tools is a clear signal that your review process isn't keeping pace with increased code volume. getDX specifically recommends monitoring PR revert rate as one of three key metrics for measuring AI's impact on code quality, alongside change failure rate and code maintainability scores.</p>
+<p>A healthy revert rate depends on your context, but if more than 5% of your PRs get reverted, something in your review process needs attention.</p>
+<h3>Review System Load Factor</h3>
+<p>This is the metric nobody tracks yet. I think they should.</p>
+<p>If you have heard of Little's Law (I'll use it later in this post), you know queueing theory has something to say about software delivery. But there is another concept from queueing theory that applies directly to code reviews: the <strong>utilization rate</strong>, often written as <strong>ρ</strong> (rho).</p>
+<p>The formula is simple:</p>
+<blockquote>
+<p>ρ = λ / μ</p>
+</blockquote>
+<p>Where <strong>λ</strong> (lambda) is the arrival rate (average number of PRs opened per day that need review) and <strong>μ</strong> (mu) is the service rate (average number of PRs your team can review and merge per day).</p>
+<p>When ρ is low (say 0.5), the system has spare capacity. PRs get reviewed quickly. Life is good.</p>
+<p>When ρ approaches 0.7, queues start forming. Wait times grow noticeably.</p>
+<p>When ρ crosses 0.85, something interesting happens: <strong>wait times grow exponentially</strong>. Not linearly. A team running at 90% utilization doesn't have 10% longer wait times than a team at 80%. It has 2-3x longer wait times. This is not opinion. It's the mathematical property of any queueing system described by the Pollaczek-Khinchine formula.</p>
+<p>Here's what makes this metric so powerful: <strong>it's predictive, not retrospective</strong>. TTFR and cycle time tell you what already happened. The load factor tells you what's about to happen.</p>
+<p>Imagine your team of 6 reviewers handles an average of 12 PRs per day (μ = 12). Currently, 9 PRs arrive per day (λ = 9). Your load factor is 0.75. Queues exist but they're manageable.</p>
+<p>Now your company rolls out an AI coding assistant. Individual developer output increases by 30%. Suddenly 12 PRs arrive per day. Your load factor hits 1.0. The queue grows without bound. Cycle times go through the roof.</p>
+<p>This is exactly what the 2025 DORA report describes: AI boosts individual output but organizational delivery stays flat. The load factor explains why. We increased λ without increasing μ.</p>
+<p>To compute your own load factor:</p>
+<ol>
+<li>Count how many PRs were opened per day over the last 2 weeks (that's your λ)</li>
+<li>Count how many PRs were reviewed and merged per day over the same period (that's your μ)</li>
+<li>Divide λ by μ</li>
+</ol>
+<p>If the result is below <strong>0.7</strong>, your review system has healthy headroom. Between <strong>0.7 and 0.85</strong> is the danger zone: things work but any spike in PR volume (a new feature push, an AI tool rollout, a returning colleague clearing their backlog) will cause queue explosion. Above <strong>0.85</strong>, you're already in trouble, even if cycle time metrics haven't caught up yet.</p>
+<p>The fix is straightforward in theory: either reduce λ (fewer, smaller PRs), increase μ (more reviewers, faster reviews, automation), or both. In practice, most teams only react after cycle times have already blown up. The load factor gives you weeks of advance warning.</p>
+<p>I haven't seen any engineering effectiveness tool surface this as a named metric. Swarmia's working agreements and LinearB's benchmarks get close, but they measure outcomes (cycle time exceeded target) rather than system capacity.</p>
+<p>I don't compute this every week. But I do check it quarterly, and especially before any change that affects PR volume: rolling out AI tools, onboarding new team members, or entering a high-output sprint. Think of it less as a dashboard metric and more as a smoke detector. You don't stare at it, but when it goes off, you pay attention.</p>
+<h2>The WIP death spiral 🌀</h2>
+<p>These metrics don't exist in isolation. They feed each other in a vicious cycle that I call the WIP death spiral. Let me walk you through it.</p>
+<ol>
+<li>A developer opens a PR. Nobody reviews it for a day.</li>
+<li>The developer does the rational thing: starts new work.</li>
+<li>Now they have two things in progress. Their context is split.</li>
+<li>More developers do the same. Open PRs pile up.</li>
+<li>Reviewers now have a wall of pending reviews. They feel overwhelmed.</li>
+<li>Reviews get delayed further. Or they get rubber-stamped.</li>
+<li>Back to step 1, but worse.</li>
+</ol>
+<p>This is not a people problem. It is a systems problem. And Little's Law explains it precisely:</p>
+<blockquote>
+<p>Average cycle time = Average WIP / Average throughput</p>
+</blockquote>
+<p>If your team of 5 has 15 open PRs and merges 5 per day, the average cycle time is 3 days. Reduce WIP to 5 open PRs (one per developer), and cycle time drops to 1 day. Nobody worked faster. The system just flows better.</p>
+<h2>Context switching makes it worse</h2>
+<p>Every time a developer switches from their current work to review someone else's code, there is a cost. Research by Dr. Gloria Mark at UC Irvine shows it takes an average of <strong>23 minutes and 15 seconds</strong> to fully regain focus after an interruption. For complex coding tasks, Carnegie Mellon research extends this to <strong>45 minutes</strong>.</p>
+<p>Now do the math: if a developer does 3 code reviews per day, switching context each time, they lose over an hour just in recovery time. Not review time. Recovery time. And interrupted tasks take twice as long and contain twice as many errors.</p>
+<p>The irony? Slow reviews cause more context switching, not less. When a PR comes back after 2 days with feedback, the author has to reload the entire mental model of what they were doing. Fast reviews (within hours) mean the context is still fresh.</p>
+<h2>The DORA connection</h2>
+<p>If you care about DORA metrics (and you should), code review time is eating your Lead Time for Changes. getDX's DX Core 4 framework unifies DORA, SPACE, and DevEx into four dimensions: Speed, Effectiveness, Quality, and Business Impact. Code review metrics span all four. That's not a coincidence. Review is the crossroads where speed meets quality.</p>
+<p>The 2025 DORA report found that AI coding assistants boost individual output (21% more tasks completed, 98% more pull requests merged) but organizational delivery metrics stay flat.</p>
+<p>The bottleneck has shifted. We optimized the machine. We forgot about the humans sitting between the machine and production.</p>
+<p>As the report states: "Without end-to-end visibility, teams optimize locally (making code generation faster) while the actual constraint shifts to review, integration, and deployment."</p>
+<p>LinearB's 2026 benchmark data makes the review bottleneck even more visible: AI-generated PRs wait <strong>4.6 times longer</strong> before a human picks them up, and when finally reviewed, only <strong>32.7%</strong> are accepted. Compare that to <strong>84.4%</strong> for human-authored PRs. There is a trust gap. Reviewers spend more time scrutinizing AI-generated code because they can't assume the author understood what they wrote. More code in, slower reviews out. The queue grows.</p>
+<h2>What to measure first</h2>
+<p>If you're starting from zero, here's what I recommend:</p>
+<ol>
+<li><strong>TTFR and Cycle Time</strong>: pull these from your git platform today. GitHub, GitLab, or tools like Sleuth, LinearB, Swarmia can generate these automatically. Share the numbers with your team. Target: TTFR under 4 business hours.</li>
+<li><strong>PR Size Distribution</strong>: this is the leading indicator. If your PRs are too big, everything else will be slow. Target: 80% of PRs under 400 lines.</li>
+<li><strong>Open PR Count</strong>: simple but powerful. How many PRs are open right now? That's your WIP. Little's Law tells you the rest. Target: no more than 1-2 open PRs per developer.</li>
+</ol>
+<p>Start with these three. They will tell you where the pain is.</p>
+<h2>What NOT to measure</h2>
+<p>Knowing what to measure matters. Knowing what to avoid matters more. getDX published a thorough analysis of metric anti-patterns, and I agree with all of them:</p>
+<ul>
+<li><strong>Individual PR counts or commit counts.</strong> This incentivizes cherry-picking small, easy tasks over hard, valuable work.</li>
+<li><strong>Lines of code per developer.</strong> Shifts focus from solving problems to producing volume. A developer who deletes 500 lines of dead code is more valuable than one who adds 500 lines of unnecessary abstraction.</li>
+<li><strong>Code review comment volume.</strong> Encourages reviewers to write more words, not better feedback. Three meaningful comments beat twenty nitpicks.</li>
+<li><strong>PR approval rates per individual.</strong> getDX warns this "damages trust and undermines collaboration" when used for performance evaluation. People stop giving honest feedback if their approval rate is being watched.</li>
+</ul>
+<p>The common thread: any code review metric used as an <strong>individual performance measure</strong> will be gamed. Use these metrics at the team level to surface process bottlenecks. Never use them to rank people.</p>
+<h2>What you can do today without a dashboard</h2>
+<p>You don't need management buy-in or tooling to start improving. If you're a developer reading this:</p>
+<ul>
+<li><strong>Review before you start new work.</strong> Check your review queue every morning before writing new code. This single habit breaks the WIP death spiral at the source.</li>
+<li><strong>Make your PRs smaller.</strong> If it's over 400 lines, split it. Smaller PRs get faster, better reviews.</li>
+<li><strong>Write better PR descriptions.</strong> Explain <em>why</em>, not just <em>what</em>. Link the ticket. Add a screenshot for UI changes. A reviewer who understands context gives better feedback in less time.</li>
+<li><strong>Talk instead of waiting.</strong> For complex changes, a 10-minute call beats two days of async back-and-forth.</li>
+</ul>
+<p>The metrics in this post help managers see the system. But the system is made of individual habits.</p>
+<p>In the next post, I will cover exactly how to fix this: from setting turnaround targets to review rotations, stacked PRs, and knowing when to ditch async reviews entirely. The metrics tell you where it hurts. The solutions make the pain stop.</p>
+<p>Have you measured your own TTFR? I'm curious what number surprised you the most. Let me know in the comments or reach out directly.</p>
+
+				<div class="post__signature">Arkadiusz Kondas</div>
+
+				<!-- Begin Mailchimp Signup Form -->
+<div id="mc_embed_signup">
+    <strong>Don't miss new blog posts and subscribe.</strong>
+    <form action="https://itcraftsman.us7.list-manage.com/subscribe/post?u=b8fa64b8b33c5d5d41ef8c0f0&amp;id=234aa6c680" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+        <div id="mc_embed_signup_scroll">
+            <input type="text" value="" name="FNAME" class="name" id="mce-FNAME" placeholder="First Name..." />
+            <input type="email" value="" name="EMAIL" class="email" id="mce-EMAIL" placeholder="Email address..." required>
+            <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+            <div style="position: absolute; left: -5000px; clear: both;" aria-hidden="true"><input type="text" name="b_b8fa64b8b33c5d5d41ef8c0f0_234aa6c680" tabindex="-1" value=""></div>
+            <div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+        </div>
+    </form>
+</div>
+<!--End mc_embed_signup-->
+
+				<div id="social" class="post__social"></div>
+
+									<section class="post__sources">
+						<h3>Sources</h3>
+						<ul class="post__sources-list">
+															<li><a href="https://graphite.com/research/median-time-to-merge-prs" rel="nofollow" target="_blank">The Median Developer&#039;s PRs Take 14 Hours to Merge</a></li>
+															<li><a href="https://google.github.io/eng-practices/review/reviewer/speed.html" rel="nofollow" target="_blank">Speed of Code Reviews - Google Engineering Practices</a></li>
+															<li><a href="https://www.infoq.com/articles/co-creation-patterns-software-development/" rel="nofollow" target="_blank">From Async Code Reviews to Co-Creation Patterns</a></li>
+															<li><a href="https://jonnyzzz.com/blog/2026/01/16/code-review-bottleneck/" rel="nofollow" target="_blank">Stop Optimizing Code Generation</a></li>
+															<li><a href="https://www.michaelagreiler.com/code-reviews-at-google/" rel="nofollow" target="_blank">Code Reviews at Google are Lightweight and Fast</a></li>
+															<li><a href="https://josnyder.com/blog/2024/queueing_theory_swe.html" rel="nofollow" target="_blank">Queueing Theory for the Working Software Engineer</a></li>
+															<li><a href="https://getdx.com/research/measuring-developer-productivity-with-the-dx-core-4/" rel="nofollow" target="_blank">Measuring Developer Productivity with the DX Core 4</a></li>
+															<li><a href="https://getdx.com/blog/engineering-metrics-top-teams/" rel="nofollow" target="_blank">The Engineering Metrics Used by Top Dev Teams</a></li>
+															<li><a href="https://workweave.dev/blog/the-price-of-mandatory-code-reviews" rel="nofollow" target="_blank">The Price of Mandatory Code Reviews</a></li>
+															<li><a href="https://linearb.io/blog/code-review-metrics" rel="nofollow" target="_blank">Code Review Metrics - LinearB</a></li>
+															<li><a href="https://www.usehaystack.io/blog/engineering-metrics-that-matter-how-to-evaluate-and-improve-code-reviews" rel="nofollow" target="_blank">Engineering Metrics That Matter - Haystack</a></li>
+															<li><a href="https://help.pluralsight.com/help/review-metrics" rel="nofollow" target="_blank">Review Metrics - Pluralsight Flow</a></li>
+															<li><a href="https://getdx.com/blog/pitfalls-of-developer-activity-metrics/" rel="nofollow" target="_blank">Pitfalls of Tracking Developer Activity Metrics</a></li>
+															<li><a href="https://getdx.com/blog/3-metrics-for-measuring-the-impact-of-ai-on-code-quality/" rel="nofollow" target="_blank">Three Metrics for Measuring the Impact of AI on Code Quality</a></li>
+													</ul>
+					</section>
+							</main>
+		</div>
+
+		    <script src="/assets/js/scripts.js" async></script>
+
+<script>
+    const disqusCode = 'arkadiusz-kondas-website';
+</script>
+<script id="dsq-count-scr" src="https://arkadiusz-kondas-website.disqus.com/count.js" async defer></script>
+	</body>
+</html>

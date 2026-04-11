@@ -11,6 +11,12 @@
   },
   "items": [
                         {
+        "id": "https://arkadiuszkondas.com/slow-code-reviews-the-silent-velocity-killer/",
+        "url": "https://arkadiuszkondas.com/slow-code-reviews-the-silent-velocity-killer/",
+        "title": "Slow code reviews: the silent velocity killer",
+        "content_text": "Your team ships fast, your CI is green, your sprints look healthy. But there is a silent killer hiding in plain sight: slow code reviews. Let me show you the numbers.",
+                "date_published": "2026-04-11T00:00:00+00:00"
+      },                            {
         "id": "https://arkadiuszkondas.com/dmca-php-ml-and-copyright-boundaries/",
         "url": "https://arkadiuszkondas.com/dmca-php-ml-and-copyright-boundaries/",
         "title": "DMCA, php-ml and copyright boundaries",

@@ -10,7 +10,17 @@
 	<atom:link href="https://arkadiuszkondas.com/rss.xml" rel="self" type="application/rss+xml" />
 	<pubDate>{date('r')}</pubDate>
 
-						<lastBuildDate>Tue, 26 May 2020 00:00:00 +0000</lastBuildDate>			
+						<lastBuildDate>Sat, 11 Apr 2026 00:00:00 +0000</lastBuildDate>			
+			
+			<item>
+				<title>Slow code reviews: the silent velocity killer</title>
+				<link>https://arkadiuszkondas.com/slow-code-reviews-the-silent-velocity-killer/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/slow-code-reviews-the-silent-velocity-killer/</guid>
+				<pubDate>Sat, 11 Apr 2026 00:00:00 +0000</pubDate>
+				<description>Your team ships fast, your CI is green, your sprints look healthy. But there is a silent killer hiding in plain sight: slow code reviews. Let me show you the numbers.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
 			
 			<item>
 				<title>DMCA, php-ml and copyright boundaries</title>
