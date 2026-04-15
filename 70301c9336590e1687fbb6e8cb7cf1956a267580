@@ -1,0 +1,31 @@
+site/assets/js/kingman.js
+  4038c80fc84e3258 1-326
+site/assets/css/kingman.css
+  4038c80fc84e3258 1-318
+site/assets/js/jackson.js
+  4038c80fc84e3258 1-58
+site/assets/js/priority.js
+  4038c80fc84e3258 1-201
+site/assets/js/amdahl.js
+  4038c80fc84e3258 1-69
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.0",
+  "base_commit_sha": "70301c9336590e1687fbb6e8cb7cf1956a267580",
+  "prompts": {
+    "4038c80fc84e3258": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "13db1c23-497f-45a7-839c-eec7b1905689",
+        "model": "claude-opus-4-6"
+      },
+      "human_author": "Arkadiusz Kondas",
+      "messages": [],
+      "total_additions": 1163,
+      "total_deletions": 5,
+      "accepted_lines": 972,
+      "overriden_lines": 0
+    }
+  }
+}
