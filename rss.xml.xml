@@ -10,7 +10,17 @@
 	<atom:link href="https://arkadiuszkondas.com/rss.xml" rel="self" type="application/rss+xml" />
 	<pubDate>{date('r')}</pubDate>
 
-						<lastBuildDate>Sat, 11 Apr 2026 00:00:00 +0000</lastBuildDate>			
+						<lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate>			
+			
+			<item>
+				<title>What hospital ERs know about code reviews that your team doesn&#039;t</title>
+				<link>https://arkadiuszkondas.com/what-hospital-ers-know-about-code-reviews-that-your-team-doesnt/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/what-hospital-ers-know-about-code-reviews-that-your-team-doesnt/</guid>
+				<pubDate>Wed, 15 Apr 2026 00:00:00 +0000</pubDate>
+				<description>Hospital emergency rooms, call centers, and highway traffic have been optimized by queueing theory for decades. Your PR queue obeys the same math but nobody on your team has done the calculations. Seven equations reveal why it breaks.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
 			
 			<item>
 				<title>Slow code reviews: the silent velocity killer</title>
