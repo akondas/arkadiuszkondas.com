@@ -1,0 +1,56 @@
+site/_posts/2026/2026-04-18-the-ai-productivity-paradox-your-team-is-borrowing-from-2027.md
+  3a86aaca64073b6f 169
+  f8b100ff5e633fb1 1-168,170-391
+site/assets/css/kingman.css
+  f8b100ff5e633fb1 319-346
+site/assets/js/debt-multiplier.js
+  f8b100ff5e633fb1 1-231
+site/assets/js/second-derivative.js
+  f8b100ff5e633fb1 1-153
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.0",
+  "base_commit_sha": "4c4a915ea27b1f364bc391864a45057a0e87e91e",
+  "prompts": {
+    "3a86aaca64073b6f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "1acb8b37-db40-4d08-88d5-0c6cb2c2aea2",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Arkadiusz Kondas",
+      "messages": [],
+      "total_additions": 1,
+      "total_deletions": 1,
+      "accepted_lines": 1,
+      "overriden_lines": 0
+    },
+    "4279ed28d79ac462": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3e6f0ba2-6ef9-4a30-812a-cef1bfae022d",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Arkadiusz Kondas",
+      "messages": [],
+      "total_additions": 0,
+      "total_deletions": 9,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "f8b100ff5e633fb1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "6b62857f-f400-44b8-b44a-3bd808d69958",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Arkadiusz Kondas",
+      "messages": [],
+      "total_additions": 1129,
+      "total_deletions": 62,
+      "accepted_lines": 802,
+      "overriden_lines": 0
+    }
+  }
+}
