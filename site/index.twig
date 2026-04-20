@@ -3,7 +3,7 @@ layout: "_layouts/default.twig"
 title: Posts
 ---
 
-<p>Read about Machine Learning, Software Architecture and good software craftsmanship practices.</p>
+<p>Notes on engineering leadership, team health, software architecture and building engineering organisations that ship.</p>
 
 {% for post in posts %}
 	{% if post.getDateInFormat('Y-m-d') <= "today"|date('Y-m-d') %}
