@@ -1,0 +1,117 @@
+.cd-visual {
+    margin: 36px 0;
+    font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    text-align: center;
+}
+
+.cd-visual svg {
+    width: 100%;
+    height: auto;
+    max-width: 800px;
+    display: block;
+    margin: 0 auto;
+}
+
+.cd-visual .cd-caption {
+    margin: 10px auto 0;
+    max-width: 600px;
+    font-size: 0.82em;
+    color: #888;
+    line-height: 1.4;
+}
+
+.cd-visual .cd-axis-line {
+    stroke: #bbb;
+    stroke-width: 1;
+}
+
+.cd-visual .cd-axis-label {
+    fill: #888;
+    font-size: 11px;
+}
+
+.cd-visual .cd-connector {
+    fill: none;
+    stroke: #bbb;
+    stroke-width: 1.5;
+    stroke-dasharray: 4 3;
+}
+
+.cd-visual .cd-dot {
+    fill: #1abc9c;
+    stroke: #fff;
+    stroke-width: 2;
+}
+
+.cd-visual .cd-dot-accent {
+    fill: #e67e22;
+    stroke: #fff;
+    stroke-width: 2;
+}
+
+.cd-visual .cd-era-label {
+    fill: #0c0c0c;
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: middle;
+}
+
+.cd-visual .cd-era-year {
+    fill: #888;
+    font-size: 10px;
+    text-anchor: middle;
+}
+
+.cd-radar .cd-ring {
+    fill-opacity: 1;
+    stroke: #d0d0d0;
+    stroke-width: 1;
+}
+
+.cd-radar .cd-ring-adopt { fill: #e8f8f5; }
+.cd-radar .cd-ring-trial { fill: #eaf4fb; }
+.cd-radar .cd-ring-assess { fill: #fdf5e8; }
+.cd-radar .cd-ring-caution { fill: #fbe9db; }
+
+.cd-radar .cd-ring-label {
+    fill: #4b4b4b;
+    font-size: 11px;
+    font-weight: 600;
+    text-anchor: middle;
+}
+
+.cd-radar .cd-ring-sublabel {
+    fill: #888;
+    font-size: 9px;
+    text-anchor: middle;
+    font-style: italic;
+}
+
+.cd-radar .cd-marker {
+    fill: #e67e22;
+    stroke: #fff;
+    stroke-width: 2.5;
+}
+
+.cd-radar .cd-marker-leader {
+    stroke: #4b4b4b;
+    stroke-width: 1;
+    fill: none;
+}
+
+.cd-radar .cd-marker-label {
+    fill: #0c0c0c;
+    font-size: 12px;
+    font-weight: 600;
+    text-anchor: start;
+}
+
+@media screen and (max-width: 600px) {
+    .cd-visual {
+        margin: 28px 0;
+    }
+
+    .cd-visual .cd-caption {
+        font-size: 0.78em;
+    }
+}
