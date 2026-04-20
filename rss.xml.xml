@@ -10,7 +10,17 @@
 	<atom:link href="https://arkadiuszkondas.com/rss.xml" rel="self" type="application/rss+xml" />
 	<pubDate>{date('r')}</pubDate>
 
-						<lastBuildDate>Wed, 15 Apr 2026 00:00:00 +0000</lastBuildDate>			
+						<lastBuildDate>Mon, 20 Apr 2026 00:00:00 +0000</lastBuildDate>			
+			
+			<item>
+				<title>AI did not invent cognitive debt. It made it invisible.</title>
+				<link>https://arkadiuszkondas.com/ai-did-not-invent-cognitive-debt-it-made-it-invisible/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/ai-did-not-invent-cognitive-debt-it-made-it-invisible/</guid>
+				<pubDate>Mon, 20 Apr 2026 00:00:00 +0000</pubDate>
+				<description>Thoughtworks Technology Radar Vol 34 flags codebase cognitive debt as Caution. The debt is not new. We have carried it since Stack Overflow. What is new is that you cannot feel it anymore, and no one has a framework for measuring debt you cannot see.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
 			
 			<item>
 				<title>What hospital ERs know about code reviews that your team doesn&#039;t</title>
