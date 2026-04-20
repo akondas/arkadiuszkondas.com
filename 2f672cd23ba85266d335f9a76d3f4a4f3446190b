@@ -1,0 +1,49 @@
+site/assets/css/cognitive-debt.css
+  48247fd129187592 1-117
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.0",
+  "base_commit_sha": "2f672cd23ba85266d335f9a76d3f4a4f3446190b",
+  "prompts": {
+    "48247fd129187592": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "aa1502fc-e411-48da-bcd7-0f38972908b0",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Arkadiusz Kondas",
+      "messages": [],
+      "total_additions": 186,
+      "total_deletions": 16,
+      "accepted_lines": 117,
+      "overriden_lines": 0
+    },
+    "9464360543e844f8": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "db18b538-f14f-4c78-a38b-401196bfe3d7",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Arkadiusz Kondas",
+      "messages": [],
+      "total_additions": 967,
+      "total_deletions": 34,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    },
+    "a47f9cfcb75b25c4": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "05d5b3f1-8337-4153-975d-d69c0168eaa8",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Arkadiusz Kondas",
+      "messages": [],
+      "total_additions": 4,
+      "total_deletions": 2,
+      "accepted_lines": 0,
+      "overriden_lines": 0
+    }
+  }
+}
