@@ -1,0 +1,23 @@
+docs/superpowers/specs/2026-04-22-cognitive-debt-followup-design.md
+  063a0b5bbd951ebc 1-142
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.2",
+  "base_commit_sha": "d184dcae19d54d62ba38740b84de4763863ef004",
+  "prompts": {
+    "063a0b5bbd951ebc": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "32e09cb7-328e-4af6-9385-ff5796b658cc",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Arkadiusz Kondas",
+      "messages": [],
+      "total_additions": 143,
+      "total_deletions": 1,
+      "accepted_lines": 142,
+      "overriden_lines": 0
+    }
+  }
+}
