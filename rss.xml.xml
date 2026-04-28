@@ -10,7 +10,17 @@
 	<atom:link href="https://arkadiuszkondas.com/rss.xml" rel="self" type="application/rss+xml" />
 	<pubDate>{date('r')}</pubDate>
 
-						<lastBuildDate>Mon, 20 Apr 2026 00:00:00 +0000</lastBuildDate>			
+						<lastBuildDate>Tue, 28 Apr 2026 00:00:00 +0000</lastBuildDate>			
+			
+			<item>
+				<title>The accounting system is being built. It still will not work.</title>
+				<link>https://arkadiuszkondas.com/the-accounting-system-is-being-built-it-still-will-not-work/</link>
+				<guid isPermaLink="false">https://arkadiuszkondas.com/the-accounting-system-is-being-built-it-still-will-not-work/</guid>
+				<pubDate>Tue, 28 Apr 2026 00:00:00 +0000</pubDate>
+				<description>Soon after I argued cognitive debt had gone invisible, two serious prescriptions surfaced. Margaret-Anne Storey proposed a Triple Debt Model with manual discipline. Entire.io is building an AI-native SDLC with agent infrastructure. The taxonomy is right. Both treatments assume the wrong thing is scarce.</description>
+				<dc:creator>Arkadiusz Kondas</dc:creator>
+			</item>
+											
 			
 			<item>
 				<title>AI did not invent cognitive debt. It made it invisible.</title>
