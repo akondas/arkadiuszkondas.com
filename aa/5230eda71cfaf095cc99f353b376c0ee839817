@@ -1,0 +1,23 @@
+site/code-review-dashboard/assets/index-PtL4e28i.css
+  s_da24520945224d::t_b7ed4274be7639 1
+site/code-review-dashboard/assets/index-D-CAggKs.js
+  s_da24520945224d::t_b7ed4274be7639 1-140
+site/code-review-dashboard/index.html
+  s_da24520945224d::t_b7ed4274be7639 1-13
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.0",
+  "base_commit_sha": "aa5230eda71cfaf095cc99f353b376c0ee839817",
+  "prompts": {},
+  "sessions": {
+    "s_da24520945224d": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "57b0da31-6c9c-443a-aa47-89f332cdcc7c",
+        "model": "claude-opus-4-7"
+      },
+      "human_author": "Arkadiusz Kondas <arkadiusz.kondas@gmail.com>"
+    }
+  }
+}
