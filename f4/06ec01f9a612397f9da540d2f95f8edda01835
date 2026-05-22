@@ -1,0 +1,13 @@
+site/code-review-dashboard/index.html
+  ai_agent 7-8
+site/code-review-dashboard/assets/index-BqiEmvNY.js
+  ai_agent 1,9,17,25,33-34,36-38,40-135,143-149,152-163,165,167,169-170,173,175,177,179-202,204,229
+site/code-review-dashboard/assets/index-DO0gkQhM.css
+  ai_agent 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.5.0",
+  "base_commit_sha": "f406ec01f9a612397f9da540d2f95f8edda01835",
+  "prompts": {}
+}
